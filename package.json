@@ -1,0 +1,19 @@
+{
+  "name": "fts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+     "front": "npm start --prefix front",
+    "back": "npm start --prefix back",
+    "dev": "concurrently \"npm run front\" \"npm run back\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "concurrently": "^10.0.5"
+  }
+}

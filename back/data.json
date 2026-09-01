@@ -1,0 +1,123 @@
+{
+  "documents": [
+    {
+      "id": "1",
+      "title": "Contrat X",
+      "reference": "Con-20",
+      "category": "Juridique",
+      "location": "Armoire A1",
+      "status": "Disponible"
+    },
+    {
+      "id": "2",
+      "title": "Facture 2023",
+      "reference": "Fac-45",
+      "category": "Finance",
+      "location": "Armoire B2",
+      "status": "Emprunté"
+    },
+    {
+      "id": "3",
+      "title": "Rapport RH",
+      "reference": "Rap-26",
+      "category": "Ressources",
+      "location": "Armoire C1",
+      "status": "Disponible"
+    },
+    {
+      "id": "91d2",
+      "title": "Lettre de motivation",
+      "cotegory": "Correspondance",
+      "location": "Etagere 2/rang 3",
+      "reference": "l-5",
+      "category": "Correspondance",
+      "status": "En retard"
+    },
+    {
+      "id": "f86c",
+      "title": "Lettre de motivation",
+      "location": "Et3/r5",
+      "reference": "l-2",
+      "category": "Correspondance",
+      "status": "Disponible"
+    },
+    {
+      "id": "6303",
+      "title": "Contrat de prestation",
+      "reference": "c-21",
+      "category": "Contrats",
+      "location": "Et2/R1",
+      "status": "Disponible"
+    },
+    {
+      "id": "9f6c",
+      "title": "Contrat de prestation",
+      "reference": "c-20",
+      "category": "Contrats",
+      "location": "Et2/R3",
+      "status": "Disponible"
+    },
+    {
+      "id": "8e6c",
+      "title": "Lettre d'affectation",
+      "reference": "l-02",
+      "category": "Correspondance",
+      "location": "Etagere1/rang2",
+      "status": "Disponible"
+    },
+    {
+      "id": "8e6c",
+      "title": "Lettre d'affectation",
+      "reference": "l-02",
+      "category": "Correspondance",
+      "location": "Etagere1/rang2",
+      "status": "Disponible"
+    }
+  ],
+  "users": [
+    {
+      "id": "1",
+      "name": "Danniel Kwizera",
+      "email": "admin@doc.com ",
+      "role": "Admin  ",
+      "status": "Actif"
+    },
+    {
+      "id": "2",
+      "name": "Didace Nkunzimana",
+      "email": "empA@doc.com",
+      "role": "Archiviste",
+      "status": "Actif"
+    },
+    {
+      "id": "3",
+      "name": "Jonas Ntirampeba",
+      "email": "lecB@doc.com ",
+      "role": "Archiviste",
+      "status": "Desactivé"
+    }
+  ],
+  "borrow": [
+    {
+      "id": "1",
+      "date": "05/08/25",
+      "action": "Emprunté",
+      "actor": "Jean Dupont",
+      "status": "Normale"
+    },
+    {
+      "id": "2",
+      "date": "05/08/25",
+      "action": "Restitué",
+      "actor": "Jean Dupont",
+      "status": "Normale"
+    },
+    {
+      "id": "3",
+      "date": "05/08/25",
+      "action": "Emprunté",
+      "actor": "Marie Claire ",
+      "status": "Annormale"
+    }
+  ]
+}
