@@ -41,3 +41,39 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+# npm
+# package-lock.json
+# Dépendances
+node_modules/
+package-lock.json
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Variables d'environnement
+.env
+.env.local
+.env.*.local
+
+# Build
+dist/
+build/
+out/
+
+# Coverage
+coverage/
+.nyc_output/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Éditeurs
+.vscode/
+.idea/
+*.swp
+*.swo
