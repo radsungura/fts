@@ -4,6 +4,7 @@
       "id": "1",
       "title": "Contrat X",
       "reference": "Con-20",
+      "codebar": "Con-20",
       "category": "Juridique",
       "location": "Armoire A1",
       "status": "Disponible"
@@ -12,6 +13,7 @@
       "id": "2",
       "title": "Facture 2023",
       "reference": "Fac-45",
+      "codebar": "Fac-45",
       "category": "Finance",
       "location": "Armoire B2",
       "status": "Emprunté"
