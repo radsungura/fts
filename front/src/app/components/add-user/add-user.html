@@ -1,0 +1,57 @@
+<div class="container" >
+    <h2 mat-dialog-title>
+    {{ data.mode === 'add' ? 'Ajouter un Document' : 'Modifier le Document' }}
+    </h2>
+    <form *ngIf="data.mode === 'add'" [formGroup]="form" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Titre</mat-label>
+        <input matInput formControlName="titre" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Catégorie</mat-label>
+        <input matInput formControlName="categorie" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Localisation</mat-label>
+        <input matInput formControlName="localisation" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Statut</mat-label>
+        <input matInput formControlName="statut" />
+      </mat-form-field>
+
+      <div class="flex justify-end mt-4" align="end">
+        <button mat-button (click)="dialogRef.close()">Annuler</button>
+        <button mat-raised-button color="primary" type="submit">Enregistrer</button>
+      </div>
+    </form>
+    <form *ngIf="data.mode === 'edit'" [formGroup]="form" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Titre</mat-label>
+        <input matInput formControlName="titre" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Catégorie</mat-label>
+        <input matInput formControlName="categorie" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Localisation</mat-label>
+        <input matInput formControlName="localisation" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Statut</mat-label>
+        <input matInput formControlName="statut" />
+      </mat-form-field>
+
+      <div class="flex justify-end mt-4" align="end">
+        <button mat-button (click)="dialogRef.close()">Annuler</button>
+        <button mat-raised-button color="primary" type="submit">Enregistrer</button>
+      </div>
+    </form>
+</div>

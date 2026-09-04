@@ -1,0 +1,112 @@
+.sidenav-container {
+  height: 100vh;
+}
+
+.sidenav {
+  width: 240px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #008a9b; // Couleur primaire
+  color: white;
+}
+
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.sidebar-logo img {
+  width: 36px;
+  height: 36px;
+}
+
+mat-nav-list {
+  flex: 1;
+}
+
+a.mat-list-item {
+  color: white;
+  font-weight: 500;
+  border-radius: 8px;
+  margin: 4px 8px;
+}
+
+a.mat-list-item.active {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.sidebar-bottom {
+  padding: 16px;
+}
+
+mat-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.menu-btn {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .menu-btn {
+    display: inline-flex;
+  }
+
+  .sidenav {
+    width: 200px;
+  }
+}
+
+.content {
+  padding: 24px;
+  background: var(--bg-color, #f5f5f5);
+  min-height: calc(100vh - 64px); // 64px = height du toolbar
+}
+
+// part 3
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 16px;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.user-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-transform: none;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user-name {
+  font-weight: 500;
+}
+
+mat-icon[color="warn"] {
+  font-size: 12px;
+}
+
+mat-nav-list mat-icon{
+      top: 20px;
+    position: sticky;
+    margin-right: 10px;
+}

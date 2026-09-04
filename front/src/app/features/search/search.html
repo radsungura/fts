@@ -1,0 +1,47 @@
+<mat-toolbar color="primary" style="justify-content: center;">
+    <!-- <div style="width: 20%;">
+        <h3>Recherche </h3>
+    </div> -->
+    <div class="search-bar">
+        <input type="text" [(ngModel)]="searchdoc" (input)="autocomplete(searchdoc)" placeholder="Nom du document..." class="search-input" />
+        <span *ngIf="query" class="reset-btn" (click)="reset()" mat-raised-button type="submit" >
+            <!-- <mat-icon>close</mat-icon> -->
+            ❌
+        </span>
+        <span class="search-btn" mat-raised-button type="submit" (click)="search(searchdoc)">
+            <!-- <mat-icon>search</mat-icon> -->
+             🔍
+        </span>
+    </div>
+</mat-toolbar>
+    <div *ngIf="query" class="search-container">
+
+        <div *ngIf="isLoading" class="loading-spinner">
+            <p>Loading...</p>
+        </div>
+
+        <div *ngIf="results.length > 0">
+            <!-- <h3>Result :</h3> -->
+            <ul>
+                <li *ngFor="let document of results" (click)="details(document)">
+                    <h4>{{ document.title }}</h4>
+                    <!-- <p>{{ document.categorie }}</p> -->
+                </li>
+            </ul>
+        </div>
+
+        <div *ngIf="documents.length === 0 && !isLoading">
+            <p>No document found.</p>
+        </div>
+    </div>
+    <div class="list">
+        <div *ngIf="documents.length > 0">
+            <!-- <h3>Result :</h3> -->
+            <ul>
+                <li *ngFor="let document of documents" (click)="details(document)">
+                    <h4>{{ document.title }}</h4>
+                    <p>{{ document.category }}</p>
+                </li>
+            </ul>
+        </div>
+    </div>

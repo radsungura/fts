@@ -1,0 +1,20 @@
+    <mat-card class="max-w-xl mx-auto mt-8 p-6 container">
+        <div class="flex justify-end gap-2 mt-6" align="end">
+        <button mat-button (click)="dialogRef.close()">
+            ❌
+        </button>
+ 
+        <!-- <button mat-stroked-button color="primary">Modifier</button> -->
+      </div>
+      <h2 class="text-2xl font-bold mb-4" style="top: 40px; position: absolute;">Détails du Mouvement
+      </h2>
+
+      <div class="space-y-2">
+        <p><strong>ID :</strong> {{ data.item?.id }}</p>
+        <p><strong>Date :</strong> {{ data.item?.date }}</p>
+        <p><strong>Action :</strong> {{ data.item?.action }}</p>
+        <p><strong>Actor :</strong> {{ data.item?.actor }}</p>
+        <p><strong>Status :</strong> {{ data.item?.status }}</p>
+      </div>
+
+    </mat-card>

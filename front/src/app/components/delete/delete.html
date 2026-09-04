@@ -1,0 +1,11 @@
+
+<div class="container" >
+    <h2 mat-dialog-title>
+    Voulez vous Supprimer ? 
+    </h2>
+    <div mat-dialog-action color="warning" align="end">
+        <button mat-button (click)="dialogRef.close()">Annuler</button>
+        <button mat-raised-button style="background: red; color: white" color="tertiary" (click)="delete()">Confirmer</button>
+    </div>
+    <span *ngIf="servererror" style="color: red">L'action a echoué !</span>
+</div>

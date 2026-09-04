@@ -1,0 +1,72 @@
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+}
+
+.stats-grid mat-card {
+  text-align: center;
+  padding: 16px;
+  box-shadow: #000000fa 5px 5px 10px -5px;
+}
+
+.stats-grid mat-icon {
+  // font-size: 36px;
+  color: #00488f;
+}
+
+.charts-grid {
+  display: flex;
+  // grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.activity {
+  padding: 16px;
+}
+
+.all{
+  background: #008a9b;
+  color: #000000;
+      font-size: large;
+    font-weight: 500;
+    
+}
+.actif{
+  background: #188038;
+  color: aliceblue;
+      font-size: large;
+    font-weight: 500;
+}
+.archive{
+  background: #FFC107;
+  color: #000000;
+      font-size: large;
+    font-weight: 500;
+}
+.user{
+  background: #f52020;
+  color: aliceblue;
+      font-size: large;
+    font-weight: 500;
+}
+.chart{
+  box-shadow: #000000 0px 0px 20px -13px;
+  text-align: center;
+  padding: 20px;
+  width: -webkit-fill-available;
+}
+.icon{
+  top: 20px;
+  position: absolute;
+  font-size: 30px;
+}
+.section{
+  box-shadow: #000000 0px 0px 20px -13px;
+}

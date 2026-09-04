@@ -1,0 +1,67 @@
+<mat-toolbar color="primary" style="justify-content: space-between;">Liste des Mouvements
+  <button mat-raised-button class="add-btn" color="accent" (click)="addMov()">
+    <mat-icon>add</mat-icon> Ajouter
+  </button>
+<!-- 
+  <mat-toolbar color="primary">Toolbar Primary</mat-toolbar>
+  <button mat-raised-button color="accent">Bouton Accent</button>
+  <button mat-raised-button color="warn">Bouton Warn</button> 
+-->
+
+</mat-toolbar>
+   
+
+    <div class="p-4">
+  <table mat-table [dataSource]="mov" class="mat-elevation-z8 w-full">
+
+    <!-- ID -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> ID </th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+
+    <!-- Titre -->
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef> Date </th>
+      <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+    </ng-container>
+
+    <!-- Catégorie -->
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef> 
+        Action </th>
+      <td mat-cell *matCellDef="let element"> {{element.action}} </td>
+    </ng-container>
+
+    <!-- Localisation -->
+    <ng-container matColumnDef="actor">
+      <th mat-header-cell *matHeaderCellDef> Acteur </th>
+      <td mat-cell *matCellDef="let element"> {{element.actor}} </td>
+    </ng-container>
+
+    <!-- Statut -->
+    <ng-container matColumnDef="statut">
+      <th mat-header-cell *matHeaderCellDef> Statut </th>
+      <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+    </ng-container>
+
+    <!-- Actions -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button color="primary" (click)="details(element)">
+          <mat-icon>visibility</mat-icon>
+        </button>
+        <button mat-icon-button color="accent" (click)="edit(element)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="delete(element)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

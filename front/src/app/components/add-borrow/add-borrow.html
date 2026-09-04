@@ -1,0 +1,42 @@
+<div class="container" >
+    <h2 mat-dialog-title>
+    {{ data.action === 'add' ? 'Ajouter un Document' : 'Modifier le Document' }}
+    </h2>
+    <!-- <form [formGroup]="form" (ngSubmit)="data.mode === 'add'? add(doc): edit(doc)"> -->
+    <form [formGroup]="form">
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Titre</mat-label>
+        <input [(ngModel)]="doc.title" matInput formControlName="title" required/>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Reference</mat-label>
+        <input [(ngModel)]="doc.reference" matInput formControlName="reference" required/>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Catégorie</mat-label>
+        <input [(ngModel)]="doc.category" matInput formControlName="category" required/>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>location</mat-label>
+        <input [(ngModel)]="doc.location" matInput formControlName="location" required/>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Statut</mat-label>
+        <input [(ngModel)]="doc.status" matInput formControlName="status" required/>
+      </mat-form-field>
+
+      <div class="flex justify-end mt-4" align="end">
+        <button mat-button (click)="dialogRef.close()">Annuler</button>
+        <button mat-raised-button color="btn-primary" (click)="data.action === 'add'? add(doc): edit(doc)">{{ data.action === 'add' ? 'Ajouter' : 'Mettre à jour' }}</button>
+      </div>
+    </form>
+    <div *ngIf="servererror">
+      <p style="color: red;">Une erreur est survenu !</p>
+    </div>
+</div>
+    
+
