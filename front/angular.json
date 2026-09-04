@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "LMS": {
+    "FTS": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -67,10 +67,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "LMS:build:production"
+              "buildTarget": "FTS:build:production"
             },
             "development": {
-              "buildTarget": "LMS:build:development"
+              "buildTarget": "FTS:build:development"
             }
           },
           "defaultConfiguration": "development"
