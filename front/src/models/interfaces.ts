@@ -20,10 +20,9 @@ export interface Mov {
 
 export interface User {
   id?: number;
-  title: string;
-  reference: string;
-  category: string;
-  location: string;
+  name: string;
+  email: string;
+  role: string;
   status: string;
   createdAt?: string;
 }

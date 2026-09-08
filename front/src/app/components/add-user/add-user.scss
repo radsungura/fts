@@ -1,11 +1,173 @@
-.w-full {
+.user-form-container {
+  width: 100%;
+  max-width: 700px;
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* =========================
+   EN-TÊTE
+   ========================= */
+
+.form-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  padding: 24px;
+
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.header-icon {
+  width: 52px;
+  height: 52px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #e8eefc;
+}
+
+.header-icon mat-icon {
+  font-size: 28px;
+  width: 28px;
+  height: 28px;
+}
+
+.header-content {
+  flex: 1;
+}
+
+.header-content h2 {
+  margin: 0 0 5px;
+
+  font-size: 21px;
+  font-weight: 600;
+}
+
+.header-content p {
+  margin: 0;
+
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.close-button {
+  margin-left: auto;
+}
+
+/* =========================
+   FORMULAIRE
+   ========================= */
+
+.user-form {
+  padding: 24px;
+}
+
+/* =========================
+   SECTIONS
+   ========================= */
+
+.form-section {
+  margin-bottom: 28px;
+}
+
+.form-section:last-of-type {
+  margin-bottom: 10px;
+}
+
+.form-section h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  margin: 0 0 18px;
+
+  font-size: 16px;
+  font-weight: 600;
+
+  color: #374151;
+}
+
+.form-section h3 mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+/* =========================
+   GRILLE
+   ========================= */
+
+.form-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 8px 16px;
+}
+
+.full-width {
   width: 100%;
 }
 
-.w-full-width-table {
-  width: 100%;
-  margin-top: 20px;
+/* =========================
+   BOUTONS
+   ========================= */
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  gap: 12px;
+
+  padding-top: 20px;
+
+  border-top: 1px solid #e5e7eb;
 }
-.container{
-    padding: 50px;
+
+.form-actions button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  min-height: 42px;
+}
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+
+@media (max-width: 600px) {
+  .form-header {
+    padding: 18px;
+  }
+
+  .user-form {
+    padding: 18px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .header-content h2 {
+    font-size: 18px;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .form-actions button {
+    width: 100%;
+    justify-content: center;
+  }
 }

@@ -1,38 +1,60 @@
 import { CommonModule } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { AddDoc } from '../add-doc/add-doc';
+import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-add-user',
-  imports: [CommonModule, MatDialogModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule],
+  imports: [
+    CommonModule,
+    MatDialogModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatIconModule,
+  ],
   templateUrl: './add-user.html',
-  styleUrl: './add-user.scss'
+  styleUrl: './add-user.scss',
 })
 export class AddUser {
-form: any;
-constructor(private fb: FormBuilder,
-    public dialogRef: MatDialogRef<AddDoc>,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ){
-  // if (data.mode === 'edit' && data.document) {
-  //     this.formData = { ...data.document };
-  //   }
+  form;
 
-  this.form = this.fb.group({
-    titre: [this.data.titre, Validators.required],
-    categorie: [this.data.categorie],
-    localisation: [this.data.localisation],
-    statut: [this.data.statut]
-  });
-}
-onSubmit() {
+  // Rôles disponibles
+  roles = ['Administrateur', 'Utilisateur', 'Gestionnaire'];
+
+  // Statuts disponibles
+  statuses = ['Actif', 'Inactif'];
+
+  constructor(
+    private fb: FormBuilder,
+    public dialogRef: MatDialogRef<AddUser>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+  ) {
+    const user = data?.item;
+
+    this.form = this.fb.group({
+      name: [user?.name ?? '', Validators.required],
+
+      email: [user?.email ?? '', [Validators.required, Validators.email]],
+
+      role: [user?.role ?? '', Validators.required],
+
+      status: [user?.status ?? 'Actif', Validators.required],
+    });
+  }
+
+  onSubmit() {
     if (this.form.valid) {
-      this.dialogRef.close(this.form.value); // renvoie les données modifiées
+      this.dialogRef.close(this.form.value);
     }
   }
 }
