@@ -1,109 +1,228 @@
+<mat-sidenav-container class="sidenav-container" [class.dark-mode]="isDarkMode">
+  <!-- ========================= -->
+  <!-- SIDEBAR -->
+  <!-- ========================= -->
 
+  <mat-sidenav #drawer class="sidenav" mode="side" [(opened)]="drawerOpened">
+    <!-- Logo -->
 
-<!--  part 2 -->
+    <div class="sidebar-header">
+      <div class="logo-icon">
+        <mat-icon>folder_special</mat-icon>
+      </div>
 
-<mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #drawer mode="side" [(opened)]="drawerOpened" class="sidenav">
-    <!-- Sidebar identique -->
-    <div class="sidebar-logo">
-      <h3>📂 L M S</h3>
+      <div class="logo-text">
+        <span class="logo-title">LMS</span>
+        <span class="logo-subtitle">Gestion documentaire</span>
+      </div>
     </div>
-    <mat-nav-list>
-      <a mat-list-item routerLink="/dashboard" routerLinkActive="active">
-        <mat-icon>dashboard</mat-icon>
-        <span>Dashboard</span>
-      </a>
 
-      <a mat-list-item routerLink="/documents" routerLinkActive="active">
-        <mat-icon>description</mat-icon>
-        <span>Documents</span>
-      </a>
+    <!-- Navigation -->
 
-      <a mat-list-item routerLink="/search" routerLinkActive="active">
-        <mat-icon>search</mat-icon>
-        <span>Recherche</span>
-      </a>
+    <div class="navigation">
+      <div class="navigation-title">MENU PRINCIPAL</div>
 
-      <a mat-list-item routerLink="/borrow" routerLinkActive="active">
-        <mat-icon>book</mat-icon>
-        <span>Emprunt</span>
-      </a>
+      <mat-nav-list>
+        <a
+          mat-list-item
+          routerLink="/dashboard"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <mat-icon>dashboard</mat-icon>
+          <span>Dashboard</span>
+        </a>
 
-      <a mat-list-item routerLink="/archive" routerLinkActive="active">
-        <mat-icon>archive</mat-icon>
-        <span>Archive</span>
-      </a>
+        <a mat-list-item routerLink="/documents" routerLinkActive="active">
+          <mat-icon>description</mat-icon>
+          <span>Documents</span>
+        </a>
 
-      <a mat-list-item routerLink="/users" routerLinkActive="active">
-        <mat-icon>group</mat-icon>
-        <span>Utilisateurs</span>
-      </a>
-    </mat-nav-list>
+        <a mat-list-item routerLink="/search" routerLinkActive="active">
+          <mat-icon>search</mat-icon>
+          <span>Recherche</span>
+        </a>
 
-    <div class="sidebar-bottom">
-      <button mat-stroked-button color="primary" (click)="toggleTheme.emit()">
-        <mat-icon>{{ isLight ? 'dark_mode' : 'light_mode' }}</mat-icon>
-        {{ isLight ? 'Mode sombre' : 'Mode clair' }}
+        <a mat-list-item routerLink="/borrow" routerLinkActive="active">
+          <mat-icon>swap_horiz</mat-icon>
+          <span>Emprunts</span>
+        </a>
+
+        <a mat-list-item routerLink="/archive" routerLinkActive="active">
+          <mat-icon>archive</mat-icon>
+          <span>Archives</span>
+        </a>
+
+        <a mat-list-item routerLink="/users" routerLinkActive="active">
+          <mat-icon>group</mat-icon>
+          <span>Utilisateurs</span>
+        </a>
+      </mat-nav-list>
+    </div>
+
+    <!-- Bas sidebar -->
+
+    <div class="sidebar-footer">
+      <button mat-stroked-button class="theme-button" type="button" (click)="toggleDarkMode()">
+        <mat-icon>
+          {{ isDarkMode ? 'light_mode' : 'dark_mode' }}
+        </mat-icon>
+
+        <span>
+          {{ isDarkMode ? 'Mode clair' : 'Mode sombre' }}
+        </span>
       </button>
+
+      <div class="sidebar-version">LMS · v1.0</div>
     </div>
   </mat-sidenav>
 
+  <!-- ========================= -->
+  <!-- CONTENU PRINCIPAL -->
+  <!-- ========================= -->
+
   <mat-sidenav-content>
-    <mat-toolbar color="primary" class="toolbar">
-      <button mat-icon-button (click)="drawer.toggle()" class="menu-btn">
+    <!-- HEADER -->
+
+    <mat-toolbar class="toolbar">
+      <!-- Menu -->
+
+      <button
+        mat-icon-button
+        class="menu-btn"
+        type="button"
+        (click)="drawer.toggle()"
+        matTooltip="Afficher le menu"
+      >
         <mat-icon>menu</mat-icon>
       </button>
 
-      <span class="app-title">GESTION DOCUMENTAIRE</span>
+      <!-- Titre -->
+
+      <div class="page-title">
+        <span>GESTION DOCUMENTAIRE</span>
+      </div>
+
       <span class="spacer"></span>
 
-      <!-- 🔔 Notifications -->
-      <button mat-icon-button [matMenuTriggerFor]="notifMenu" matBadge="{{ unreadCount }}" matBadgeColor="warn" matBadgeHidden="{{ unreadCount === 0 }}">
-        <mat-icon>notifications</mat-icon>
+      <!-- ========================= -->
+      <!-- NOTIFICATIONS -->
+      <!-- ========================= -->
+
+      <button
+        mat-icon-button
+        class="notification-btn"
+        type="button"
+        [matMenuTriggerFor]="notifMenu"
+        [matBadge]="unreadCount"
+        matBadgeColor="warn"
+        [matBadgeHidden]="unreadCount === 0"
+        matTooltip="Notifications"
+      >
+        <mat-icon>notifications_none</mat-icon>
       </button>
 
-      <mat-menu #notifMenu="matMenu">
+      <mat-menu #notifMenu="matMenu" class="notification-menu">
+        <div class="notification-header">
+          <strong>Notifications</strong>
+
+          <span *ngIf="unreadCount > 0">
+            {{ unreadCount }} non lue{{ unreadCount > 1 ? 's' : '' }}
+          </span>
+        </div>
+
+        <mat-divider></mat-divider>
+
         <ng-container *ngIf="notifications.length > 0; else noNotif">
           <button mat-menu-item *ngFor="let notif of notifications">
-            <mat-icon color="{{ notif.read ? '' : 'warn' }}">fiber_manual_record</mat-icon>
-            <span>{{ notif.message }}</span>
+            <mat-icon [class.unread-icon]="!notif.read">
+              {{ notif.read ? 'fiber_manual_record' : 'circle' }}
+            </mat-icon>
+
+            <span>
+              {{ notif.message }}
+            </span>
           </button>
+
           <mat-divider></mat-divider>
-          <button mat-menu-item (click)="markAllAsRead()">
+
+          <button mat-menu-item *ngIf="unreadCount > 0" (click)="markAllAsRead()">
             <mat-icon>done_all</mat-icon>
-            <span>Marquer tout comme lu</span>
+
+            <span> Marquer tout comme lu </span>
           </button>
         </ng-container>
+
         <ng-template #noNotif>
-          <button mat-menu-item disabled>Aucune notification</button>
+          <div class="no-notification">
+            <mat-icon>notifications_off</mat-icon>
+            <span>Aucune notification</span>
+          </div>
         </ng-template>
       </mat-menu>
 
-      <!-- Avatar + menu utilisateur -->
-      <button mat-button [matMenuTriggerFor]="userMenu" class="user-btn">
-        <!-- <img class="avatar" src="../../assets/avatar.png" alt="avatar" /> -->
-        <span class="user-name">{{ user.name }}</span>
-        <mat-icon>expand_more</mat-icon>
+      <!-- ========================= -->
+      <!-- UTILISATEUR -->
+      <!-- ========================= -->
+
+      <button mat-button class="user-btn" type="button" [matMenuTriggerFor]="userMenu">
+        <div class="user-avatar">
+          <mat-icon>person</mat-icon>
+        </div>
+
+        <div class="user-info">
+          <span class="user-name">
+            {{ user.name }}
+          </span>
+
+          <span class="user-role">
+            {{ user.role }}
+          </span>
+        </div>
+
+        <mat-icon class="expand-icon"> expand_more </mat-icon>
       </button>
 
       <mat-menu #userMenu="matMenu">
+        <div class="user-menu-header">
+          <div class="user-avatar large">
+            <mat-icon>person</mat-icon>
+          </div>
+
+          <div>
+            <strong>{{ user.name }}</strong>
+            <small>{{ user.role }}</small>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
         <button mat-menu-item>
           <mat-icon>person</mat-icon>
-          <span>Profil</span>
+
+          <span>Mon profil</span>
         </button>
+
         <button mat-menu-item>
           <mat-icon>settings</mat-icon>
+
           <span>Paramètres</span>
         </button>
+
+        <mat-divider></mat-divider>
+
         <button mat-menu-item>
           <mat-icon>logout</mat-icon>
+
           <span>Déconnexion</span>
         </button>
       </mat-menu>
     </mat-toolbar>
 
-    <div class="content">
+    <!-- CONTENU -->
+
+    <main class="content">
       <router-outlet></router-outlet>
-    </div>
+    </main>
   </mat-sidenav-content>
 </mat-sidenav-container>

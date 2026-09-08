@@ -71,7 +71,7 @@ export class Users {
 
         this.activeUsers = users.filter((user) => user.status === 'Actif').length;
 
-        this.inactiveUsers = users.filter((user) => user.status === 'Inactif').length;
+        this.inactiveUsers = users.filter((user) => user.status === 'Desactivé').length;
 
         this.loading = false;
       },

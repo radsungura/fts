@@ -29,10 +29,10 @@ export class AddUser {
   form;
 
   // Rôles disponibles
-  roles = ['Administrateur', 'Utilisateur', 'Gestionnaire'];
+  roles = ['Administrateur', 'Utilisateur', 'Gestionnaire', 'Archiviste'];
 
   // Statuts disponibles
-  statuses = ['Actif', 'Inactif'];
+  statuses = ['Actif', 'Desactivé'];
 
   constructor(
     private fb: FormBuilder,
