@@ -1,42 +1,151 @@
-<div class="container" >
-    <h2 mat-dialog-title>
-    {{ data.action === 'add' ? 'Ajouter un Document' : 'Modifier le Document' }}
-    </h2>
-    <!-- <form [formGroup]="form" (ngSubmit)="data.mode === 'add'? add(doc): edit(doc)"> -->
-    <form [formGroup]="form">
-      <mat-form-field appearance="outline" class="w-full">
-        <mat-label>Titre</mat-label>
-        <input [(ngModel)]="doc.title" matInput formControlName="title" required/>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="w-full">
-        <mat-label>Reference</mat-label>
-        <input [(ngModel)]="doc.reference" matInput formControlName="reference" required/>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="w-full">
-        <mat-label>Catégorie</mat-label>
-        <input [(ngModel)]="doc.category" matInput formControlName="category" required/>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="w-full">
-        <mat-label>location</mat-label>
-        <input [(ngModel)]="doc.location" matInput formControlName="location" required/>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="w-full">
-        <mat-label>Statut</mat-label>
-        <input [(ngModel)]="doc.status" matInput formControlName="status" required/>
-      </mat-form-field>
-
-      <div class="flex justify-end mt-4" align="end">
-        <button mat-button (click)="dialogRef.close()">Annuler</button>
-        <button mat-raised-button color="btn-primary" (click)="data.action === 'add'? add(doc): edit(doc)">{{ data.action === 'add' ? 'Ajouter' : 'Mettre à jour' }}</button>
-      </div>
-    </form>
-    <div *ngIf="servererror">
-      <p style="color: red;">Une erreur est survenu !</p>
+<div class="document-form">
+  <!-- HEADER -->
+  <div class="form-header">
+    <div class="header-icon">
+      <mat-icon>
+        {{ data.action === 'add' ? 'note_add' : 'edit_document' }}
+      </mat-icon>
     </div>
-</div>
-    
 
+    <div class="header-content">
+      <h2>
+        {{ data.action === 'add' ? 'Ajouter un document' : 'Modifier le document' }}
+      </h2>
+
+      <p>
+        {{
+          data.action === 'add'
+            ? 'Enregistrez un nouveau document dans le système.'
+            : 'Modifiez les informations du document.'
+        }}
+      </p>
+    </div>
+
+    <button
+      mat-icon-button
+      type="button"
+      class="close-button"
+      (click)="cancel()"
+      matTooltip="Fermer"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <!-- FORMULAIRE -->
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <!-- INFORMATIONS DU DOCUMENT -->
+    <div class="form-section">
+      <h3>
+        <mat-icon>description</mat-icon>
+        Informations du document
+      </h3>
+
+      <div class="form-grid">
+        <!-- TITRE -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Titre du document</mat-label>
+
+          <input matInput formControlName="title" placeholder="Ex. Rapport annuel 2026" />
+
+          <mat-icon matSuffix> description </mat-icon>
+
+          <mat-error *ngIf="form.controls.title.hasError('required')">
+            Le titre est obligatoire
+          </mat-error>
+        </mat-form-field>
+
+        <!-- REFERENCE -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Référence</mat-label>
+
+          <input matInput formControlName="reference" placeholder="Ex. DOC-2026-001" />
+
+          <mat-icon matSuffix> tag </mat-icon>
+
+          <mat-error *ngIf="form.controls.reference.hasError('required')">
+            La référence est obligatoire
+          </mat-error>
+        </mat-form-field>
+
+        <!-- CATEGORIE -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Catégorie</mat-label>
+
+          <input matInput formControlName="category" placeholder="Ex. Contrat" />
+
+          <mat-icon matSuffix> category </mat-icon>
+
+          <mat-error *ngIf="form.controls.category.hasError('required')">
+            La catégorie est obligatoire
+          </mat-error>
+        </mat-form-field>
+
+        <!-- LOCALISATION -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Localisation</mat-label>
+
+          <input matInput formControlName="location" placeholder="Ex. Armoire A - Étagère 2" />
+
+          <mat-icon matSuffix> location_on </mat-icon>
+
+          <mat-error *ngIf="form.controls.location.hasError('required')">
+            La localisation est obligatoire
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- INFORMATIONS DU COMPTE -->
+    <div class="form-section">
+      <h3>
+        <mat-icon>settings</mat-icon>
+        Gestion du document
+      </h3>
+
+      <div class="form-grid">
+        <!-- STATUT -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Statut</mat-label>
+
+          <mat-select formControlName="status">
+            <mat-option value="Actif"> Actif </mat-option>
+
+            <mat-option value="Emprunté"> Emprunté </mat-option>
+
+            <mat-option value="Archivé"> Archivé </mat-option>
+          </mat-select>
+
+          <mat-icon matSuffix> verified </mat-icon>
+
+          <mat-error *ngIf="form.controls.status.hasError('required')">
+            Le statut est obligatoire
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- ERREUR SERVEUR -->
+    <div class="server-error" *ngIf="servererror">
+      <mat-icon>error_outline</mat-icon>
+
+      <span> Une erreur est survenue. Veuillez réessayer. </span>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="form-footer">
+      <button mat-stroked-button type="button" (click)="cancel()">
+        <mat-icon>close</mat-icon>
+        Annuler
+      </button>
+
+      <button mat-raised-button class="submit-button" type="submit">
+        <mat-icon>
+          {{ data.action === 'add' ? 'add' : 'save' }}
+        </mat-icon>
+
+        {{ data.action === 'add' ? 'Enregistrer' : 'Enregistrer les modifications' }}
+      </button>
+    </div>
+  </form>
+</div>

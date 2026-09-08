@@ -50,6 +50,8 @@
       <mat-option value="Emprunté"> Emprunté </mat-option>
 
       <mat-option value="Archivé"> Archivé </mat-option>
+
+      <mat-option value="Disponible"> Disponible </mat-option>
     </mat-select>
   </mat-form-field>
 </div>
@@ -126,6 +128,7 @@
           [class.active]="element.status === 'Actif'"
           [class.borrowed]="element.status === 'Emprunté'"
           [class.archived]="element.status === 'Archivé'"
+          [class.disponible]="element.status === 'Disponible'"
         >
           <span class="status-dot"></span>
 
@@ -232,6 +235,7 @@
       [class.active]="document.status === 'Actif'"
       [class.borrowed]="document.status === 'Emprunté'"
       [class.archived]="document.status === 'Archivé'"
+      [class.disponible]="document.status === 'Disponible'"
     >
       <span class="status-dot"></span>
 
