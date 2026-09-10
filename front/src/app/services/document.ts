@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {Doc} from '../../models/interfaces'
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment';
+import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +11,7 @@ export class Document {
   url = environment.URL;
 
   private api = `${this.url}/documents`;
+  
   constructor(private http: HttpClient) {}
 
   getAll(): Observable<Doc[]> {
