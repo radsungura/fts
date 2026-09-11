@@ -1,57 +1,133 @@
-<div class="container" >
-    <h2 mat-dialog-title>
-    {{ data.mode === 'add' ? 'Ajouter un Document' : 'Modifier le Document' }}
-    </h2>
-    <form *ngIf="data.mode === 'add'" [formGroup]="form" (ngSubmit)="onSubmit()">
-      <mat-form-field appearance="outline" class="w-full">
-        <mat-label>Titre</mat-label>
-        <input matInput formControlName="titre" />
-      </mat-form-field>
+<div class="user-form-container">
+  <!-- En-tête -->
+  <div class="form-header">
+    <div class="header-icon">
+      <mat-icon>
+        {{ data.mode === 'add' ? 'person_add' : 'manage_accounts' }}
+      </mat-icon>
+    </div>
 
-      <mat-form-field appearance="outline" class="w-full">
-        <mat-label>Catégorie</mat-label>
-        <input matInput formControlName="categorie" />
-      </mat-form-field>
+    <div class="header-content">
+      <h2>
+        {{ data.mode === 'add' ? 'Ajouter un utilisateur' : 'Modifier l’utilisateur' }}
+      </h2>
 
-      <mat-form-field appearance="outline" class="w-full">
-        <mat-label>Localisation</mat-label>
-        <input matInput formControlName="localisation" />
-      </mat-form-field>
+      <p>
+        {{
+          data.mode === 'add'
+            ? 'Créer un nouveau compte utilisateur'
+            : 'Modifier les informations du compte'
+        }}
+      </p>
+    </div>
 
-      <mat-form-field appearance="outline" class="w-full">
-        <mat-label>Statut</mat-label>
-        <input matInput formControlName="statut" />
-      </mat-form-field>
+    <button mat-icon-button type="button" class="close-button" (click)="dialogRef.close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
 
-      <div class="flex justify-end mt-4" align="end">
-        <button mat-button (click)="dialogRef.close()">Annuler</button>
-        <button mat-raised-button color="primary" type="submit">Enregistrer</button>
+  <!-- Formulaire -->
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="user-form">
+    <!-- Informations personnelles -->
+    <div class="form-section">
+      <h3>
+        <mat-icon>person_outline</mat-icon>
+        Informations personnelles
+      </h3>
+
+      <div class="form-grid">
+        <!-- Nom -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Nom</mat-label>
+
+          <input matInput formControlName="name" placeholder="Ex. Jean Dupont" />
+
+          <mat-icon matSuffix>person</mat-icon>
+
+          <mat-error *ngIf="form.get('name')?.hasError('required')">
+            Le nom est obligatoire
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Email -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Adresse e-mail</mat-label>
+
+          <input matInput type="email" formControlName="email" placeholder="exemple@email.com" />
+
+          <mat-icon matSuffix>email</mat-icon>
+
+          <mat-error *ngIf="form.get('email')?.hasError('required')">
+            L'adresse e-mail est obligatoire
+          </mat-error>
+
+          <mat-error *ngIf="form.get('email')?.hasError('email')">
+            Adresse e-mail invalide
+          </mat-error>
+        </mat-form-field>
       </div>
-    </form>
-    <form *ngIf="data.mode === 'edit'" [formGroup]="form" (ngSubmit)="onSubmit()">
-      <mat-form-field appearance="outline" class="w-full">
-        <mat-label>Titre</mat-label>
-        <input matInput formControlName="titre" />
-      </mat-form-field>
+    </div>
 
-      <mat-form-field appearance="outline" class="w-full">
-        <mat-label>Catégorie</mat-label>
-        <input matInput formControlName="categorie" />
-      </mat-form-field>
+    <!-- Informations du compte -->
+    <div class="form-section">
+      <h3>
+        <mat-icon>manage_accounts</mat-icon>
+        Informations du compte
+      </h3>
 
-      <mat-form-field appearance="outline" class="w-full">
-        <mat-label>Localisation</mat-label>
-        <input matInput formControlName="localisation" />
-      </mat-form-field>
+      <div class="form-grid">
+        <!-- Rôle -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Rôle</mat-label>
 
-      <mat-form-field appearance="outline" class="w-full">
-        <mat-label>Statut</mat-label>
-        <input matInput formControlName="statut" />
-      </mat-form-field>
+          <mat-select formControlName="role">
+            <mat-option value=""> Sélectionner un rôle </mat-option>
 
-      <div class="flex justify-end mt-4" align="end">
-        <button mat-button (click)="dialogRef.close()">Annuler</button>
-        <button mat-raised-button color="primary" type="submit">Enregistrer</button>
+            <mat-option *ngFor="let role of roles" [value]="role">
+              {{ role }}
+            </mat-option>
+          </mat-select>
+
+          <mat-icon matSuffix>badge</mat-icon>
+
+          <mat-error *ngIf="form.get('role')?.hasError('required')">
+            Le rôle est obligatoire
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Statut -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Statut</mat-label>
+
+          <mat-select formControlName="status">
+            <mat-option *ngFor="let status of statuses" [value]="status">
+              {{ status }}
+            </mat-option>
+          </mat-select>
+
+          <mat-icon matSuffix>toggle_on</mat-icon>
+
+          <mat-error *ngIf="form.get('status')?.hasError('required')">
+            Le statut est obligatoire
+          </mat-error>
+        </mat-form-field>
       </div>
-    </form>
+    </div>
+
+    <!-- Boutons -->
+    <div class="form-actions">
+      <button mat-stroked-button type="button" (click)="dialogRef.close()">
+        <mat-icon>close</mat-icon>
+        Annuler
+      </button>
+
+      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+        <mat-icon>
+          {{ data.mode === 'add' ? 'person_add' : 'save' }}
+        </mat-icon>
+
+        {{ data.mode === 'add' ? 'Ajouter' : 'Enregistrer' }}
+      </button>
+    </div>
+  </form>
 </div>

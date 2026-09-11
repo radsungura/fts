@@ -1,18 +1,88 @@
-    <mat-card class="max-w-xl mx-auto mt-8 p-6 container">
-      <div class="flex justify-end gap-2 mt-6" align="end">
-        <button mat-button (click)="dialogRef.close()">
-            ❌
-        </button>
-      </div>
-      <h2 class="text-2xl font-bold mb-4" style="top: 40px; position: absolute;">Détails du document
-      </h2>
+<div class="user-details">
+  <!-- En-tête -->
+  <div class="details-header">
+    <div class="user-avatar">
+      <mat-icon>person</mat-icon>
+    </div>
 
-      <div class="space-y-2">
-        <p><strong>ID :</strong> {{ data.item?.id }}</p>
-        <p><strong>Name :</strong> {{ data.item?.name }}</p>
-        <p><strong>Email :</strong> {{ data.item?.email }}</p>
-        <p><strong>Role :</strong> {{ data.item?.role }}</p>
-        <p><strong>Status :</strong> {{ data.item?.status }}</p>
-      </div>
+    <div class="user-header-info">
+      <h2>{{ user?.name }}</h2>
+      <p>{{ user?.email }}</p>
+    </div>
+  </div>
 
-    </mat-card>
+  <!-- Corps -->
+  <div class="details-body" *ngIf="user">
+    <!-- Informations personnelles -->
+    <div class="section">
+      <h3>
+        <mat-icon>person_outline</mat-icon>
+        Informations personnelles
+      </h3>
+
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="label">Nom</span>
+          <span class="value">{{ user.name }}</span>
+        </div>
+
+        <div class="info-item">
+          <span class="label">Adresse e-mail</span>
+          <span class="value">{{ user.email }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Informations du compte -->
+    <div class="section">
+      <h3>
+        <mat-icon>manage_accounts</mat-icon>
+        Informations du compte
+      </h3>
+
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="label">Identifiant</span>
+          <span class="value">#{{ user.id }}</span>
+        </div>
+
+        <div class="info-item">
+          <span class="label">Rôle</span>
+          <span class="value role-badge">
+            {{ user.role }}
+          </span>
+        </div>
+
+        <div class="info-item">
+          <span class="label">Statut</span>
+
+          <span
+            class="status-badge"
+            [class.active]="user.status === 'Actif'"
+            [class.inactive]="user.status === 'Inactif'"
+          >
+            <mat-icon>
+              {{ user.status === 'Actif' ? 'check_circle' : 'cancel' }}
+            </mat-icon>
+
+            {{ user.status }}
+          </span>
+        </div>
+
+        <div class="info-item" *ngIf="user.createdAt">
+          <span class="label">Date de création</span>
+          <span class="value">
+            {{ user.createdAt | date: 'dd/MM/yyyy HH:mm' }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pied de fenêtre -->
+  <div class="details-footer">
+    <button mat-stroked-button type="button" (click)="dialogRef.close()">
+      Fermer
+    </button>
+  </div>
+</div>
