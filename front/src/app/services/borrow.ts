@@ -8,7 +8,9 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class Borrows {
-    private api = 'http://localhost:4000/borrow';
+    // private api = 'http://localhost:4000/borrow';
+  private readonly api = `${environment.URL}/borrow`;
+
   constructor(private http: HttpClient) {}
 
   getAll(): Observable<Mov[]> {
