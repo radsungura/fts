@@ -26,3 +26,23 @@ export interface User {
   status: string;
   createdAt?: string;
 }
+
+export interface Category {
+  id?: number;
+  name: string;
+  description: string;
+  createdAt?: string;
+}
+
+export interface Location {
+  id?: number;
+  name: string;
+  code: string;
+  address: string;
+  status: string;
+  category: string;
+  description: string;
+  created_at?: string;
+  updated_at?: string;
+}
+

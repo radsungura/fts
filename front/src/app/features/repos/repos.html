@@ -1,0 +1,285 @@
+<mat-toolbar class="Location-toolbar">
+  <div class="toolbar-title">
+    <mat-icon>description</mat-icon>
+    <span>Liste des Locations</span>
+  </div>
+
+  <div class="toolbar-actions">
+    <button
+      mat-icon-button
+      type="button"
+      (click)="toggleView()"
+      [matTooltip]="view === 'list' ? 'Afficher en grille' : 'Afficher en liste'"
+    >
+      <mat-icon>
+        {{ view === 'list' ? 'grid_view' : 'view_list' }}
+      </mat-icon>
+    </button>
+
+    <button mat-raised-button class="add-btn" type="button" (click)="add()">
+      <mat-icon>add</mat-icon>
+      Ajouter
+    </button>
+  </div>
+</mat-toolbar>
+
+<!-- FILTRES -->
+
+<div class="filters">
+  <mat-form-field appearance="outline" class="search-field">
+    <mat-label>Rechercher un locations</mat-label>
+
+    <input
+      matInput
+      [(ngModel)]="searchText"
+      (ngModelChange)="searchLocations()"
+      placeholder="Titre, catégorie, localisation..."
+    />
+
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="status-field">
+    <mat-label>Statut</mat-label>
+
+    <mat-select [(ngModel)]="statusFilter" (selectionChange)="searchLocations()">
+      <mat-option value="Tous"> Tous </mat-option>
+
+      <mat-option value="Actif"> Actif </mat-option>
+
+      <mat-option value="Emprunté"> Emprunté </mat-option>
+
+      <mat-option value="Archivé"> Archivé </mat-option>
+
+      <mat-option value="Disponible"> Disponible </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<!-- ===================== -->
+<!-- VUE LISTE -->
+<!-- ===================== -->
+
+<div *ngIf="view === 'list'" class="table-container">
+  <table
+    mat-table
+    [dataSource]="filteredLocations.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize)"
+  >
+    <!-- ID -->
+
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>ID</th>
+
+      <td mat-cell *matCellDef="let element; let i = index">
+        {{ pageIndex * pageSize + i + 1 }}
+      </td>
+    </ng-container>
+
+    <!-- TITRE -->
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Nom</th>
+
+      <td mat-cell *matCellDef="let element">
+        <div class="location-title">
+          <div class="location-icon">
+            <mat-icon>description</mat-icon>
+          </div>
+
+          <span>
+            {{ element.name }}
+          </span>
+        </div>
+      </td>
+    </ng-container>
+
+    <!-- CATÉGORIE -->
+
+    <ng-container matColumnDef="category">
+      <th mat-header-cell *matHeaderCellDef>Catégories</th>
+
+      <td mat-cell *matCellDef="let element">
+        {{ element.category }}
+      </td>
+    </ng-container>
+
+    <!-- LOCALISATION -->
+
+    <ng-container matColumnDef="address">
+      <th mat-header-cell *matHeaderCellDef>Adresse</th>
+
+      <td mat-cell *matCellDef="let element">
+        <div class="location">
+          <mat-icon>location_on</mat-icon>
+
+          {{ element.address }}
+        </div>
+      </td>
+    </ng-container>
+
+    <!-- STATUT -->
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef>Statut</th>
+
+      <td mat-cell *matCellDef="let element">
+        <span
+          class="status-badge"
+          [class.active]="element.status === 'Actif'"
+          [class.disponible]="element.status === 'Disponible'"
+        >
+          <span class="status-dot"></span>
+
+          {{ element.status }}
+        </span>
+      </td>
+    </ng-container>
+
+    <!-- ACTIONS -->
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+
+      <td mat-cell *matCellDef="let element">
+        <div class="actions">
+          <button
+            mat-icon-button
+            color="primary"
+            matTooltip="Voir les détails"
+            type="button"
+            (click)="details(element)"
+          >
+            <mat-icon>visibility</mat-icon>
+          </button>
+
+          <button
+            mat-icon-button
+            color="accent"
+            matTooltip="Modifier"
+            type="button"
+            (click)="edit(element)"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+
+          <button
+            mat-icon-button
+            color="warn"
+            matTooltip="Supprimer"
+            type="button"
+            (click)="delete(element)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <!-- Aucun résultat -->
+
+  <div class="empty-state" *ngIf="filteredLocations.length === 0">
+    <mat-icon>folder_off</mat-icon>
+
+    <h3>Aucun locations trouvé</h3>
+
+    <p>Aucun locations ne correspond à votre recherche.</p>
+  </div>
+
+  <!-- PAGINATION -->
+
+  <mat-paginator
+    [length]="filteredLocations.length"
+    [pageSize]="pageSize"
+    [pageIndex]="pageIndex"
+    [pageSizeOptions]="[5, 10, 25]"
+    (page)="changePage($event)"
+    showFirstLastButtons
+  >
+  </mat-paginator>
+</div>
+
+<!-- ===================== -->
+<!-- VUE GRILLE -->
+<!-- ===================== -->
+
+<div *ngIf="view === 'grid'" class="grid-container">
+  <div class="location-card" *ngFor="let locations of filteredLocations">
+    <div class="card-icon">
+      <mat-icon>
+        {{locations.category == 'Dépot' ? 'warehouse' : ''}}
+        {{locations.category == 'Salle' ? 'gite' : ''}}
+        {{locations.category == 'Etagere' ? 'shelves' : ''}}
+    </mat-icon>
+    </div>
+
+    <div class="card-content">
+      <h3>
+        {{ locations.name }}
+      </h3>
+
+      <p>
+        {{ locations.category }}
+      </p>
+
+      <span class="location">
+        <mat-icon>location_on</mat-icon>
+        {{ locations.address }}
+      </span>
+    </div>
+
+    <span
+      class="status-badge"
+      [class.active]="locations.status === 'Actif'"
+      [class.disponible]="locations.status === 'Disponible'"
+    >
+      <span class="status-dot"></span>
+
+      {{ locations.status }}
+    </span>
+
+    <div class="card-actions">
+      <button
+        mat-icon-button
+        color="primary"
+        matTooltip="Voir les détails"
+        type="button"
+        (click)="details(locations)"
+      >
+        <mat-icon>visibility</mat-icon>
+      </button>
+
+      <button
+        mat-icon-button
+        color="accent"
+        matTooltip="Modifier"
+        type="button"
+        (click)="edit(locations)"
+      >
+        <mat-icon>edit</mat-icon>
+      </button>
+
+      <button
+        mat-icon-button
+        color="warn"
+        matTooltip="Supprimer"
+        type="button"
+        (click)="delete(locations)"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="empty-state" *ngIf="filteredLocations.length === 0">
+    <mat-icon>folder_off</mat-icon>
+
+    <h3>Aucun locations trouvé</h3>
+
+    <p>Aucun locations ne correspond à votre recherche.</p>
+  </div>
+</div>
