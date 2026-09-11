@@ -8,11 +8,15 @@ import { environment } from '../../environments/environment.development';
   providedIn: 'root'
 })
 export class Document {
-  url = environment.URL;
+  private url = environment.URL;
+  
 
   private api = `${this.url}/documents`;
-  
-  constructor(private http: HttpClient) {}
+  // private api = 'http://localhost:4000/documents';
+
+  constructor(private http: HttpClient) {
+    console.log('URL:', this.url);
+  }
 
   getAll(): Observable<Doc[]> {
     return this.http.get<Doc[]>(this.api);
