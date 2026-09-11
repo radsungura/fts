@@ -8,8 +8,8 @@ import { environment } from '../../environments/environment.development';
   providedIn: 'root',
 })
 export class Repo {
-  private readonly api = `http://localhost:4000/repos`;
-  // private readonly api = `${environment.URL}/locations`;
+  // private readonly api = `http://localhost:4000/repos`;
+  private readonly api = `${environment.URL}/repos`;
 
   constructor(private http: HttpClient) {}
 
