@@ -78,11 +78,11 @@
   ],
   "users": [
     {
-      "id": "1",
       "name": "Danniel Kwizera",
-      "email": "admin@doc.com ",
-      "role": "Admin  ",
-      "status": "Actif"
+      "email": "admin@gmail.com",
+      "role": "Administrateur",
+      "status": "Actif",
+      "id": "1"
     },
     {
       "id": "2",
@@ -121,5 +121,6 @@
       "actor": "Marie Claire ",
       "status": "Annormale"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }
