@@ -1,47 +1,164 @@
-<mat-toolbar color="primary" style="justify-content: center;">
-    <!-- <div style="width: 20%;">
-        <h3>Recherche </h3>
-    </div> -->
-    <div class="search-bar">
-        <input type="text" [(ngModel)]="searchdoc" (input)="autocomplete(searchdoc)" placeholder="Nom du document..." class="search-input" />
-        <span *ngIf="query" class="reset-btn" (click)="reset()" mat-raised-button type="submit" >
-            <!-- <mat-icon>close</mat-icon> -->
-            ❌
-        </span>
-        <span class="search-btn" mat-raised-button type="submit" (click)="search(searchdoc)">
-            <!-- <mat-icon>search</mat-icon> -->
-             🔍
-        </span>
-    </div>
+<mat-toolbar color="primary" class="search-toolbar">
+  <div class="search-bar">
+    <input
+      type="text"
+      [(ngModel)]="searchdoc"
+      (input)="autocomplete(searchdoc)"
+      (keyup.enter)="search(searchdoc)"
+      placeholder="Rechercher un document..."
+      class="search-input"
+    />
+
+    <!-- Réinitialiser -->
+    <button
+      *ngIf="searchdoc"
+      type="button"
+      class="reset-btn"
+      (click)="reset()"
+      matTooltip="Réinitialiser"
+    >
+      ❌
+    </button>
+
+    <!-- Rechercher -->
+    <button type="button" class="search-btn" (click)="search(searchdoc)" matTooltip="Rechercher">
+      🔍
+    </button>
+  </div>
 </mat-toolbar>
-    <div *ngIf="query" class="search-container">
 
-        <div *ngIf="isLoading" class="loading-spinner">
-            <p>Loading...</p>
+<!-- =====================================================
+     AUTOCOMPLÉTION
+     ===================================================== -->
+
+<div *ngIf="query && query.length >= 3" class="search-container">
+  <!-- Chargement -->
+  <div *ngIf="isLoading" class="loading-spinner">
+    <p>Recherche en cours...</p>
+  </div>
+
+  <!-- Résultats -->
+  <div *ngIf="!isLoading && results.length > 0" class="autocomplete-results">
+    <ul>
+      <li *ngFor="let document of results" (click)="details(document)">
+        <div class="document-icon">
+          <mat-icon> description </mat-icon>
         </div>
 
-        <div *ngIf="results.length > 0">
-            <!-- <h3>Result :</h3> -->
-            <ul>
-                <li *ngFor="let document of results" (click)="details(document)">
-                    <h4>{{ document.title }}</h4>
-                    <!-- <p>{{ document.categorie }}</p> -->
-                </li>
-            </ul>
+        <div class="document-info">
+          <h4>
+            {{ document.title }}
+          </h4>
+
+          <div class="document-meta">
+            <span>
+              {{ document.reference }}
+            </span>
+
+            <span>
+              {{ document.category }}
+            </span>
+
+            <span>
+              {{ document.location }}
+            </span>
+          </div>
+
+          <span class="document-status" [ngClass]="document.status">
+            {{ document.status }}
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Aucun résultat -->
+  <div *ngIf="!isLoading && results.length === 0" class="no-results">
+    <mat-icon> search_off </mat-icon>
+
+    <p>Aucun document trouvé.</p>
+  </div>
+</div>
+
+<!-- =====================================================
+     LISTE DES DOCUMENTS
+     ===================================================== -->
+
+<div class="list">
+  <!-- Chargement -->
+  <div *ngIf="isLoading && !query" class="loading-spinner">
+    <p>Chargement des documents...</p>
+  </div>
+
+  <!-- Documents -->
+  <div *ngIf="!isLoading && paginatedDocuments.length > 0">
+    <ul>
+      <li *ngFor="let document of paginatedDocuments" (click)="details(document)">
+        <!-- Icône -->
+        <div class="document-icon">
+          <mat-icon> description </mat-icon>
         </div>
 
-        <div *ngIf="documents.length === 0 && !isLoading">
-            <p>No document found.</p>
+        <!-- Informations -->
+        <div class="document-info">
+          <h4>
+            {{ document.title }}
+          </h4>
+
+          <div class="document-meta">
+            <span>
+              <strong>Réf.</strong>
+              {{ document.reference }}
+            </span>
+
+            <span>
+              <strong>Catégorie</strong>
+              {{ document.category }}
+            </span>
+
+            <span>
+              <strong>Localisation</strong>
+              {{ document.location }}
+            </span>
+          </div>
+
+          <!-- Statut -->
+          <div class="status-container">
+            <span class="document-status" [ngClass]="document.status">
+              {{ document.status }}
+            </span>
+          </div>
         </div>
+
+        <!-- Flèche -->
+        <div class="document-arrow">
+          <mat-icon> chevron_right </mat-icon>
+        </div>
+      </li>
+    </ul>
+
+    <!-- =================================================
+         PAGINATION
+         ================================================= -->
+
+    <div class="pagination-container">
+      <mat-paginator
+        [length]="documents.length"
+        [pageSize]="pageSize"
+        [pageIndex]="pageIndex"
+        [pageSizeOptions]="[10, 20, 50]"
+        (page)="changePage($event)"
+        showFirstLastButtons
+        aria-label="Pagination des documents"
+      >
+      </mat-paginator>
     </div>
-    <div class="list">
-        <div *ngIf="documents.length > 0">
-            <!-- <h3>Result :</h3> -->
-            <ul>
-                <li *ngFor="let document of documents" (click)="details(document)">
-                    <h4>{{ document.title }}</h4>
-                    <p>{{ document.category }}</p>
-                </li>
-            </ul>
-        </div>
-    </div>
+  </div>
+
+  <!-- Aucun document -->
+  <div *ngIf="!isLoading && documents.length === 0" class="no-documents">
+    <mat-icon> folder_off </mat-icon>
+
+    <p>Aucun document trouvé.</p>
+  </div>
+</div>

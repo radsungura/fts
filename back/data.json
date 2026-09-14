@@ -76,7 +76,7 @@
       "status": "Disponible"
     },
     {
-      "title": "bbbbb",
+      "title": "bbbm",
       "reference": "bbbbb",
       "category": "bbbbb",
       "location": "bbbbbb",
@@ -109,31 +109,31 @@
   ],
   "borrow": [
     {
-      "id": "1",
-      "documentId": "2",
-      "documentTitle": "Rapport annuel 2026",
+      "documentId": "3",
+      "documentTitle": "Rapport RH",
       "borrower": "Jean Dupont",
       "borrowDate": "09/10/2026",
       "returnDate": "09/17/2026",
-      "status": "Emprunté"
+      "status": "Retourné",
+      "id": "1"
     },
     {
-      "id": "2",
-      "documentId": "3",
-      "documentTitle": "Contrat fournisseur",
+      "documentId": "91d2",
+      "documentTitle": "Lettre de motivation",
       "borrower": "Marie Labelle",
       "borrowDate": "09/05/2026",
       "returnDate": "10/12/2026",
-      "status": "En retard"
+      "status": "Retourné",
+      "id": "2"
     },
     {
-      "id": "3",
-      "documentId": "4",
-      "documentTitle": "Procédure RH",
+      "documentId": "8e6c",
+      "documentTitle": "Lettre d'affectation",
       "borrower": "Paul Dubois",
       "borrowDate": "09/01/2026",
       "returnDate": "09/08/2026",
-      "status": "Retourné"
+      "status": "Retourné",
+      "id": "3"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
