@@ -30,7 +30,7 @@ export interface User {
 export interface Category {
   id?: number;
   name: string;
-  description: string;
+  desc: string;
   createdAt?: string;
 }
 
@@ -41,7 +41,7 @@ export interface Location {
   address: string;
   status: string;
   category: string;
-  description: string;
+  desc: string;
   created_at?: string;
   updated_at?: string;
 }

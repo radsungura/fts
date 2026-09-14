@@ -1,7 +1,7 @@
 <mat-toolbar class="Location-toolbar">
   <div class="toolbar-title">
     <mat-icon>description</mat-icon>
-    <span>Liste des Locations</span>
+    <span>Liste des Repetoires</span>
   </div>
 
   <div class="toolbar-actions">
@@ -27,7 +27,7 @@
 
 <div class="filters">
   <mat-form-field appearance="outline" class="search-field">
-    <mat-label>Rechercher un locations</mat-label>
+    <mat-label>Rechercher un repertoire</mat-label>
 
     <input
       matInput
@@ -44,14 +44,8 @@
 
     <mat-select [(ngModel)]="statusFilter" (selectionChange)="searchLocations()">
       <mat-option value="Tous"> Tous </mat-option>
-
       <mat-option value="Actif"> Actif </mat-option>
-
-      <mat-option value="Emprunté"> Emprunté </mat-option>
-
-      <mat-option value="Archivé"> Archivé </mat-option>
-
-      <mat-option value="Disponible"> Disponible </mat-option>
+      <mat-option value="Fermé"> Fermé </mat-option>
     </mat-select>
   </mat-form-field>
 </div>
@@ -126,7 +120,7 @@
         <span
           class="status-badge"
           [class.active]="element.status === 'Actif'"
-          [class.disponible]="element.status === 'Disponible'"
+          [class.ferme]="element.status === 'Fermé'"
         >
           <span class="status-dot"></span>
 
@@ -235,7 +229,7 @@
     <span
       class="status-badge"
       [class.active]="locations.status === 'Actif'"
-      [class.disponible]="locations.status === 'Disponible'"
+      [class.ferme]="locations.status === 'Fermé'"
     >
       <span class="status-dot"></span>
 
