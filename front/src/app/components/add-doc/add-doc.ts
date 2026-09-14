@@ -51,7 +51,7 @@ export class AddDoc {
 
       location: [doc?.location ?? '', Validators.required],
 
-      status: [doc?.status ?? 'Actif', Validators.required],
+      status: [doc?.status ?? (data?.archive ? 'Archivé' : 'Actif'), Validators.required],
     });
   }
 

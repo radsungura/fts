@@ -64,8 +64,8 @@ export class Archive {
 
     this.data.getAll().subscribe({
       next: (docs) => {
-        this.documents = docs;
-        this.filteredDocuments = [...docs];
+        this.documents = docs.filter((doc) => doc.status === 'Archivé');
+        this.filteredDocuments = [...this.documents];
 
         this.loading = false;
       },
@@ -106,12 +106,12 @@ export class Archive {
       width: '90vw', // ou '80vw' pour responsive
       maxHeight: '1000vh',
 
-      data: { mode: 'add' },
+      data: { action: 'add', archive: true },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        // this.documentsService.addDocument(result).subscribe(() => this.loadDocuments());
+        this.loadDocs();
       }
     });
   }
@@ -138,12 +138,12 @@ export class Archive {
     const dialogRef = this.dialog.open(AddDoc, {
       width: '90vw', // ou '80vw' pour responsive
       maxHeight: '1000vh',
-      data: { mode: 'edit' },
+      data: { action: 'edit', data: doc },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        // this.documentsService.addDocument(result).subscribe(() => this.loadDocuments());
+        this.loadDocs();
       }
     });
   }
@@ -154,12 +154,12 @@ export class Archive {
     const dialogRef = this.dialog.open(Delete, {
       width: '90vw', // ou '80vw' pour responsive
       maxHeight: '1000vh',
-      data: { mode: 'document' },
+      data: { mode: 'document', item: doc },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        // this.documentsService.addDocument(result).subscribe(() => this.loadDocuments());
+        this.loadDocs();
       }
     });
   }

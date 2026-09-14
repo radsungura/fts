@@ -74,6 +74,14 @@
       "category": "Correspondance",
       "location": "Etagere1/rang2",
       "status": "Disponible"
+    },
+    {
+      "title": "bbbbb",
+      "reference": "bbbbb",
+      "category": "bbbbb",
+      "location": "bbbbbb",
+      "status": "Archivé",
+      "id": "06jvn-xFLQY"
     }
   ],
   "users": [
@@ -121,5 +129,6 @@
       "actor": "Marie Claire ",
       "status": "Annormale"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }
