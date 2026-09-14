@@ -41,8 +41,13 @@
         <mat-select formControlName="documentId" (selectionChange)="onDocumentChange($event.value)">
           <mat-option [value]="null"> Sélectionner un document </mat-option>
 
-          <mat-option *ngFor="let doc of documents" [value]="doc.id">
+          <mat-option
+            *ngFor="let doc of documents"
+            [value]="doc.id"
+            [disabled]="doc.status === 'Emprunté'"
+          >
             {{ doc.title }}
+            <span *ngIf="doc.status === 'Emprunté'"> — Déjà emprunté </span>
           </mat-option>
         </mat-select>
 

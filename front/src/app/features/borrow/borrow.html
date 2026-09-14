@@ -129,25 +129,40 @@
       </ng-container>
 
       <!-- Actions -->
+
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef>Actions</th>
 
         <td mat-cell *matCellDef="let element">
+          <!-- Détails -->
           <button
             mat-icon-button
             color="primary"
             matTooltip="Voir les détails"
             (click)="details(element)"
           >
-            <mat-icon> visibility </mat-icon>
+            <mat-icon>visibility</mat-icon>
           </button>
 
+          <!-- Modifier -->
           <button mat-icon-button color="accent" matTooltip="Modifier" (click)="edit(element)">
-            <mat-icon> edit </mat-icon>
+            <mat-icon>edit</mat-icon>
           </button>
 
+          <!-- Retourner -->
+          <button
+            *ngIf="element.status !== 'Retourné'"
+            mat-icon-button
+            color="primary"
+            matTooltip="Retourner le document"
+            (click)="returnDocument(element)"
+          >
+            <mat-icon>assignment_return</mat-icon>
+          </button>
+
+          <!-- Supprimer -->
           <button mat-icon-button color="warn" matTooltip="Supprimer" (click)="delete(element)">
-            <mat-icon> delete </mat-icon>
+            <mat-icon>delete</mat-icon>
           </button>
         </td>
       </ng-container>

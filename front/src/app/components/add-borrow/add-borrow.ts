@@ -113,6 +113,7 @@ export class AddBorrow implements OnInit {
   /*
    * Ajouter un emprunt
    */
+
   add(): void {
     this.servererror = false;
 
@@ -123,13 +124,63 @@ export class AddBorrow implements OnInit {
 
     const item = this.form.getRawValue() as Mov;
 
-    this.serv.create(item).subscribe({
-      next: (result: Mov) => {
-        this.dialogRef.close(result);
+    // Vérifier que le document a bien été sélectionné
+    if (!item.documentId) {
+      this.servererror = true;
+      return;
+    }
+
+    // Rechercher le document sélectionné
+    const selectedDocument = this.documents.find((doc) => doc.id === item.documentId);
+
+    if (!selectedDocument) {
+      console.error('Document introuvable');
+      this.servererror = true;
+      return;
+    }
+
+    // Vérifier que le document n'est pas déjà emprunté
+    if (selectedDocument.status === 'Emprunté') {
+      console.error('Ce document est déjà emprunté');
+      this.servererror = true;
+      return;
+    }
+
+    // 1. Mettre le document à l'état "Emprunté"
+    const updatedDocument: Doc = {
+      ...selectedDocument,
+      status: 'Emprunté',
+    };
+
+    this.documentService.update(selectedDocument.id!, updatedDocument).subscribe({
+      next: () => {
+        // 2. Enregistrer l'emprunt
+        this.serv.create(item).subscribe({
+          next: (result: Mov) => {
+            this.dialogRef.close(result);
+          },
+
+          error: (error) => {
+            console.error('Erreur lors de la création de l’emprunt :', error);
+
+            // Si la création de l'emprunt échoue,
+            // on remet le document à son état précédent.
+            this.documentService.update(selectedDocument.id!, selectedDocument).subscribe({
+              next: () => {
+                console.log('Le document a été remis à son état initial.');
+              },
+              error: (restoreError) => {
+                console.error('Erreur lors de la restauration du document :', restoreError);
+              },
+            });
+
+            this.servererror = true;
+          },
+        });
       },
 
       error: (error) => {
-        console.error('Erreur lors de l’ajout de l’emprunt :', error);
+        console.error('Erreur lors de la mise à jour du document :', error);
 
         this.servererror = true;
       },
