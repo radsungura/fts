@@ -1,20 +1,140 @@
-    <mat-card class="max-w-xl mx-auto mt-8 p-6 container">
-        <div class="flex justify-end gap-2 mt-6" align="end">
-        <button mat-button (click)="dialogRef.close()">
-            ❌
-        </button>
- 
-        <!-- <button mat-stroked-button color="primary">Modifier</button> -->
-      </div>
-      <h2 class="text-2xl font-bold mb-4" style="top: 40px; position: absolute;">Détails du Mouvement
-      </h2>
+<div class="details-borrow">
+  <!-- EN-TÊTE -->
+  <div class="details-header">
+    <div class="header-icon">
+      <mat-icon>swap_horiz</mat-icon>
+    </div>
 
-      <div class="space-y-2">
-        <p><strong>ID :</strong> {{ data.item?.id }}</p>
-        <p><strong>Date :</strong> {{ data.item?.date }}</p>
-        <p><strong>Action :</strong> {{ data.item?.action }}</p>
-        <p><strong>Actor :</strong> {{ data.item?.actor }}</p>
-        <p><strong>Status :</strong> {{ data.item?.status }}</p>
-      </div>
+    <div class="header-content">
+      <h2>Détails de l'emprunt</h2>
 
-    </mat-card>
+      <p>Informations concernant cet emprunt</p>
+    </div>
+
+    <button
+      mat-icon-button
+      type="button"
+      class="close-button"
+      matTooltip="Fermer"
+      (click)="close()"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <!-- CONTENU -->
+  <div class="details-content">
+    <!-- INFORMATIONS EMPRUNT -->
+    <div class="details-section">
+      <h3>
+        <mat-icon>swap_horiz</mat-icon>
+        Informations de l'emprunt
+      </h3>
+
+      <div class="info-grid">
+        <!-- ID -->
+        <div class="info-item">
+          <span class="label"> ID de l'emprunt </span>
+
+          <span class="value"> #{{ mov.id }} </span>
+        </div>
+
+        <!-- EMPRUNTEUR -->
+        <div class="info-item">
+          <span class="label"> Emprunteur </span>
+
+          <span class="value borrower">
+            <mat-icon>person</mat-icon>
+
+            {{ mov.borrower }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- DOCUMENT -->
+    <div class="details-section">
+      <h3>
+        <mat-icon>description</mat-icon>
+        Document
+      </h3>
+
+      <div class="document-card">
+        <div class="document-icon">
+          <mat-icon> description </mat-icon>
+        </div>
+
+        <div class="document-info">
+          <span class="document-title">
+            {{ mov.documentTitle }}
+          </span>
+
+          <span class="document-id"> Document #{{ mov.documentId }} </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- DATES -->
+    <div class="details-section">
+      <h3>
+        <mat-icon>calendar_month</mat-icon>
+        Dates
+      </h3>
+
+      <div class="date-grid">
+        <!-- DATE EMPRUNT -->
+        <div class="date-card">
+          <mat-icon> event </mat-icon>
+
+          <div>
+            <span class="label"> Date d'emprunt </span>
+
+            <span class="value">
+              {{ mov.borrowDate | date: 'dd/MM/yyyy' }}
+            </span>
+          </div>
+        </div>
+
+        <!-- DATE RETOUR -->
+        <div class="date-card">
+          <mat-icon> event_available </mat-icon>
+
+          <div>
+            <span class="label"> Retour prévu </span>
+
+            <span class="value">
+              {{ mov.returnDate | date: 'dd/MM/yyyy' }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STATUT -->
+    <div class="details-section">
+      <h3>
+        <mat-icon>verified</mat-icon>
+        Statut
+      </h3>
+
+      <div class="status-container">
+        <span class="status-badge" [ngClass]="getStatusClass(mov.status)">
+          <mat-icon>
+            {{ getStatusIcon(mov.status) }}
+          </mat-icon>
+
+          {{ mov.status }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PIED -->
+  <div class="details-footer">
+    <button mat-raised-button color="primary" type="button" (click)="close()">
+      <mat-icon> close </mat-icon>
+
+      Fermer
+    </button>
+  </div>
+</div>

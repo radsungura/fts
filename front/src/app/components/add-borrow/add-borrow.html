@@ -1,42 +1,176 @@
-<div class="container" >
-    <h2 mat-dialog-title>
-    {{ data.action === 'add' ? 'Ajouter un Document' : 'Modifier le Document' }}
-    </h2>
-    <!-- <form [formGroup]="form" (ngSubmit)="data.mode === 'add'? add(doc): edit(doc)"> -->
-    <form [formGroup]="form">
-      <mat-form-field appearance="outline" class="w-full">
-        <mat-label>Titre</mat-label>
-        <input [(ngModel)]="doc.title" matInput formControlName="title" required/>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="w-full">
-        <mat-label>Reference</mat-label>
-        <input [(ngModel)]="doc.reference" matInput formControlName="reference" required/>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="w-full">
-        <mat-label>Catégorie</mat-label>
-        <input [(ngModel)]="doc.category" matInput formControlName="category" required/>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="w-full">
-        <mat-label>location</mat-label>
-        <input [(ngModel)]="doc.location" matInput formControlName="location" required/>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="w-full">
-        <mat-label>Statut</mat-label>
-        <input [(ngModel)]="doc.status" matInput formControlName="status" required/>
-      </mat-form-field>
-
-      <div class="flex justify-end mt-4" align="end">
-        <button mat-button (click)="dialogRef.close()">Annuler</button>
-        <button mat-raised-button color="btn-primary" (click)="data.action === 'add'? add(doc): edit(doc)">{{ data.action === 'add' ? 'Ajouter' : 'Mettre à jour' }}</button>
-      </div>
-    </form>
-    <div *ngIf="servererror">
-      <p style="color: red;">Une erreur est survenu !</p>
+<div class="borrow-form">
+  <!-- EN-TÊTE -->
+  <div class="form-header">
+    <div class="header-icon">
+      <mat-icon>
+        {{ data.action === 'add' ? 'swap_horiz' : 'edit' }}
+      </mat-icon>
     </div>
-</div>
-    
 
+    <div class="header-content">
+      <h2>
+        {{ data.action === 'add' ? 'Nouvel emprunt' : 'Modifier l’emprunt' }}
+      </h2>
+
+      <p>
+        {{
+          data.action === 'add'
+            ? 'Enregistrez un nouveau document emprunté.'
+            : 'Modifiez les informations de cet emprunt.'
+        }}
+      </p>
+    </div>
+
+    <button mat-icon-button type="button" class="close-button" (click)="cancel()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <!-- FORMULAIRE -->
+  <form [formGroup]="form" (ngSubmit)="data.action === 'add' ? add() : edit()">
+    <!-- DOCUMENT -->
+    <div class="form-section">
+      <h3>
+        <mat-icon>description</mat-icon>
+        Document
+      </h3>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Sélectionner un document</mat-label>
+
+        <mat-select formControlName="documentId" (selectionChange)="onDocumentChange($event.value)">
+          <mat-option [value]="null"> Sélectionner un document </mat-option>
+
+          <mat-option *ngFor="let doc of documents" [value]="doc.id">
+            {{ doc.title }}
+          </mat-option>
+        </mat-select>
+
+        <mat-icon matSuffix> description </mat-icon>
+
+        <mat-error *ngIf="form.controls.documentId.hasError('required')">
+          Veuillez sélectionner un document.
+        </mat-error>
+      </mat-form-field>
+
+      <!-- TITRE AUTOMATIQUE -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Titre du document</mat-label>
+
+        <input matInput formControlName="documentTitle" readonly />
+
+        <mat-icon matSuffix> title </mat-icon>
+
+        <mat-error *ngIf="form.controls.documentTitle.hasError('required')">
+          Le titre du document est obligatoire.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- EMPRUNTEUR -->
+    <div class="form-section">
+      <h3>
+        <mat-icon>person</mat-icon>
+        Emprunteur
+      </h3>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Nom de l’emprunteur</mat-label>
+
+        <input matInput formControlName="borrower" placeholder="Ex. Jean Nkurunziza" />
+
+        <mat-icon matSuffix> person </mat-icon>
+
+        <mat-error *ngIf="form.controls.borrower.hasError('required')">
+          Le nom de l’emprunteur est obligatoire.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- DATES -->
+    <div class="form-section">
+      <h3>
+        <mat-icon>calendar_month</mat-icon>
+        Dates de l’emprunt
+      </h3>
+
+      <div class="date-grid">
+        <!-- DATE EMPRUNT -->
+        <mat-form-field appearance="outline">
+          <mat-label>Date d’emprunt</mat-label>
+
+          <input matInput type="date" formControlName="borrowDate" />
+
+          <mat-icon matSuffix> event </mat-icon>
+
+          <mat-error *ngIf="form.controls.borrowDate.hasError('required')">
+            La date d’emprunt est obligatoire.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- DATE RETOUR -->
+        <mat-form-field appearance="outline">
+          <mat-label>Retour prévu</mat-label>
+
+          <input matInput type="date" formControlName="returnDate" />
+
+          <mat-icon matSuffix> event_available </mat-icon>
+
+          <mat-error *ngIf="form.controls.returnDate.hasError('required')">
+            La date de retour est obligatoire.
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- STATUT -->
+    <div class="form-section">
+      <h3>
+        <mat-icon>verified</mat-icon>
+        Statut de l’emprunt
+      </h3>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Statut</mat-label>
+
+        <mat-select formControlName="status">
+          <mat-option value="Emprunté"> Emprunté </mat-option>
+
+          <mat-option value="En retard"> En retard </mat-option>
+
+          <mat-option value="Retourné"> Retourné </mat-option>
+        </mat-select>
+
+        <mat-icon matSuffix> verified </mat-icon>
+
+        <mat-error *ngIf="form.controls.status.hasError('required')">
+          Le statut est obligatoire.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- ERREUR SERVEUR -->
+    <div class="server-error" *ngIf="servererror">
+      <mat-icon> error_outline </mat-icon>
+
+      <span> Une erreur est survenue. Veuillez vérifier les informations et réessayer. </span>
+    </div>
+
+    <!-- BOUTONS -->
+    <div class="form-footer">
+      <button mat-stroked-button type="button" (click)="cancel()">
+        <mat-icon> close </mat-icon>
+
+        Annuler
+      </button>
+
+      <button mat-raised-button color="primary" type="submit">
+        <mat-icon>
+          {{ data.action === 'add' ? 'add' : 'save' }}
+        </mat-icon>
+
+        {{ data.action === 'add' ? 'Enregistrer' : 'Enregistrer les modifications' }}
+      </button>
+    </div>
+  </form>
+</div>
