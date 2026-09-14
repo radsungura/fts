@@ -110,24 +110,30 @@
   "borrow": [
     {
       "id": "1",
-      "date": "05/08/25",
-      "action": "Emprunté",
-      "actor": "Jean Dupont",
-      "status": "Normale"
+      "documentId": "2",
+      "documentTitle": "Rapport annuel 2026",
+      "borrower": "Jean Dupont",
+      "borrowDate": "09/10/2026",
+      "returnDate": "09/17/2026",
+      "status": "Emprunté"
     },
     {
       "id": "2",
-      "date": "05/08/25",
-      "action": "Restitué",
-      "actor": "Jean Dupont",
-      "status": "Normale"
+      "documentId": "3",
+      "documentTitle": "Contrat fournisseur",
+      "borrower": "Marie Labelle",
+      "borrowDate": "09/05/2026",
+      "returnDate": "10/12/2026",
+      "status": "En retard"
     },
     {
       "id": "3",
-      "date": "05/08/25",
-      "action": "Emprunté",
-      "actor": "Marie Claire ",
-      "status": "Annormale"
+      "documentId": "4",
+      "documentTitle": "Procédure RH",
+      "borrower": "Paul Dubois",
+      "borrowDate": "09/01/2026",
+      "returnDate": "09/08/2026",
+      "status": "Retourné"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
