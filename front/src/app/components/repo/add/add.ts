@@ -28,6 +28,8 @@ import { Repo } from '../../../services/repo';
 })
 export class Add {
   servererror = false;
+  parents: any = [];
+  level: any;
   form;
 
   constructor(
@@ -37,29 +39,32 @@ export class Add {
     private serv: Repo,
   ) {
     const location = data?.data;
-
     this.form = this.fb.group({
       name: [location?.name ?? '', Validators.required],
       code: [location?.code ?? '', Validators.required],
       category: [location?.category ?? '', Validators.required],
       address: [location?.address ?? '', Validators.required],
       desc: [location?.desc ?? '', Validators.required],
+      parent_id: [location?.parent_id ?? '', Validators.required],
       status: [location?.status ?? 'Actif', Validators.required],
       created_at: [location?.status ?? Date.now, Validators.required],
       update_at: [location?.status ?? Date.now, Validators.required],
     });
+    // this.parent = this.serv.filter(el => el.level == level+1)
+  }
+
+  oncat(){
+    console.log("parent", this.level)
   }
 
   onSubmit(): void {
     this.servererror = false;
-
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
 
     const locationData = this.form.getRawValue() as Location;
-
     if (this.data.action === 'add') {
       this.add(locationData);
     } else {

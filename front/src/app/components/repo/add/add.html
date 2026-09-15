@@ -36,12 +36,43 @@
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <!-- INFORMATIONS DU location -->
     <div class="form-section">
-      <h3>
+      <!-- <h3>
         <mat-icon>description</mat-icon>
         Informations du repertoire
-      </h3>
+      </h3> -->
 
       <div class="form-grid">
+                <!-- CATEGORIE -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Catégorie</mat-label>
+          <mat-select matInput formControlName="category" placeholder="Ex. Contrat" [(ngModel)]="level" 
+    (input)="oncat()" >
+            <mat-option value="Dépot">Dépot</mat-option>
+            <mat-option value="Salle">Salle</mat-option>
+            <mat-option value="Etagère">Etagère</mat-option>
+            <mat-option value="Boite">Boite</mat-option>
+            <mat-option value="Classeur">Classeur</mat-option>
+            <mat-option value="Falde">Falde</mat-option>
+            <mat-option value="liasse">liasse</mat-option>
+          </mat-select>
+          <mat-icon matSuffix> category </mat-icon>
+          <mat-error *ngIf="form.controls.category.hasError('required')">
+            La catégorie est obligatoire
+          </mat-error>
+        </mat-form-field>
+
+        <!-- PARENT -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Repetoire Parent</mat-label>
+          <mat-select matInput formControlName="parent" placeholder="Ex. Depot" >
+            <mat-option *ngFor="let parent of parents" value="Dépot">{{parent}}</mat-option>
+          </mat-select>
+          <mat-icon matSuffix> category </mat-icon>
+          <mat-error *ngIf="form.controls.category.hasError('required')">
+            Le repertoire parent est obligatoire
+          </mat-error>
+        </mat-form-field>
+
         <!-- TITRE -->
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Nom</mat-label>
@@ -65,28 +96,6 @@
 
           <mat-error *ngIf="form.controls.code.hasError('required')">
             La référence est obligatoire
-          </mat-error>
-        </mat-form-field>
-
-        <!-- CATEGORIE -->
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Catégorie</mat-label>
-
-          <mat-select matInput formControlName="category" placeholder="Ex. Contrat" >
-            <mat-option value="Dépot">Dépot</mat-option>
-            <mat-option value="Dépot">Dépot</mat-option>
-            <mat-option value="Salle">Salle</mat-option>
-            <mat-option value="Etagère">Etagère</mat-option>
-            <mat-option value="Boite">Boite</mat-option>
-            <mat-option value="Classeur">Classeur</mat-option>
-            <mat-option value="Falde">Falde</mat-option>
-            <mat-option value="liasse">liasse</mat-option>
-          </mat-select>
-
-          <mat-icon matSuffix> category </mat-icon>
-
-          <mat-error *ngIf="form.controls.category.hasError('required')">
-            La catégorie est obligatoire
           </mat-error>
         </mat-form-field>
 
