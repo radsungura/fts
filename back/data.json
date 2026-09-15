@@ -134,7 +134,7 @@
     {
       "name": "Dépôt Central",
       "code": "DEP-BUJA-001",
-      "category": "Dépot",
+      "category": 1,
       "address": "Avenue de la Libération, n°5, Bujumbura",
       "desc": "Dépôt principal pour les archives administratives et institutionnelles",
       "status": "Actif",
@@ -145,7 +145,7 @@
     {
       "name": "Dépôt Régional de Gitega",
       "code": "DEP-GIT-002",
-      "category": "Salle",
+      "category": 2,
       "address": "Quartier Industriel, n°12, Gitega, Burundi",
       "desc": "Dépôt régional pour les archives industrielles et commerciales",
       "status": "Fermé",
@@ -156,7 +156,7 @@
     {
       "name": "Dépôt Historique de Burunga",
       "code": "DEP-BUR-0034",
-      "category": "Etagere",
+      "category": 3,
       "address": "Boulevard de l'Indépendance, n°7, Burunga, Burundi",
       "desc": "Dépôt spécialisé dans la conservation des archives historiques et culturelles",
       "status": "Actif",
@@ -167,7 +167,7 @@
     {
       "name": "hhd",
       "code": "dfh",
-      "category": "Dépot",
+      "category": 1,
       "address": "hdhd",
       "desc": "bxf",
       "status": "Actif",
@@ -176,20 +176,103 @@
     {
       "name": "<wcwc",
       "code": "<wc<",
-      "category": "Dépot",
+      "category": 1,
       "address": "<c<wc",
       "desc": "<wc<",
       "status": "Actif",
       "id": "o_uU4SgNgZI"
     },
     {
-      "name": "dsqdqsdqdqdssdsd",
-      "code": "sdqsd",
-      "category": "Dépot",
+      "name": "doc",
+      "code": "doc-112",
+      "category": "7",
       "address": "qsdq",
       "desc": "qsdqd",
+      "parent_id": "85qlwrY6LEs",
       "status": "Fermé",
+      "created_at": "Fermé",
+      "update_at": "Fermé",
       "id": "Oe6GQWth1cM"
+    },
+    {
+      "name": "Archive principale",
+      "code": "DEPO-BUJA-001",
+      "category": "2",
+      "address": "Bujumbura, Q Asiatique",
+      "desc": "Depotdes archive comptable",
+      "parent_id": "1",
+      "status": "Actif",
+      "id": "fe-EagswnOk"
+    },
+    {
+      "name": "ryerye",
+      "code": "eyy",
+      "category": "1",
+      "address": "ey",
+      "desc": "eyre",
+      "parent_id": "0",
+      "status": "Actif",
+      "id": "fC1EehApn3M"
+    },
+    {
+      "name": "Comptabilité",
+      "code": "CONT-01",
+      "category": "3",
+      "address": "Bujumbura",
+      "desc": "Comptabilité",
+      "parent_id": "fe-EagswnOk",
+      "status": "Actif",
+      "id": "1LdoX5EVAwM"
+    },
+    {
+      "name": "Compte 2026",
+      "code": "COM-2026",
+      "category": "4",
+      "address": "bujumbura",
+      "desc": "Compte 2026",
+      "parent_id": "1LdoX5EVAwM",
+      "status": "Actif",
+      "id": "fWMLQuBgIRU"
+    },
+    {
+      "name": "juin",
+      "code": "JUN-01",
+      "category": "5",
+      "address": "Bujumbura",
+      "desc": "Comptabilité Juin",
+      "parent_id": "fWMLQuBgIRU",
+      "status": "Actif",
+      "id": "er-xPDkqz-Q"
+    },
+    {
+      "name": "Piece comptable",
+      "code": "Doc-01",
+      "category": "6",
+      "address": "Bujumbura",
+      "desc": "Doc cpmtable ",
+      "parent_id": "er-xPDkqz-Q",
+      "status": "Actif",
+      "id": "85qlwrY6LEs"
+    },
+    {
+      "name": "dfdsfs",
+      "code": "dsfsdfd",
+      "category": "6",
+      "address": "sdfsdf",
+      "desc": "sdfsdfd",
+      "parent_id": "er-xPDkqz-Q",
+      "status": "Actif",
+      "id": "AYoNlOQxfoI"
+    },
+    {
+      "name": "xcwx",
+      "code": "dfsdf",
+      "category": "5",
+      "address": "dfs",
+      "desc": "sdfsd",
+      "parent_id": "fWMLQuBgIRU",
+      "status": "Actif",
+      "id": "r1qKIDswhus"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

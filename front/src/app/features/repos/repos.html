@@ -38,10 +38,9 @@
 
     <mat-icon matSuffix>search</mat-icon>
   </mat-form-field>
-
+ 
   <mat-form-field appearance="outline" class="status-field">
     <mat-label>Statut</mat-label>
-
     <mat-select [(ngModel)]="statusFilter" (selectionChange)="searchLocations()">
       <mat-option value="Tous"> Tous </mat-option>
       <mat-option value="Actif"> Actif </mat-option>
@@ -49,6 +48,12 @@
     </mat-select>
   </mat-form-field>
 </div>
+
+
+<button mat-button (click)="display(parent, action = 'back')" *ngIf="parent">
+  <mat-icon>arrow_back</mat-icon>
+  Retour
+</button>
 
 <!-- ===================== -->
 <!-- VUE LISTE -->
@@ -77,7 +82,19 @@
       <td mat-cell *matCellDef="let element">
         <div class="location-title">
           <div class="location-icon">
-            <mat-icon>description</mat-icon>
+            <mat-icon>
+        {{element.category == 1 ? 'warehouse' : ''}}
+        {{element.category == 2 ? 'gite' : ''}}
+        {{element.category == 3 ? 'view_column' : ''}}
+        {{element.category == 4 ? 'shelves' : ''}}
+        {{element.category == 5 ? 'splitscreen' : ''}}
+        {{element.category == 6 ? 'inventory' : ''}}
+        {{element.category == 7 ? 'folder' : ''}}
+        {{element.category == 4 ? 'shelves' : ''}}
+        {{element.category == 5 ? 'splitscreen' : ''}}
+        {{element.category == 6 ? 'inventory' : ''}}
+        {{element.category == 7 ? 'description' : ''}}
+    </mat-icon>
           </div>
 
           <span>
@@ -202,30 +219,36 @@
 <!-- ===================== -->
 
 <div *ngIf="view === 'grid'" class="grid-container">
-  <div class="location-card" *ngFor="let locations of filteredLocations">
+  <!-- back button -->
+
+  <div (click)="display(locations, action = 'enter')" class="location-card" *ngFor="let locations of filteredLocations">
     <div class="card-icon">
       <mat-icon>
-        {{locations.category == 'Dépot' ? 'warehouse' : ''}}
-        {{locations.category == 'Salle' ? 'gite' : ''}}
-        {{locations.category == 'Etagere' ? 'shelves' : ''}}
+        {{locations.category == 1 ? 'warehouse' : ''}}
+        {{locations.category == 2 ? 'gite' : ''}}
+        {{locations.category == 3 ? 'view_column' : ''}}
+        {{locations.category == 4 ? 'shelves' : ''}}
+        {{locations.category == 5 ? 'splitscreen' : ''}}
+        {{locations.category == 6 ? 'inventory' : ''}}
+        {{locations.category == 7 ? 'folder' : ''}}
+        {{locations.category == 4 ? 'shelves' : ''}}
+        {{locations.category == 5 ? 'splitscreen' : ''}}
+        {{locations.category == 6 ? 'inventory' : ''}}
+        {{locations.category == 7 ? 'description' : ''}}
     </mat-icon>
     </div>
-
     <div class="card-content">
       <h3>
         {{ locations.name }}
       </h3>
-
       <p>
         {{ locations.category }}
       </p>
-
       <span class="location">
         <mat-icon>location_on</mat-icon>
         {{ locations.address }}
       </span>
     </div>
-
     <span
       class="status-badge"
       [class.active]="locations.status === 'Actif'"
@@ -235,7 +258,6 @@
 
       {{ locations.status }}
     </span>
-
     <div class="card-actions">
       <button
         mat-icon-button
@@ -246,7 +268,6 @@
       >
         <mat-icon>visibility</mat-icon>
       </button>
-
       <button
         mat-icon-button
         color="accent"
@@ -256,7 +277,6 @@
       >
         <mat-icon>edit</mat-icon>
       </button>
-
       <button
         mat-icon-button
         color="warn"
@@ -271,9 +291,7 @@
 
   <div class="empty-state" *ngIf="filteredLocations.length === 0">
     <mat-icon>folder_off</mat-icon>
-
     <h3>Aucun locations trouvé</h3>
-
     <p>Aucun locations ne correspond à votre recherche.</p>
   </div>
 </div>

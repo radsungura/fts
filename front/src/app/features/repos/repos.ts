@@ -16,7 +16,7 @@ import { Repo } from '../../services/repo';
 import { Add } from '../../components/repo/add/add';
 import { Details } from '../../components/repo/details/details';
 import { Delete } from '../../components/delete/delete';
-import { Location } from '../../../models/interfaces';
+import type { Location } from '../../../models/interfaces';
 
 @Component({
   selector: 'app-repos',
@@ -40,24 +40,18 @@ import { Location } from '../../../models/interfaces';
 })
 export class Repos {
  repos: Location[] = [];
+ parent!: Location;
 filteredLocations: Location[] = [];
-
   view: 'list' | 'grid' = 'list';
-
   displayedColumns: string[] = ['id', 'name', 'category', 'address', 'status', 'actions'];
-
   searchText = '';
   statusFilter = 'Tous';
-
   pageSize = 5;
   pageIndex = 0;
+  action: string = '';
 
-  constructor(
-    private dialog: MatDialog,
-    private data: Repo,
-    private snackBar: MatSnackBar,
-  ) {
-
+  constructor(private dialog: MatDialog, private data: Repo, private snackBar: MatSnackBar) {
+    console.log("parent", this.parent);
   }
 
   ngOnInit() {
@@ -86,7 +80,7 @@ filteredLocations: Location[] = [];
       const matchesSearch =
         !search ||
         Location.name?.toLowerCase().includes(search) ||
-        Location.category?.toLowerCase().includes(search) ||
+        Location.category?.toString().includes(search) ||
         Location.address?.toLowerCase().includes(search) ||
         Location.status?.toLowerCase().includes(search);
 
@@ -107,6 +101,19 @@ filteredLocations: Location[] = [];
     this.view = this.view === 'list' ? 'grid' : 'list';
   }
 
+  display(item: Location, action?: string) {
+    console.log("child", item);
+    
+    if (action === 'back' && item.category > 1) {
+      this.filteredLocations = this.repos.filter((loc) => loc.id === item.parent_id && loc.category === item.category - 1 );
+      console.log("parent", this.parent);
+    }else {
+      this.parent = item;
+      const childLocations = this.repos.filter((loc) => loc.parent_id === item.id && loc.parent_id !== 0);
+      this.filteredLocations = childLocations.length > 0 ? childLocations : [item];
+    }
+  }
+
   add() {
     const dialogRef = this.dialog.open(Add, {
       width: '90vw',
@@ -123,18 +130,18 @@ filteredLocations: Location[] = [];
     });
   }
 
-  details(Location: Location) {
+  details(loc: Location) {
     this.dialog.open(Details, {
       width: '90vw',
       maxHeight: '1000vh',
       data: {
         action: 'details',
-        item: Location,
+        item: loc,
       },
     });
   }
 
-  edit(Location: Location) {
+  edit(loc: Location) {
     const dialogRef = this.dialog.open(Add, {
       width: '90vw',
       maxHeight: '1000vh',
@@ -151,12 +158,12 @@ filteredLocations: Location[] = [];
     });
   }
 
-  delete(Location: Location) {
+  delete(loc: Location) {
     const dialogRef = this.dialog.open(Delete, {
       width: '500px',
       data: {
         action: 'delete',
-        data: Location,
+        data: loc,
       },
     });
 

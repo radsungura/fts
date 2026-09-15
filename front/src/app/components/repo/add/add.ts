@@ -45,7 +45,7 @@ export class Add {
       category: [location?.category ?? '', Validators.required],
       address: [location?.address ?? '', Validators.required],
       desc: [location?.desc ?? '', Validators.required],
-      parent_id: [location?.parent_id ?? '', Validators.required],
+      parent_id: [location?.parent_id ?? '0', Validators.required],
       status: [location?.status ?? 'Actif', Validators.required],
       created_at: [location?.status ?? Date.now, Validators.required],
       update_at: [location?.status ?? Date.now, Validators.required],
@@ -53,8 +53,11 @@ export class Add {
     // this.parent = this.serv.filter(el => el.level == level+1)
   }
 
-  oncat(){
-    console.log("parent", this.level)
+  oncat(data: any): void {
+    this.serv.getAll().subscribe((locations: Location[]) => {
+      this.parents = locations.filter((el) => el.category == (parseInt(data) - 1));
+      console.log('parents', this.parents, locations.map((el) => el.category), parseInt(data) - 1);
+    });
   }
 
   onSubmit(): void {

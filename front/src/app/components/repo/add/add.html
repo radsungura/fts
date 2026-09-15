@@ -46,14 +46,14 @@
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Catégorie</mat-label>
           <mat-select matInput formControlName="category" placeholder="Ex. Contrat" [(ngModel)]="level" 
-    (input)="oncat()" >
-            <mat-option value="Dépot">Dépot</mat-option>
-            <mat-option value="Salle">Salle</mat-option>
-            <mat-option value="Etagère">Etagère</mat-option>
-            <mat-option value="Boite">Boite</mat-option>
-            <mat-option value="Classeur">Classeur</mat-option>
-            <mat-option value="Falde">Falde</mat-option>
-            <mat-option value="liasse">liasse</mat-option>
+            (ngModelChange)="oncat(level)" >
+            <mat-option value="1">Site</mat-option>
+            <mat-option value="2">Salle</mat-option>
+            <mat-option value="3">Travée</mat-option>
+            <mat-option value="4">Etagère</mat-option>
+            <mat-option value="5">Rayon</mat-option>
+            <mat-option value="6">Boite, classeur, Falde</mat-option>
+            <mat-option value="7">Document</mat-option>
           </mat-select>
           <mat-icon matSuffix> category </mat-icon>
           <mat-error *ngIf="form.controls.category.hasError('required')">
@@ -62,13 +62,13 @@
         </mat-form-field>
 
         <!-- PARENT -->
-        <mat-form-field appearance="outline" class="full-width">
+        <mat-form-field *ngIf="parents.length > 0" appearance="outline" class="full-width">
           <mat-label>Repetoire Parent</mat-label>
-          <mat-select matInput formControlName="parent" placeholder="Ex. Depot" >
-            <mat-option *ngFor="let parent of parents" value="Dépot">{{parent}}</mat-option>
+          <mat-select matInput formControlName="parent_id" placeholder="Ex. Depot" >
+            <mat-option *ngFor="let parent of parents" value="{{parent.id}}">{{parent.name}}</mat-option>
           </mat-select>
           <mat-icon matSuffix> category </mat-icon>
-          <mat-error *ngIf="form.controls.category.hasError('required')">
+          <mat-error *ngIf="form.controls.parent_id.hasError('required')">
             Le repertoire parent est obligatoire
           </mat-error>
         </mat-form-field>

@@ -40,7 +40,8 @@ export interface Location {
   code: string;
   address: string;
   status: string;
-  category: string;
+  category: number;
+  parent_id: number;
   desc: string;
   created_at?: string;
   updated_at?: string;
