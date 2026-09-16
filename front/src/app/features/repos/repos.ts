@@ -39,9 +39,9 @@ import type { Location } from '../../../models/interfaces';
   styleUrl: './repos.scss',
 })
 export class Repos {
- repos: Location[] = [];
- parent!: Location;
-filteredLocations: Location[] = [];
+  repos: Location[] = [];
+  parent!: Location;
+  filteredLocations: Location[] = [];
   view: 'list' | 'grid' = 'list';
   displayedColumns: string[] = ['id', 'name', 'category', 'address', 'status', 'actions'];
   searchText = '';
@@ -50,9 +50,7 @@ filteredLocations: Location[] = [];
   pageIndex = 0;
   action: string = '';
 
-  constructor(private dialog: MatDialog, private data: Repo, private snackBar: MatSnackBar) {
-    console.log("parent", this.parent);
-  }
+  constructor(private dialog: MatDialog, private data: Repo, private snackBar: MatSnackBar) {  }
 
   ngOnInit() {
     this.loadLocations();
@@ -62,12 +60,11 @@ filteredLocations: Location[] = [];
     this.data.getAll().subscribe({
       next: (Locations) => {
         this.repos = [...Locations].reverse();
-        this.filteredLocations = [...this.repos];
+        this.filteredLocations = [...this.repos].filter((loc) => loc.category === 1);
         this.searchLocations();
       },
       error: (error) => {
         console.error('Erreur lors du chargement des dépots :', error);
-
         this.snackBar.open('Impossible de charger les dépots', 'Fermer', { duration: 4000 });
       },
     });
@@ -103,7 +100,6 @@ filteredLocations: Location[] = [];
 
   display(item: Location, action?: string) {
     console.log("child", item);
-    
     if (action === 'back' && item.category > 1) {
       this.filteredLocations = this.repos.filter((loc) => loc.id === item.parent_id && loc.category === item.category - 1 );
       console.log("parent", this.parent);

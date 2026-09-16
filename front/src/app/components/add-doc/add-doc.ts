@@ -7,9 +7,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
-
 import { Doc } from '../../../models/interfaces';
+import { Location } from '../../../models/interfaces';
 import { Document } from '../../services/document';
+import { Repo } from '../../services/repo';
 
 @Component({
   selector: 'app-add-doc',
@@ -29,26 +30,46 @@ import { Document } from '../../services/document';
 })
 export class AddDoc {
   servererror = false;
-
+  sites: Location[] = [];
+  rooms: Location[] = [];
+  ranges: Location[] = [];
+  shelves: Location[] = [];
+  bays: Location[] = [];
+  boxs: Location[] = [];
   form;
 
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<AddDoc>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private serv: Document,
+    private serv: Document, private repos: Repo
   ) {
     const doc = data?.data;
+    this.repos.getAll().subscribe(rep => 
+      {
+        this.sites = rep.filter(el => el.category == 1);
+        this.rooms = rep.filter(el => el.category == 2);
+        this.ranges = rep.filter(el => el.category == 3);
+        this.shelves = rep.filter(el => el.category == 4);
+        this.bays = rep.filter(el => el.category == 5);
+        this.boxs = rep.filter(el => el.category == 6);
+        // console.log("box", this.box)
+      }
+    );
 
     this.form = this.fb.group({
       title: [doc?.title ?? '', Validators.required],
-
       reference: [doc?.reference ?? '', Validators.required],
-
       category: [doc?.category ?? '', Validators.required],
-
       location: [doc?.location ?? '', Validators.required],
-
+      desc: [doc?.desc ?? '', Validators.required],
+      box_id: [doc?.box_id ?? '', Validators.required],
+      dept_id: [doc?.dept_id ?? '', Validators.required],
+      code: [doc?.code ?? '', Validators.required],
+      updated_by: [doc?.updated_by ?? '', Validators.required],
+      created_by: [doc?.created_by ?? '', Validators.required],
+      created_at: [doc?.created_at ?? Date.now, Validators.required],
+      updated_at: [doc?.updated_at ?? Date.now, Validators.required],
       status: [doc?.status ?? 'Actif', Validators.required],
     });
   }

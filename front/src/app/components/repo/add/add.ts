@@ -45,7 +45,7 @@ export class Add {
       category: [location?.category ?? '', Validators.required],
       address: [location?.address ?? '', Validators.required],
       desc: [location?.desc ?? '', Validators.required],
-      parent_id: [location?.parent_id ?? '0', Validators.required],
+      parent_id: [location?.parent_id ?? '', Validators.required],
       status: [location?.status ?? 'Actif', Validators.required],
       created_at: [location?.status ?? Date.now, Validators.required],
       update_at: [location?.status ?? Date.now, Validators.required],
