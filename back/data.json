@@ -120,41 +120,159 @@
       "action": "Emprunté",
       "actor": "Marie Claire ",
       "status": "Annormale"
+    },
+    {
+      "title": "exomath",
+      "reference": "exo1",
+      "category": "livre",
+      "location": "Etagere1,rayon2",
+      "status": "active",
+      "id": "NitysGQFif0"
     }
   ],
   "repos": [
     {
-    "id": 1,
-    "name": "Dépôt Central",
-    "code": "DEP-BUJA-001",
-    "category": "Dépot",
-    "address": "Avenue de la Libération, n°5, Bujumbura",
-    "description": "Dépôt principal pour les archives administratives et institutionnelles",
-    "status": "active",
-    "created_at": "2026-01-15T08:30:00Z",
-    "updated_at": "2026-09-10T14:22:00Z"
+      "name": "Dépôt Central",
+      "code": "DEP-BUJA-001",
+      "category": 1,
+      "address": "Avenue de la Libération, n°5, Bujumbura",
+      "desc": "Dépôt principal pour les archives administratives et institutionnelles",
+      "status": "Actif",
+      "created_at": "active",
+      "update_at": "active",
+      "id": "1"
     },
     {
-      "id": 2,
       "name": "Dépôt Régional de Gitega",
       "code": "DEP-GIT-002",
-      "category": "Salle",
+      "category": 2,
       "address": "Quartier Industriel, n°12, Gitega, Burundi",
-      "description": "Dépôt régional pour les archives industrielles et commerciales",
-      "status": "active",
-      "created_at": "2026-02-20T10:15:00Z",
-      "updated_at": "2026-09-12T09:45:00Z"
+      "desc": "Dépôt régional pour les archives industrielles et commerciales",
+      "status": "Fermé",
+      "created_at": "active",
+      "update_at": "active",
+      "id": "2"
     },
     {
-      "id": 3,
       "name": "Dépôt Historique de Burunga",
-      "code": "DEP-BUR-003",
-      "category": "Etagere",
+      "code": "DEP-BUR-0034",
+      "category": 3,
       "address": "Boulevard de l'Indépendance, n°7, Burunga, Burundi",
-      "description": "Dépôt spécialisé dans la conservation des archives historiques et culturelles",
-      "status": "inactive",
-      "created_at": "2026-03-05T11:00:00Z",
-      "updated_at": "2026-09-15T16:30:00Z"
+      "desc": "Dépôt spécialisé dans la conservation des archives historiques et culturelles",
+      "status": "Actif",
+      "created_at": "inactive",
+      "update_at": "inactive",
+      "id": "3"
+    },
+    {
+      "name": "hhd",
+      "code": "dfh",
+      "category": 1,
+      "address": "hdhd",
+      "desc": "bxf",
+      "status": "Actif",
+      "id": "BDgM55NrhVM"
+    },
+    {
+      "name": "<wcwc",
+      "code": "<wc<",
+      "category": 1,
+      "address": "<c<wc",
+      "desc": "<wc<",
+      "status": "Actif",
+      "id": "o_uU4SgNgZI"
+    },
+    {
+      "name": "doc",
+      "code": "doc-112",
+      "category": "7",
+      "address": "qsdq",
+      "desc": "qsdqd",
+      "parent_id": "85qlwrY6LEs",
+      "status": "Fermé",
+      "created_at": "Fermé",
+      "update_at": "Fermé",
+      "id": "Oe6GQWth1cM"
+    },
+    {
+      "name": "Archive principale",
+      "code": "DEPO-BUJA-001",
+      "category": "2",
+      "address": "Bujumbura, Q Asiatique",
+      "desc": "Depotdes archive comptable",
+      "parent_id": "1",
+      "status": "Actif",
+      "id": "fe-EagswnOk"
+    },
+    {
+      "name": "ryerye",
+      "code": "eyy",
+      "category": "1",
+      "address": "ey",
+      "desc": "eyre",
+      "parent_id": "0",
+      "status": "Actif",
+      "id": "fC1EehApn3M"
+    },
+    {
+      "name": "Comptabilité",
+      "code": "CONT-01",
+      "category": "3",
+      "address": "Bujumbura",
+      "desc": "Comptabilité",
+      "parent_id": "fe-EagswnOk",
+      "status": "Actif",
+      "id": "1LdoX5EVAwM"
+    },
+    {
+      "name": "Compte 2026",
+      "code": "COM-2026",
+      "category": "4",
+      "address": "bujumbura",
+      "desc": "Compte 2026",
+      "parent_id": "1LdoX5EVAwM",
+      "status": "Actif",
+      "id": "fWMLQuBgIRU"
+    },
+    {
+      "name": "juin",
+      "code": "JUN-01",
+      "category": "5",
+      "address": "Bujumbura",
+      "desc": "Comptabilité Juin",
+      "parent_id": "fWMLQuBgIRU",
+      "status": "Actif",
+      "id": "er-xPDkqz-Q"
+    },
+    {
+      "name": "Piece comptable",
+      "code": "Doc-01",
+      "category": "6",
+      "address": "Bujumbura",
+      "desc": "Doc cpmtable ",
+      "parent_id": "er-xPDkqz-Q",
+      "status": "Actif",
+      "id": "85qlwrY6LEs"
+    },
+    {
+      "name": "dfdsfs",
+      "code": "dsfsdfd",
+      "category": "6",
+      "address": "sdfsdf",
+      "desc": "sdfsdfd",
+      "parent_id": "er-xPDkqz-Q",
+      "status": "Actif",
+      "id": "AYoNlOQxfoI"
+    },
+    {
+      "name": "xcwx",
+      "code": "dfsdf",
+      "category": "5",
+      "address": "dfs",
+      "desc": "sdfsd",
+      "parent_id": "fWMLQuBgIRU",
+      "status": "Actif",
+      "id": "r1qKIDswhus"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

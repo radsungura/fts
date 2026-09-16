@@ -1,1 +1,171 @@
-<p>add works!</p>
+<div class="location-form">
+  <!-- HEADER -->
+  <div class="form-header">
+    <div class="header-icon">
+      <mat-icon>
+        {{ data.action === 'add' ? 'note_add' : 'edit_location' }}
+      </mat-icon>
+    </div>
+
+    <div class="header-content">
+      <h2>
+        {{ data.action === 'add' ? 'Ajouter un repertoire' : 'Modifier le repertoire' }}
+      </h2>
+
+      <p>
+        {{
+          data.action === 'add'
+            ? 'Enregistrez un nouveau repertoire dans le système.'
+            : 'Modifiez les informations du repertoire.'
+        }}
+      </p>
+    </div>
+
+    <button
+      mat-icon-button
+      type="button"
+      class="close-button"
+      (click)="cancel()"
+      matTooltip="Fermer"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <!-- FORMULAIRE -->
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <!-- INFORMATIONS DU location -->
+    <div class="form-section">
+      <!-- <h3>
+        <mat-icon>description</mat-icon>
+        Informations du repertoire
+      </h3> -->
+
+      <div class="form-grid">
+                <!-- CATEGORIE -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Catégorie</mat-label>
+          <mat-select matInput formControlName="category" placeholder="Ex. Contrat" [(ngModel)]="level" 
+            (ngModelChange)="oncat(level)" >
+            <mat-option value="1">Site</mat-option>
+            <mat-option value="2">Salle</mat-option>
+            <mat-option value="3">Travée</mat-option>
+            <mat-option value="4">Etagère</mat-option>
+            <mat-option value="5">Rayon</mat-option>
+            <mat-option value="6">Boite, classeur, Falde</mat-option>
+            <mat-option value="7">Document</mat-option>
+          </mat-select>
+          <mat-icon matSuffix> category </mat-icon>
+          <mat-error *ngIf="form.controls.category.hasError('required')">
+            La catégorie est obligatoire
+          </mat-error>
+        </mat-form-field>
+
+        <!-- PARENT -->
+        <mat-form-field *ngIf="parents.length > 0" appearance="outline" class="full-width">
+          <mat-label>Repetoire Parent</mat-label>
+          <mat-select matInput formControlName="parent_id" placeholder="Ex. Depot" >
+            <mat-option *ngFor="let parent of parents" value="{{parent.id}}">{{parent.name}}</mat-option>
+          </mat-select>
+          <mat-icon matSuffix> category </mat-icon>
+          <mat-error *ngIf="form.controls.parent_id.hasError('required')">
+            Le repertoire parent est obligatoire
+          </mat-error>
+        </mat-form-field>
+
+        <!-- TITRE -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Nom</mat-label>
+
+          <input matInput formControlName="name" placeholder="Archive principale" />
+
+          <mat-icon matSuffix> description </mat-icon>
+
+          <mat-error *ngIf="form.controls.name.hasError('required')">
+            Le nom est obligatoire
+          </mat-error>
+        </mat-form-field>
+
+        <!-- REFERENCE -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Référence</mat-label>
+
+          <input matInput formControlName="code" placeholder="Ex. DEPO-BUJA-001" />
+
+          <mat-icon matSuffix> tag </mat-icon>
+
+          <mat-error *ngIf="form.controls.code.hasError('required')">
+            La référence est obligatoire
+          </mat-error>
+        </mat-form-field>
+
+        <!-- LOCALISATION -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Localisation</mat-label>
+
+          <input matInput formControlName="address" placeholder="Ex. Ville, Batiment, n°" />
+
+          <mat-icon matSuffix> location_on </mat-icon>
+
+          <mat-error *ngIf="form.controls.address.hasError('required')">
+            La localisation est obligatoire
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- INFORMATIONS DU COMPTE -->
+    <div class="form-section">
+      <!-- <h3>
+        <mat-icon>settings</mat-icon>
+        Gestion du location
+      </h3> -->
+
+      <div class="form-grid">
+        <!-- STATUT -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Statut</mat-label>
+          <mat-select formControlName="status">
+            <mat-option value="Actif"> Actif </mat-option>
+            <mat-option value="Fermé"> Fermé </mat-option>
+          </mat-select>
+          <mat-icon matSuffix> verified </mat-icon>
+          <mat-error *ngIf="form.controls.status.hasError('required')">
+            Le statut est obligatoire
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Description</mat-label>
+          <input matInput formControlName="desc" placeholder="Ex. Batiment pour les archive administratif" />
+          <mat-icon matSuffix> location_on </mat-icon>
+          <mat-error *ngIf="form.controls.desc.hasError('required')">
+            La description est obligatoire
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- ERREUR SERVEUR -->
+    <div class="server-error" *ngIf="servererror">
+      <mat-icon>error_outline</mat-icon>
+
+      <span> Une erreur est survenue. Veuillez réessayer. </span>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="form-footer">
+      <button mat-stroked-button type="button" (click)="cancel()">
+        <mat-icon>close</mat-icon>
+        Annuler
+      </button>
+
+      <button mat-raised-button class="submit-button" type="submit">
+        <mat-icon>
+          {{ data.action === 'add' ? 'add' : 'save' }}
+        </mat-icon>
+
+        {{ data.action === 'add' ? 'Enregistrer' : 'Enregistrer les modifications' }}
+      </button>
+    </div>
+  </form>
+</div>

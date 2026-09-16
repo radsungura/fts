@@ -2,10 +2,18 @@ export interface Doc {
   id?: number;
   title: string;
   reference: string;
+  code: string;
   category: string;
   location: string;
+  desc: string;
+  dept_id: string;
+  box_id: string;
   status: string;
-  createdAt?: string;
+  created_by?: string;
+  updated_by: string;
+  created_at?: string;
+  updated_at: string;
+  
 }
 
 export interface Mov {
@@ -30,7 +38,7 @@ export interface User {
 export interface Category {
   id?: number;
   name: string;
-  description: string;
+  desc: string;
   createdAt?: string;
 }
 
@@ -40,8 +48,9 @@ export interface Location {
   code: string;
   address: string;
   status: string;
-  category: string;
-  description: string;
+  category: number;
+  parent_id: number;
+  desc: string;
   created_at?: string;
   updated_at?: string;
 }

@@ -36,10 +36,10 @@
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <!-- INFORMATIONS DU DOCUMENT -->
     <div class="form-section">
-      <h3>
+      <!-- <h3>
         <mat-icon>description</mat-icon>
         Informations du document
-      </h3>
+      </h3> -->
 
       <div class="form-grid">
         <!-- TITRE -->
@@ -68,14 +68,39 @@
           </mat-error>
         </mat-form-field>
 
+        <!-- boxid -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Repertoire</mat-label>
+          <mat-select matInput formControlName="box_id" placeholder="Ex. com-juin-2026" >
+            <mat-option *ngFor="let box of boxs" value="box.id">{{box.name}}</mat-option>
+          </mat-select>
+          <mat-select matInput formControlName="box_id" placeholder="Ex. com-juin-2026" >
+            <mat-option *ngFor="let site of sites" value="site.id">{{site.name}}</mat-option>
+          </mat-select>
+          <mat-icon matSuffix> box </mat-icon>
+          <mat-error *ngIf="form.controls.box_id.hasError('required')">
+            La repetoire du document est obligatoire
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Departement -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Departement</mat-label>
+
+          <input matInput formControlName="dept_id" placeholder="Ex. Juridique" />
+
+          <mat-icon matSuffix> service </mat-icon>
+
+          <mat-error *ngIf="form.controls.dept_id.hasError('required')">
+            Le departement est obligatoire
+          </mat-error>
+        </mat-form-field>
+
         <!-- CATEGORIE -->
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Catégorie</mat-label>
-
           <input matInput formControlName="category" placeholder="Ex. Contrat" />
-
           <mat-icon matSuffix> category </mat-icon>
-
           <mat-error *ngIf="form.controls.category.hasError('required')">
             La catégorie est obligatoire
           </mat-error>
@@ -84,44 +109,44 @@
         <!-- LOCALISATION -->
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Localisation</mat-label>
-
           <input matInput formControlName="location" placeholder="Ex. Armoire A - Étagère 2" />
-
           <mat-icon matSuffix> location_on </mat-icon>
-
           <mat-error *ngIf="form.controls.location.hasError('required')">
             La localisation est obligatoire
           </mat-error>
         </mat-form-field>
+
       </div>
     </div>
 
     <!-- INFORMATIONS DU COMPTE -->
     <div class="form-section">
-      <h3>
-        <mat-icon>settings</mat-icon>
-        Gestion du document
-      </h3>
-
       <div class="form-grid">
         <!-- STATUT -->
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Statut</mat-label>
-
           <mat-select formControlName="status">
             <mat-option value="Actif"> Actif </mat-option>
-
             <mat-option value="Emprunté"> Emprunté </mat-option>
-
             <mat-option value="Archivé"> Archivé </mat-option>
           </mat-select>
-
           <mat-icon matSuffix> verified </mat-icon>
-
           <mat-error *ngIf="form.controls.status.hasError('required')">
             Le statut est obligatoire
           </mat-error>
         </mat-form-field>
+
+                <!-- Description -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Description</mat-label>
+          <input matInput formControlName="desc" placeholder="Ex. le document contient les contrats du juin 2024" />
+          <mat-icon matSuffix> description </mat-icon>
+          <mat-error *ngIf="form.controls.desc.hasError('required')">
+            La localisation est obligatoire
+          </mat-error>
+        </mat-form-field>
+
+
       </div>
     </div>
 
