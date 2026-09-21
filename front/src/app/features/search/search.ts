@@ -1,101 +1,254 @@
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule, MatDialog   } from '@angular/material/dialog';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { DetailsDoc } from '../../components/details-doc/details-doc';
+import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
-import { Router } from '@angular/router';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTooltipModule } from '@angular/material/tooltip';
+
+import { DetailsDoc } from '../../components/details-doc/details-doc';
 import { SearchService } from '../../services/search';
-import { firstValueFrom } from 'rxjs';
-import { Doc } from "../../../models/interfaces";
+
+import { Doc } from '../../../models/interfaces';
 
 @Component({
   selector: 'app-search',
-  imports: [FormsModule, MatFormFieldModule, MatToolbarModule, MatIconModule, MatButtonModule, MatDialogModule, CommonModule, MatDialogModule, ReactiveFormsModule, MatInputModule],
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatPaginatorModule,
+    MatTooltipModule,
+  ],
   templateUrl: './search.html',
-  styleUrl: './search.scss'
+  styleUrl: './search.scss',
 })
-export class Search {
-  results: any;
-  query: string = ''; // Valeur saisie dans le champ de recherche
-  documents: Doc[] = [];  // Liste des médicaments retournée par la recherche
-  isLoading: boolean = false; // Pour gérer l'état de chargement
-  searchdoc: any;
+export class Search implements OnInit {
+  /**
+   * Tous les documents / résultats de recherche
+   */
+  documents: Doc[] = [];
 
-  constructor(private serv: SearchService, private dialog: MatDialog, public route: Router) {
+  /**
+   * Résultats de l'autocomplétion
+   */
+  results: Doc[] = [];
+
+  /**
+   * Documents affichés sur la page courante
+   */
+  paginatedDocuments: Doc[] = [];
+
+  /**
+   * Texte saisi dans la barre de recherche
+   */
+  searchdoc = '';
+
+  /**
+   * Requête actuelle
+   */
+  query = '';
+
+  /**
+   * État du chargement
+   */
+  isLoading = false;
+
+  /**
+   * Pagination
+   */
+  pageSize = 10;
+  pageIndex = 0;
+
+  constructor(
+    private serv: SearchService,
+    private dialog: MatDialog,
+  ) {}
+
+  ngOnInit(): void {
     this.getDoc();
-    if (this.documents) {
-      this.isLoading = true;
-    } else {
-      this.documents = [];
-    }
   }
 
-  getDoc(){
-    this.serv.get_doc().subscribe( el => { this.documents = el } );
+  /**
+   * Charger tous les documents
+   */
+  getDoc(): void {
+    this.isLoading = true;
+
+    this.serv.get_doc().subscribe({
+      next: (documents: Doc[]) => {
+        this.documents = documents;
+
+        this.pageIndex = 0;
+
+        this.updatePagination();
+
+        this.isLoading = false;
+      },
+
+      error: (error) => {
+        console.error('Erreur lors du chargement des documents :', error);
+
+        this.documents = [];
+        this.paginatedDocuments = [];
+
+        this.isLoading = false;
+      },
+    });
   }
-  // Fonction de recherche rapide 
-  autocomplete(query: string) {
-    this.query = query? query: '';
-    if (query.trim() !== '' && this.query.length > 2) {
+
+  /**
+   * Autocomplétion
+   *
+   * La recherche commence à partir de 3 caractères.
+   */
+  autocomplete(query: string): void {
+    this.searchdoc = query;
+    this.query = query.trim();
+
+    if (this.query.length >= 3) {
       this.isLoading = true;
-      this.serv.search(this.query).subscribe(
-        (results: any) => {
+
+      this.serv.search(this.query).subscribe({
+        next: (results: Doc[]) => {
           this.results = results;
-          
+
           this.isLoading = false;
         },
-        (error: any) => {
-          console.error('Erreur lors de la recherche', error);
+
+        error: (error) => {
+          console.error('Erreur lors de la recherche :', error);
+
+          this.results = [];
+
           this.isLoading = false;
-        }
-      );
+        },
+      });
     } else {
       this.results = [];
-      this.getDoc()
+
+      /*
+       * Si le champ est complètement vide,
+       * on revient à la liste complète.
+       */
+      if (this.query.length === 0) {
+        this.getDoc();
+      }
     }
   }
-  // reset search
-  reset(){
-    this.query = "";
-    this.searchdoc = "";
-  }
-  // Fonction de recherche avance
-  async search(query: string) {
-    this.query = query? query: "";
-    if (this.query.trim() !== '') {
-       this.isLoading = true;
-      try {
-        const results = await firstValueFrom(this.serv.search(this.query));
+
+  /**
+   * Recherche complète
+   */
+  search(query: string): void {
+    const searchValue = query.trim();
+
+    if (!searchValue) {
+      this.reset();
+      return;
+    }
+
+    this.searchdoc = searchValue;
+    this.query = searchValue;
+
+    this.isLoading = true;
+
+    this.serv.search(searchValue).subscribe({
+      next: (results: Doc[]) => {
+        /*
+         * Les résultats deviennent
+         * la nouvelle liste à paginer.
+         */
         this.documents = results;
-      } catch (error) {
-        console.error('Erreur', error);
-      } finally {
-        this.isLoading = false;
+
+        /*
+         * On masque l'autocomplétion.
+         */
         this.results = [];
-        this.query = '';
-      }
-    } else {
-      this.results = [];
-    }
+
+        /*
+         * Toujours revenir à la première page
+         * après une nouvelle recherche.
+         */
+        this.pageIndex = 0;
+
+        this.updatePagination();
+
+        this.isLoading = false;
+      },
+
+      error: (error) => {
+        console.error('Erreur lors de la recherche :', error);
+
+        this.documents = [];
+        this.paginatedDocuments = [];
+        this.results = [];
+
+        this.isLoading = false;
+      },
+    });
   }
 
-  details(doc: any) {
-    // Naviguer vers une page ou ouvrir une modale
-    const dialogRef = this.dialog.open(DetailsDoc, {
-      width: '90vw', // ou '80vw' pour responsive
-      maxHeight: '1000vh',
-      data: { mode: 'details', item: doc }
-    });
+  /**
+   * Réinitialiser la recherche
+   */
+  reset(): void {
+    this.searchdoc = '';
+    this.query = '';
+    this.results = [];
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        // this.documentsService.addDocument(result).subscribe(() => this.loadDocuments());
-      }
+    this.pageIndex = 0;
+
+    this.getDoc();
+  }
+
+  /**
+   * Changer de page
+   */
+  changePage(event: any): void {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+
+    this.updatePagination();
+  }
+
+  /**
+   * Calculer les documents à afficher
+   * sur la page courante.
+   */
+  updatePagination(): void {
+    const startIndex = this.pageIndex * this.pageSize;
+
+    const endIndex = startIndex + this.pageSize;
+
+    this.paginatedDocuments = this.documents.slice(startIndex, endIndex);
+  }
+
+  /**
+   * Afficher les détails du document
+   */
+  details(doc: Doc): void {
+    this.dialog.open(DetailsDoc, {
+      width: '90vw',
+      maxWidth: '700px',
+      maxHeight: '90vh',
+      data: {
+        mode: 'details',
+        item: doc,
+      },
     });
   }
 }
