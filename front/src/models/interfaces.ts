@@ -18,12 +18,12 @@ export interface Doc {
 
 export interface Mov {
   id?: number;
-  title: string;
-  reference: string;
-  category: string;
-  location: string;
-  status: string;
-  createdAt?: string;
+  documentId?: number;
+  documentTitle: string;
+  borrower: string;
+  borrowDate: string;
+  returnDate: string;
+  status: 'Emprunté' | 'En retard' | 'Retourné';
 }
 
 export interface User {

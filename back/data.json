@@ -76,6 +76,12 @@
       "status": "Disponible"
     },
     {
+      "title": "bbbbb",
+      "reference": "bbbbb",
+      "category": "bbbbb",
+      "location": "bbbbbb",
+      "status": "Archivé",
+      "id": "06jvn-xFLQY"
       "title": "Contrat",
       "reference": "C-2026-001",
       "category": "CONTRAT",
@@ -324,17 +330,21 @@
   "borrow": [
     {
       "id": "1",
-      "date": "05/08/25",
-      "action": "Emprunté",
-      "actor": "Jean Dupont",
-      "status": "Normale"
+      "documentId": "2",
+      "documentTitle": "Rapport annuel 2026",
+      "borrower": "Jean Dupont",
+      "borrowDate": "09/10/2026",
+      "returnDate": "09/17/2026",
+      "status": "Emprunté"
     },
     {
       "id": "2",
-      "date": "05/08/25",
-      "action": "Restitué",
-      "actor": "Jean Dupont",
-      "status": "Normale"
+      "documentId": "3",
+      "documentTitle": "Contrat fournisseur",
+      "borrower": "Marie Labelle",
+      "borrowDate": "09/05/2026",
+      "returnDate": "10/12/2026",
+      "status": "En retard"
     },
     {
       "id": "3",

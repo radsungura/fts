@@ -64,8 +64,8 @@ export class Archive {
 
     this.data.getAll().subscribe({
       next: (docs) => {
-        this.documents = docs;
-        this.filteredDocuments = [...docs];
+        this.documents = docs.filter((doc) => doc.status === 'Archivé');
+        this.filteredDocuments = [...this.documents];
 
         this.loading = false;
       },
@@ -106,12 +106,12 @@ export class Archive {
       width: '90vw', // ou '80vw' pour responsive
       maxHeight: '1000vh',
 
-      data: { mode: 'add' },
+      data: { action: 'add', archive: true },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        // this.documentsService.addDocument(result).subscribe(() => this.loadDocuments());
+        this.loadDocs();
       }
     });
   }
@@ -138,28 +138,48 @@ export class Archive {
     const dialogRef = this.dialog.open(AddDoc, {
       width: '90vw', // ou '80vw' pour responsive
       maxHeight: '1000vh',
-      data: { mode: 'edit' },
+      data: { action: 'edit', data: doc },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        // this.documentsService.addDocument(result).subscribe(() => this.loadDocuments());
+        this.loadDocs();
       }
     });
   }
 
-  delete(doc: any) {
-    console.log('🗑️ Supprimer le document :', doc);
-    // Confirmer et supprimer via API ou service
+  delete(doc: Doc): void {
     const dialogRef = this.dialog.open(Delete, {
-      width: '90vw', // ou '80vw' pour responsive
-      maxHeight: '1000vh',
-      data: { mode: 'document' },
+      width: '90vw',
+      maxWidth: '450px',
+      data: {
+        mode: 'document',
+        item: doc,
+      },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        // this.documentsService.addDocument(result).subscribe(() => this.loadDocuments());
+      // L'utilisateur a confirmé la suppression
+      if (result === true) {
+        // Vérifier que le document possède un ID
+        if (!doc.id) {
+          console.error('ID du document manquant');
+          return;
+        }
+
+        // Suppression dans le backend
+        this.data.delete(doc.id).subscribe({
+          next: () => {
+            console.log(`Document ${doc.id} supprimé avec succès`);
+
+            // Recharger la liste après suppression
+            this.loadDocs();
+          },
+
+          error: (error) => {
+            console.error('Erreur lors de la suppression du document :', error);
+          },
+        });
       }
     });
   }
