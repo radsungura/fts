@@ -1,7 +1,7 @@
-<mat-toolbar class="documents-toolbar">
+<mat-toolbar class="Location-toolbar">
   <div class="toolbar-title">
     <mat-icon>description</mat-icon>
-    <span>Liste des Documents</span>
+    <span>Liste des Repetoires</span>
   </div>
 
   <div class="toolbar-actions">
@@ -27,26 +27,33 @@
 
 <div class="filters">
   <mat-form-field appearance="outline" class="search-field">
-    <mat-label>Rechercher un document</mat-label>
+    <mat-label>Rechercher un repertoire</mat-label>
+
     <input
       matInput
       [(ngModel)]="searchText"
-      (ngModelChange)="searchDocuments()"
+      (ngModelChange)="searchLocations()"
       placeholder="Titre, catégorie, localisation..."
     />
+
     <mat-icon matSuffix>search</mat-icon>
   </mat-form-field>
+ 
   <mat-form-field appearance="outline" class="status-field">
     <mat-label>Statut</mat-label>
-    <mat-select [(ngModel)]="statusFilter" (selectionChange)="searchDocuments()">
+    <mat-select [(ngModel)]="statusFilter" (selectionChange)="searchLocations()">
       <mat-option value="Tous"> Tous </mat-option>
       <mat-option value="Actif"> Actif </mat-option>
-      <mat-option value="Emprunté"> Emprunté </mat-option>
-      <mat-option value="Archivé"> Archivé </mat-option>
-      <mat-option value="Disponible"> Disponible </mat-option>
+      <mat-option value="Fermé"> Fermé </mat-option>
     </mat-select>
   </mat-form-field>
 </div>
+
+
+<button mat-button (click)="display(parent, action = 'back')" *ngIf="parent">
+  <mat-icon>arrow_back</mat-icon>
+  Retour
+</button>
 
 <!-- ===================== -->
 <!-- VUE LISTE -->
@@ -55,7 +62,7 @@
 <div *ngIf="view === 'list'" class="table-container">
   <table
     mat-table
-    [dataSource]="filteredDocuments.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize)"
+    [dataSource]="filteredLocations.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize)"
   >
     <!-- ID -->
 
@@ -69,17 +76,29 @@
 
     <!-- TITRE -->
 
-    <ng-container matColumnDef="title">
-      <th mat-header-cell *matHeaderCellDef>Titre</th>
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Nom</th>
 
       <td mat-cell *matCellDef="let element">
-        <div class="document-title">
-          <div class="document-icon">
-            <mat-icon>description</mat-icon>
+        <div class="location-title">
+          <div class="location-icon">
+            <mat-icon>
+        {{element.category == 1 ? 'warehouse' : ''}}
+        {{element.category == 2 ? 'gite' : ''}}
+        {{element.category == 3 ? 'view_column' : ''}}
+        {{element.category == 4 ? 'shelves' : ''}}
+        {{element.category == 5 ? 'splitscreen' : ''}}
+        {{element.category == 6 ? 'inventory' : ''}}
+        {{element.category == 7 ? 'folder' : ''}}
+        {{element.category == 4 ? 'shelves' : ''}}
+        {{element.category == 5 ? 'splitscreen' : ''}}
+        {{element.category == 6 ? 'inventory' : ''}}
+        {{element.category == 7 ? 'description' : ''}}
+    </mat-icon>
           </div>
 
           <span>
-            {{ element.title }}
+            {{ element.name }}
           </span>
         </div>
       </td>
@@ -88,7 +107,7 @@
     <!-- CATÉGORIE -->
 
     <ng-container matColumnDef="category">
-      <th mat-header-cell *matHeaderCellDef>Catégorie</th>
+      <th mat-header-cell *matHeaderCellDef>Catégories</th>
 
       <td mat-cell *matCellDef="let element">
         {{ element.category }}
@@ -97,13 +116,14 @@
 
     <!-- LOCALISATION -->
 
-    <ng-container matColumnDef="location">
-      <th mat-header-cell *matHeaderCellDef>Localisation</th>
+    <ng-container matColumnDef="address">
+      <th mat-header-cell *matHeaderCellDef>Adresse</th>
 
       <td mat-cell *matCellDef="let element">
         <div class="location">
           <mat-icon>location_on</mat-icon>
-          {{ element.location.slice(0, 20) }} ...
+
+          {{ element.address }}
         </div>
       </td>
     </ng-container>
@@ -117,9 +137,7 @@
         <span
           class="status-badge"
           [class.active]="element.status === 'Actif'"
-          [class.borrowed]="element.status === 'Emprunté'"
-          [class.archived]="element.status === 'Archivé'"
-          [class.disponible]="element.status === 'Disponible'"
+          [class.ferme]="element.status === 'Fermé'"
         >
           <span class="status-dot"></span>
 
@@ -175,18 +193,18 @@
 
   <!-- Aucun résultat -->
 
-  <div class="empty-state" *ngIf="filteredDocuments.length === 0">
+  <div class="empty-state" *ngIf="filteredLocations.length === 0">
     <mat-icon>folder_off</mat-icon>
 
-    <h3>Aucun document trouvé</h3>
+    <h3>Aucun locations trouvé</h3>
 
-    <p>Aucun document ne correspond à votre recherche.</p>
+    <p>Aucun locations ne correspond à votre recherche.</p>
   </div>
 
   <!-- PAGINATION -->
 
   <mat-paginator
-    [length]="filteredDocuments.length"
+    [length]="filteredLocations.length"
     [pageSize]="pageSize"
     [pageIndex]="pageIndex"
     [pageSizeOptions]="[5, 10, 25]"
@@ -201,76 +219,79 @@
 <!-- ===================== -->
 
 <div *ngIf="view === 'grid'" class="grid-container">
-  <div class="document-card" *ngFor="let document of filteredDocuments">
-    <div class="card-icon">
-      <mat-icon>folder</mat-icon>
-    </div>
+  <!-- back button -->
 
+  <div (click)="display(locations, action = 'enter')" class="location-card" *ngFor="let locations of filteredLocations">
+    <div class="card-icon">
+      <mat-icon>
+        {{locations.category == 1 ? 'warehouse' : ''}}
+        {{locations.category == 2 ? 'gite' : ''}}
+        {{locations.category == 3 ? 'view_column' : ''}}
+        {{locations.category == 4 ? 'shelves' : ''}}
+        {{locations.category == 5 ? 'splitscreen' : ''}}
+        {{locations.category == 6 ? 'inventory' : ''}}
+        {{locations.category == 7 ? 'folder' : ''}}
+        {{locations.category == 4 ? 'shelves' : ''}}
+        {{locations.category == 5 ? 'splitscreen' : ''}}
+        {{locations.category == 6 ? 'inventory' : ''}}
+        {{locations.category == 7 ? 'description' : ''}}
+    </mat-icon>
+    </div>
     <div class="card-content">
       <h3>
-        {{ document.title }}
+        {{ locations.name }}
       </h3>
-
       <p>
-        {{ document.category }}
+        {{ locations.category }}
       </p>
-
       <span class="location">
         <mat-icon>location_on</mat-icon>
-        {{ document.location }}
+        {{ locations.address }}
       </span>
     </div>
-
     <span
       class="status-badge"
-      [class.active]="document.status === 'Actif'"
-      [class.borrowed]="document.status === 'Emprunté'"
-      [class.archived]="document.status === 'Archivé'"
-      [class.disponible]="document.status === 'Disponible'"
+      [class.active]="locations.status === 'Actif'"
+      [class.ferme]="locations.status === 'Fermé'"
     >
       <span class="status-dot"></span>
 
-      {{ document.status }}
+      {{ locations.status }}
     </span>
-
     <div class="card-actions">
       <button
         mat-icon-button
         color="primary"
         matTooltip="Voir les détails"
         type="button"
-        (click)="details(document)"
+        (click)="details(locations)"
       >
         <mat-icon>visibility</mat-icon>
       </button>
-
       <button
         mat-icon-button
         color="accent"
         matTooltip="Modifier"
         type="button"
-        (click)="edit(document)"
+        (click)="edit(locations)"
       >
         <mat-icon>edit</mat-icon>
       </button>
-
       <button
         mat-icon-button
         color="warn"
         matTooltip="Supprimer"
         type="button"
-        (click)="delete(document)"
+        (click)="delete(locations)"
       >
         <mat-icon>delete</mat-icon>
       </button>
     </div>
   </div>
 
-  <div class="empty-state" *ngIf="filteredDocuments.length === 0">
+  <div class="empty-state" *ngIf="filteredLocations.length === 0">
     <mat-icon>folder_off</mat-icon>
-
-    <h3>Aucun document trouvé</h3>
-
-    <p>Aucun document ne correspond à votre recherche.</p>
+    <h3>Aucun locations trouvé</h3>
+    <p>Aucun locations ne correspond à votre recherche.</p>
   </div>
 </div>

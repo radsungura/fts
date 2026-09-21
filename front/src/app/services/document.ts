@@ -2,20 +2,24 @@ import { Injectable } from '@angular/core';
 import {Doc} from '../../models/interfaces'
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class Document {
 
-  private api = 'http://localhost:4000/documents';
-  constructor(private http: HttpClient) {}
+  private api = `${environment.URL}/documents`;
+  // private api = 'http://localhost:4000/documents';
+
+  constructor(private http: HttpClient) { }
 
   getAll(): Observable<Doc[]> {
     return this.http.get<Doc[]>(this.api);
   }
 
-  create(doc: Doc): Observable<Doc> {    
+  create(doc: Doc): Observable<Doc> {  
+    console.log("doc", doc);  
     return this.http.post<Doc>(this.api, doc);
   }
 
