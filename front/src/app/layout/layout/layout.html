@@ -12,7 +12,7 @@
       </div>
 
       <div class="logo-text">
-        <span class="logo-title">LMS</span>
+        <span class="logo-title">Smart Archive</span>
         <span class="logo-subtitle">Gestion documentaire</span>
       </div>
     </div>
@@ -53,6 +53,11 @@
           <span>Archives</span>
         </a>
 
+        <a mat-list-item routerLink="/repos" routerLinkActive="active">
+          <mat-icon>location_on</mat-icon>
+          <span>Dépots</span>
+        </a>
+
         <a mat-list-item routerLink="/users" routerLinkActive="active">
           <mat-icon>group</mat-icon>
           <span>Utilisateurs</span>
@@ -63,7 +68,7 @@
     <!-- Bas sidebar -->
 
     <div class="sidebar-footer">
-      <button mat-stroked-button class="theme-button" type="button" (click)="toggleDarkMode()">
+      <!-- <button mat-stroked-button class="theme-button" type="button" (click)="toggleDarkMode()">
         <mat-icon>
           {{ isDarkMode ? 'light_mode' : 'dark_mode' }}
         </mat-icon>
@@ -71,9 +76,9 @@
         <span>
           {{ isDarkMode ? 'Mode clair' : 'Mode sombre' }}
         </span>
-      </button>
+      </button> -->
 
-      <div class="sidebar-version">LMS · v1.0</div>
+      <div class="sidebar-version">Smart Archive · v1.0</div>
     </div>
   </mat-sidenav>
 

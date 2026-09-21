@@ -1,15 +1,7 @@
-/* ================================= */
-/* CONTENEUR PRINCIPAL */
-/* ================================= */
-
 .sidenav-container {
   height: 100vh;
   background: #f5f7f9;
 }
-
-/* ================================= */
-/* SIDEBAR */
-/* ================================= */
 
 .sidenav {
   width: 250px;
@@ -21,10 +13,6 @@
   display: flex;
   flex-direction: column;
 }
-
-/* ================================= */
-/* LOGO */
-/* ================================= */
 
 .sidebar-header {
   display: flex;
@@ -71,10 +59,6 @@
   letter-spacing: 0.5px;
 }
 
-/* ================================= */
-/* NAVIGATION */
-/* ================================= */
-
 .navigation {
   flex: 1;
   padding: 20px 10px;
@@ -93,8 +77,6 @@
 mat-nav-list {
   padding: 0;
 }
-
-/* Liens */
 
 mat-nav-list a {
   height: 48px;
@@ -118,14 +100,10 @@ mat-nav-list a mat-icon {
   color: rgba(255, 255, 255, 0.8);
 }
 
-/* Hover */
-
 mat-nav-list a:hover {
   background: rgba(255, 255, 255, 0.12);
   color: white;
 }
-
-/* Active */
 
 mat-nav-list a.active {
   background: rgba(255, 255, 255, 0.2);
@@ -138,10 +116,6 @@ mat-nav-list a.active {
 mat-nav-list a.active mat-icon {
   color: white;
 }
-
-/* ================================= */
-/* BAS SIDEBAR */
-/* ================================= */
 
 .sidebar-footer {
   padding: 16px;
@@ -175,65 +149,35 @@ mat-nav-list a.active mat-icon {
   opacity: 0.55;
 }
 
-/* ================================= */
-/* TOOLBAR */
-/* ================================= */
-
 .toolbar {
   height: 64px;
-
   display: flex;
   align-items: center;
-
   padding: 0 22px;
-
   background: white;
-
   color: #1f2937;
-
   border-bottom: 1px solid #e5e7eb;
-
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-
   gap: 10px;
 }
-
-/* ================================= */
-/* MENU MOBILE */
-/* ================================= */
 
 .menu-btn {
   display: none;
   color: #374151;
 }
 
-/* ================================= */
-/* TITRE */
-/* ================================= */
-
 .page-title {
   display: flex;
   align-items: center;
-
   font-size: 15px;
   font-weight: 600;
-
   color: #374151;
-
   letter-spacing: 0.3px;
 }
-
-/* ================================= */
-/* ESPACE */
-/* ================================= */
 
 .spacer {
   flex: 1;
 }
-
-/* ================================= */
-/* NOTIFICATIONS */
-/* ================================= */
 
 .notification-btn {
   color: #4b5563;
@@ -247,15 +191,10 @@ mat-nav-list a.active mat-icon {
   color: #008a9b;
 }
 
-/* ================================= */
-/* MENU NOTIFICATIONS */
-/* ================================= */
-
 .notification-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   padding: 12px 16px;
 }
 
@@ -271,14 +210,10 @@ mat-nav-list a.active mat-icon {
 .no-notification {
   display: flex;
   flex-direction: column;
-
   align-items: center;
   justify-content: center;
-
   gap: 8px;
-
   padding: 30px;
-
   color: #6b7280;
 }
 
@@ -287,10 +222,6 @@ mat-nav-list a.active mat-icon {
   width: 30px;
   height: 30px;
 }
-
-/* ================================= */
-/* UTILISATEUR */
-/* ================================= */
 
 .user-btn {
   display: flex;
@@ -360,10 +291,6 @@ mat-nav-list a.active mat-icon {
   font-size: 20px;
 }
 
-/* ================================= */
-/* MENU UTILISATEUR */
-/* ================================= */
-
 .user-menu-header {
   display: flex;
   align-items: center;
@@ -390,10 +317,6 @@ mat-nav-list a.active mat-icon {
   color: #6b7280;
 }
 
-/* ================================= */
-/* CONTENU */
-/* ================================= */
-
 .content {
   min-height: calc(100vh - 64px);
 
@@ -403,10 +326,6 @@ mat-nav-list a.active mat-icon {
 
   box-sizing: border-box;
 }
-
-/* ================================= */
-/* RESPONSIVE */
-/* ================================= */
 
 @media (max-width: 768px) {
   .menu-btn {
@@ -451,10 +370,6 @@ mat-nav-list a.active mat-icon {
     padding: 12px;
   }
 }
-
-/* ================================= */
-/* MODE SOMBRE */
-/* ================================= */
 
 .sidenav-container.dark-mode {
   background: #111827;
@@ -521,26 +436,15 @@ mat-nav-list a.active mat-icon {
   color: #5eead4;
 }
 
-/* ================================= */
-/* CARTES MATERIAL */
-/* ================================= */
 
 .sidenav-container.dark-mode mat-card {
   background: #1f2937;
   color: #f9fafb;
 }
 
-/* ================================= */
-/* SIDEBAR */
-/* ================================= */
-
 .sidenav-container.dark-mode .sidenav {
   background: #006f7c;
 }
-
-/* ================================= */
-/* TABLEAUX */
-/* ================================= */
 
 .sidenav-container.dark-mode table {
   background: #1f2937;
@@ -560,17 +464,9 @@ mat-nav-list a.active mat-icon {
   background: #374151;
 }
 
-/* ================================= */
-/* CHAMPS DE FORMULAIRE */
-/* ================================= */
-
 .sidenav-container.dark-mode .mat-mdc-form-field {
   color: #f9fafb;
 }
-
-/* ================================= */
-/* VERSION SIDEBAR */
-/* ================================= */
 
 .sidenav-container.dark-mode .sidebar-version {
   color: #d1d5db;
