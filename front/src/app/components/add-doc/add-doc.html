@@ -68,31 +68,16 @@
           </mat-error>
         </mat-form-field>
 
-        <!-- boxid -->
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Repertoire</mat-label>
-          <mat-select matInput formControlName="box_id" placeholder="Ex. com-juin-2026" >
-            <mat-option *ngFor="let box of boxs" value="box.id">{{box.name}}</mat-option>
-          </mat-select>
-          <mat-select matInput formControlName="box_id" placeholder="Ex. com-juin-2026" >
-            <mat-option *ngFor="let site of sites" value="site.id">{{site.name}}</mat-option>
-          </mat-select>
-          <mat-icon matSuffix> box </mat-icon>
-          <mat-error *ngIf="form.controls.box_id.hasError('required')">
-            La repetoire du document est obligatoire
-          </mat-error>
-        </mat-form-field>
-
         <!-- Departement -->
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Departement</mat-label>
+          <mat-label>Service</mat-label>
 
           <input matInput formControlName="dept_id" placeholder="Ex. Juridique" />
 
           <mat-icon matSuffix> service </mat-icon>
 
           <mat-error *ngIf="form.controls.dept_id.hasError('required')">
-            Le departement est obligatoire
+            Le service est obligatoire
           </mat-error>
         </mat-form-field>
 
@@ -106,27 +91,10 @@
           </mat-error>
         </mat-form-field>
 
-        <!-- LOCALISATION -->
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Localisation</mat-label>
-          <input matInput formControlName="location" placeholder="Ex. Armoire A - Étagère 2" />
-          <mat-icon matSuffix> location_on </mat-icon>
-          <mat-error *ngIf="form.controls.location.hasError('required')">
-            La localisation est obligatoire
-          </mat-error>
-        </mat-form-field>
-
-      </div>
-    </div>
-
-    <!-- INFORMATIONS DU COMPTE -->
-    <div class="form-section">
-      <div class="form-grid">
-        <!-- STATUT -->
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Statut</mat-label>
           <mat-select formControlName="status">
-            <mat-option value="Actif"> Actif </mat-option>
+            <mat-option value="Disponible"> Disponible </mat-option>
             <mat-option value="Emprunté"> Emprunté </mat-option>
             <mat-option value="Archivé"> Archivé </mat-option>
           </mat-select>
@@ -136,19 +104,91 @@
           </mat-error>
         </mat-form-field>
 
-                <!-- Description -->
+        <!-- boxid -->
+        <!-- <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Repertoire</mat-label>
+          <input placeholder="Pick one" matInput formControlName="box_id" [(ngModel)]="box" [matAutocomplete]="auto" (ngModelChange)="newbox(box)" />
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let option of boxs" [value]="option.name">{{option.name}}</mat-option>
+          </mat-autocomplete>
+          <mat-icon matSuffix> box </mat-icon>
+          <mat-error *ngIf="form.controls.box_id.hasError('required')">
+            La repetoire du document est obligatoire
+          </mat-error>
+        </mat-form-field> -->
+
+          <!-- bay -->
+          <mat-form-field  appearance="outline" class="full-width">
+            <mat-label>Site</mat-label>
+            <mat-select placeholder="JUIN-2022" matInput formControlName="site" (ngModelChange)="nextloclevel($event)">
+              <mat-option *ngFor="let site of sites" [value]="site.id">{{site.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!-- bay -->
+          <mat-form-field  appearance="outline" class="full-width">
+            <mat-label>Salle</mat-label>
+            <mat-select placeholder="JUIN-2022" matInput formControlName="room" (ngModelChange)="nextloclevel($event)">
+              <mat-option *ngFor="let room of children" [value]="room.id">{{room.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!-- bay -->
+          <mat-form-field  appearance="outline" class="full-width">
+            <mat-label>Travée</mat-label>
+            <mat-select placeholder="JUIN-2022" matInput formControlName="range" (ngModelChange)="nextloclevel($event)">
+              <mat-option *ngFor="let range of children" [value]="range.id">{{range.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          
+          <!-- bay -->
+          <mat-form-field  appearance="outline" class="full-width">
+            <mat-label>Etagère</mat-label>
+            <mat-select placeholder="JUIN-2022" matInput formControlName="shelf" (ngModelChange)="nextloclevel($event)">
+              <mat-option *ngFor="let shelf of children" [value]="shelf.id">{{shelf.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!-- bay -->
+          <mat-form-field  appearance="outline" class="full-width">
+            <mat-label>Rayon</mat-label>
+            <mat-select placeholder="JUIN-2022" matInput formControlName="bay" (ngModelChange)="nextloclevel($event)">
+              <mat-option *ngFor="let bay of children" [value]="bay.id">{{bay.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+        <!-- box -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Boite / Classeur</mat-label>
+            <mat-select placeholder="JUIN-2022" matInput formControlName="box_id" (ngModelChange)="nextloclevel($event)">
+              <mat-option *ngFor="let box of children" [value]="box.id">{{box.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+  
+                   <!-- Description -->
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Description</mat-label>
-          <input matInput formControlName="desc" placeholder="Ex. le document contient les contrats du juin 2024" />
+          <textarea matInput formControlName="desc" placeholder="Ex. le document contient les contrats du juin 2024" >
+          </textarea>
           <mat-icon matSuffix> description </mat-icon>
           <mat-error *ngIf="form.controls.desc.hasError('required')">
-            La localisation est obligatoire
+            La description est obligatoire
           </mat-error>
         </mat-form-field>
+        </div>
+    </div>
+
+    <!-- INFORMATIONS DU COMPTE -->
+    <!-- <div class="form-section">
+      <div class="form-grid">
+        STATUT
+        
+
+       
 
 
       </div>
-    </div>
+    </div> -->
 
     <!-- ERREUR SERVEUR -->
     <div class="server-error" *ngIf="servererror">
