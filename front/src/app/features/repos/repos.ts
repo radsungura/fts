@@ -50,7 +50,7 @@ export class Repos {
   pageIndex = 0;
   action: string = '';
 
-  constructor(private dialog: MatDialog, private data: Repo, private snackBar: MatSnackBar) {  }
+  constructor(private dialog: MatDialog, private data: Repo, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.loadLocations();

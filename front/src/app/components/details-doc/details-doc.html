@@ -37,10 +37,10 @@
     <!-- INFORMATIONS PRINCIPALES -->
 
     <div class="section">
-      <h3>
+      <!-- <h3>
         <mat-icon>description</mat-icon>
         Informations du document
-      </h3>
+      </h3> -->
 
       <div class="info-grid">
         <div class="info-item">
@@ -78,10 +78,10 @@
     <!-- GESTION DU DOCUMENT -->
 
     <div class="section">
-      <h3>
+      <!-- <h3>
         <mat-icon>folder</mat-icon>
         Gestion du document
-      </h3>
+      </h3> -->
 
       <div class="info-grid">
         <div class="info-item">
@@ -108,6 +108,16 @@
             {{ document.status }}
           </span>
         </div>
+
+        <div class="info-item">
+          <span class="label"> Description </span>
+
+          <span>
+            <span class="status-dot"></span>
+            {{ document.desc }}
+          </span>
+        </div>
+
       </div>
     </div>
   </div>
