@@ -107,9 +107,9 @@
         <!-- boxid -->
         <!-- <mat-form-field appearance="outline" class="full-width">
           <mat-label>Repertoire</mat-label>
-          <input placeholder="Pick one" matInput formControlName="box_id" [(ngModel)]="box" [matAutocomplete]="auto" (ngModelChange)="newbox(box)" />
+          <input placeholder="Pick one" matInput formControlName="box_id" [matAutocomplete]="auto" />
           <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let option of boxs" [value]="option.name">{{option.name}}</mat-option>
+            <mat-option *ngFor="let option of boxs" [value]="option.id">{{option.name}}</mat-option>
           </mat-autocomplete>
           <mat-icon matSuffix> box </mat-icon>
           <mat-error *ngIf="form.controls.box_id.hasError('required')">
@@ -117,53 +117,17 @@
           </mat-error>
         </mat-form-field> -->
 
-          <!-- bay -->
-          <mat-form-field  appearance="outline" class="full-width">
-            <mat-label>Site</mat-label>
-            <mat-select placeholder="JUIN-2022" matInput formControlName="site" (ngModelChange)="nextloclevel($event)">
-              <mat-option *ngFor="let site of sites" [value]="site.id">{{site.name}}</mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <!-- bay -->
-          <mat-form-field  appearance="outline" class="full-width">
-            <mat-label>Salle</mat-label>
-            <mat-select placeholder="JUIN-2022" matInput formControlName="room" (ngModelChange)="nextloclevel($event)">
-              <mat-option *ngFor="let room of children" [value]="room.id">{{room.name}}</mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <!-- bay -->
-          <mat-form-field  appearance="outline" class="full-width">
-            <mat-label>Travée</mat-label>
-            <mat-select placeholder="JUIN-2022" matInput formControlName="range" (ngModelChange)="nextloclevel($event)">
-              <mat-option *ngFor="let range of children" [value]="range.id">{{range.name}}</mat-option>
-            </mat-select>
-          </mat-form-field>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Localisation</mat-label>
+          <mat-select placeholder="Pick one" matInput formControlName="box_id" >
+            <mat-option *ngFor="let option of location" [value]="option.id">{{option.link}}</mat-option>
+          <mat-icon matSuffix> box </mat-icon>
+        </mat-select>
           
-          <!-- bay -->
-          <mat-form-field  appearance="outline" class="full-width">
-            <mat-label>Etagère</mat-label>
-            <mat-select placeholder="JUIN-2022" matInput formControlName="shelf" (ngModelChange)="nextloclevel($event)">
-              <mat-option *ngFor="let shelf of children" [value]="shelf.id">{{shelf.name}}</mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <!-- bay -->
-          <mat-form-field  appearance="outline" class="full-width">
-            <mat-label>Rayon</mat-label>
-            <mat-select placeholder="JUIN-2022" matInput formControlName="bay" (ngModelChange)="nextloclevel($event)">
-              <mat-option *ngFor="let bay of children" [value]="bay.id">{{bay.name}}</mat-option>
-            </mat-select>
-          </mat-form-field>
-
-        <!-- box -->
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Boite / Classeur</mat-label>
-            <mat-select placeholder="JUIN-2022" matInput formControlName="box_id" (ngModelChange)="nextloclevel($event)">
-              <mat-option *ngFor="let box of children" [value]="box.id">{{box.name}}</mat-option>
-            </mat-select>
-          </mat-form-field>
+          <mat-error *ngIf="form.controls.box_id.hasError('required')">
+            La repetoire du document est obligatoire
+          </mat-error>
+        </mat-form-field>
   
                    <!-- Description -->
         <mat-form-field appearance="outline" class="full-width">
