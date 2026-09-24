@@ -1,67 +1,199 @@
-<mat-toolbar color="primary" style="justify-content: space-between;">Liste des Mouvements
-  <button mat-raised-button class="add-btn" color="accent" (click)="addMov()">
-    <mat-icon>add</mat-icon> Ajouter
-  </button>
-<!-- 
-  <mat-toolbar color="primary">Toolbar Primary</mat-toolbar>
-  <button mat-raised-button color="accent">Bouton Accent</button>
-  <button mat-raised-button color="warn">Bouton Warn</button> 
--->
+<div class="borrow-page">
+  <!-- Toolbar -->
 
-</mat-toolbar>
-   
+  <mat-toolbar class="page-toolbar">
+    <div class="toolbar-title">
+      <mat-icon>swap_horiz</mat-icon>
+      <span>Gestion des emprunts</span>
+    </div>
 
-    <div class="p-4">
-  <table mat-table [dataSource]="mov" class="mat-elevation-z8 w-full">
+    <button mat-raised-button class="add-btn" (click)="addMov()">
+      <mat-icon>add</mat-icon>
+      Nouvel emprunt
+    </button>
+  </mat-toolbar>
 
-    <!-- ID -->
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef> ID </th>
-      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-    </ng-container>
+  <!-- Filtres -->
 
-    <!-- Titre -->
-    <ng-container matColumnDef="date">
-      <th mat-header-cell *matHeaderCellDef> Date </th>
-      <td mat-cell *matCellDef="let element"> {{element.date}} </td>
-    </ng-container>
+  <div class="filters">
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>Rechercher</mat-label>
 
-    <!-- Catégorie -->
-    <ng-container matColumnDef="action">
-      <th mat-header-cell *matHeaderCellDef> 
-        Action </th>
-      <td mat-cell *matCellDef="let element"> {{element.action}} </td>
-    </ng-container>
+      <input
+        matInput
+        [(ngModel)]="searchText"
+        (input)="searchMovements()"
+        placeholder="Document ou emprunteur"
+      />
 
-    <!-- Localisation -->
-    <ng-container matColumnDef="actor">
-      <th mat-header-cell *matHeaderCellDef> Acteur </th>
-      <td mat-cell *matCellDef="let element"> {{element.actor}} </td>
-    </ng-container>
+      <mat-icon matSuffix> search </mat-icon>
+    </mat-form-field>
 
-    <!-- Statut -->
-    <ng-container matColumnDef="statut">
-      <th mat-header-cell *matHeaderCellDef> Statut </th>
-      <td mat-cell *matCellDef="let element"> {{element.status}} </td>
-    </ng-container>
+    <mat-form-field appearance="outline" class="status-field">
+      <mat-label>Statut</mat-label>
 
-    <!-- Actions -->
-    <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef> Actions </th>
-      <td mat-cell *matCellDef="let element">
-        <button mat-icon-button color="primary" (click)="details(element)">
-          <mat-icon>visibility</mat-icon>
-        </button>
-        <button mat-icon-button color="accent" (click)="edit(element)">
-          <mat-icon>edit</mat-icon>
-        </button>
-        <button mat-icon-button color="warn" (click)="delete(element)">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </td>
-    </ng-container>
+      <mat-select [(ngModel)]="statusFilter" (selectionChange)="searchMovements()">
+        <mat-option value="Tous"> Tous </mat-option>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
+        <mat-option value="Emprunté"> Emprunté </mat-option>
+
+        <mat-option value="En retard"> En retard </mat-option>
+
+        <mat-option value="Retourné"> Retourné </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <!-- Chargement -->
+
+  <div class="loading-container" *ngIf="loading">
+    <mat-spinner diameter="45"></mat-spinner>
+
+    <p>Chargement des emprunts...</p>
+  </div>
+
+  <!-- Tableau -->
+
+  <div class="table-container" *ngIf="!loading && filteredMov.length > 0">
+    <table mat-table [dataSource]="paginatedMov" class="borrow-table">
+      <!-- ID -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>ID</th>
+
+        <td mat-cell *matCellDef="let element">
+          {{ element.id }}
+        </td>
+      </ng-container>
+
+      <!-- Document -->
+      <ng-container matColumnDef="document">
+        <th mat-header-cell *matHeaderCellDef>Document</th>
+
+        <td mat-cell *matCellDef="let element">
+          <div class="document-cell">
+            <mat-icon> description </mat-icon>
+
+            <div>
+              <strong>
+                {{ element.documentTitle }}
+              </strong>
+
+              <small> Document #{{ element.documentId }} </small>
+            </div>
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Emprunteur -->
+      <ng-container matColumnDef="borrower">
+        <th mat-header-cell *matHeaderCellDef>Emprunteur</th>
+
+        <td mat-cell *matCellDef="let element">
+          <div class="borrower-cell">
+            <mat-icon> person </mat-icon>
+
+            <span>
+              {{ element.borrower }}
+            </span>
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Date d'emprunt -->
+      <ng-container matColumnDef="borrowDate">
+        <th mat-header-cell *matHeaderCellDef>Date d'emprunt</th>
+
+        <td mat-cell *matCellDef="let element">
+          {{ element.borrowDate | date: 'dd/MM/yyyy' }}
+        </td>
+      </ng-container>
+
+      <!-- Retour prévu -->
+      <ng-container matColumnDef="returnDate">
+        <th mat-header-cell *matHeaderCellDef>Retour prévu</th>
+
+        <td mat-cell *matCellDef="let element">
+          {{ element.returnDate | date: 'dd/MM/yyyy' }}
+        </td>
+      </ng-container>
+
+      <!-- Statut -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Statut</th>
+
+        <td mat-cell *matCellDef="let element">
+          <span class="status-badge" [ngClass]="getStatusClass(element.status)">
+            {{ element.status }}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- Actions -->
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+
+        <td mat-cell *matCellDef="let element">
+          <!-- Détails -->
+          <button
+            mat-icon-button
+            color="primary"
+            matTooltip="Voir les détails"
+            (click)="details(element)"
+          >
+            <mat-icon>visibility</mat-icon>
+          </button>
+
+          <!-- Modifier -->
+          <button mat-icon-button color="accent" matTooltip="Modifier" (click)="edit(element)">
+            <mat-icon>edit</mat-icon>
+          </button>
+
+          <!-- Retourner -->
+          <button
+            *ngIf="element.status !== 'Retourné'"
+            mat-icon-button
+            color="primary"
+            matTooltip="Retourner le document"
+            (click)="returnDocument(element)"
+          >
+            <mat-icon>assignment_return</mat-icon>
+          </button>
+
+          <!-- Supprimer -->
+          <button mat-icon-button color="warn" matTooltip="Supprimer" (click)="delete(element)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <mat-paginator
+      [length]="filteredMov.length"
+      [pageSize]="pageSize"
+      [pageIndex]="pageIndex"
+      [pageSizeOptions]="[5, 10, 20]"
+      (page)="changePage($event)"
+    >
+    </mat-paginator>
+  </div>
+
+  <!-- Aucun emprunt -->
+
+  <div class="empty-state" *ngIf="!loading && filteredMov.length === 0">
+    <mat-icon> library_books </mat-icon>
+
+    <h3>Aucun emprunt trouvé</h3>
+
+    <p>Aucun emprunt ne correspond aux critères sélectionnés.</p>
+
+    <button mat-raised-button class="add-btn" (click)="addMov()">
+      <mat-icon>add</mat-icon>
+      Nouvel emprunt
+    </button>
+  </div>
 </div>

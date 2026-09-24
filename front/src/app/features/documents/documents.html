@@ -28,28 +28,22 @@
 <div class="filters">
   <mat-form-field appearance="outline" class="search-field">
     <mat-label>Rechercher un document</mat-label>
-
     <input
       matInput
       [(ngModel)]="searchText"
       (ngModelChange)="searchDocuments()"
       placeholder="Titre, catégorie, localisation..."
     />
-
     <mat-icon matSuffix>search</mat-icon>
   </mat-form-field>
-
   <mat-form-field appearance="outline" class="status-field">
     <mat-label>Statut</mat-label>
-
     <mat-select [(ngModel)]="statusFilter" (selectionChange)="searchDocuments()">
       <mat-option value="Tous"> Tous </mat-option>
-
       <mat-option value="Actif"> Actif </mat-option>
-
       <mat-option value="Emprunté"> Emprunté </mat-option>
-
       <mat-option value="Archivé"> Archivé </mat-option>
+      <mat-option value="Disponible"> Disponible </mat-option>
     </mat-select>
   </mat-form-field>
 </div>
@@ -109,8 +103,7 @@
       <td mat-cell *matCellDef="let element">
         <div class="location">
           <mat-icon>location_on</mat-icon>
-
-          {{ element.location }}
+          {{ element.location.slice(0, 30) }} ...
         </div>
       </td>
     </ng-container>
@@ -126,6 +119,7 @@
           [class.active]="element.status === 'Actif'"
           [class.borrowed]="element.status === 'Emprunté'"
           [class.archived]="element.status === 'Archivé'"
+          [class.disponible]="element.status === 'Disponible'"
         >
           <span class="status-dot"></span>
 
@@ -232,6 +226,7 @@
       [class.active]="document.status === 'Actif'"
       [class.borrowed]="document.status === 'Emprunté'"
       [class.archived]="document.status === 'Archivé'"
+      [class.disponible]="document.status === 'Disponible'"
     >
       <span class="status-dot"></span>
 

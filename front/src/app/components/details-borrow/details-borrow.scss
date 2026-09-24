@@ -1,6 +1,330 @@
-.w-full {
-  width: 100%;
+.details-borrow {
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
 }
-.container{
-    padding: 50px;
+
+/* =========================
+   HEADER
+   ========================= */
+
+.details-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+  padding: 20px 24px;
+
+  border-bottom: 1px solid #eee;
+}
+
+.header-icon {
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #e8f5f7;
+}
+
+.header-icon mat-icon {
+  color: #008a9b;
+  font-size: 26px;
+}
+
+.header-content {
+  flex: 1;
+}
+
+.header-content h2 {
+  margin: 0;
+
+  font-size: 21px;
+  font-weight: 600;
+}
+
+.header-content p {
+  margin: 4px 0 0;
+
+  font-size: 13px;
+
+  opacity: 0.65;
+}
+
+.close-button {
+  margin-left: auto;
+}
+
+/* =========================
+   CONTENT
+   ========================= */
+
+.details-content {
+  padding: 24px;
+}
+
+/* =========================
+   SECTIONS
+   ========================= */
+
+.details-section {
+  margin-bottom: 28px;
+}
+
+.details-section:last-child {
+  margin-bottom: 0;
+}
+
+.details-section h3 {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  margin: 0 0 16px;
+
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.details-section h3 mat-icon {
+  font-size: 21px;
+}
+
+/* =========================
+   INFO GRID
+   ========================= */
+
+.info-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 20px;
+}
+
+.info-item {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 5px;
+
+  padding: 14px;
+
+  background: #f8f9fa;
+
+  border-radius: 8px;
+}
+
+.label {
+  font-size: 12px;
+
+  opacity: 0.6;
+
+  font-weight: 500;
+}
+
+.value {
+  font-size: 15px;
+
+  font-weight: 600;
+}
+
+/* =========================
+   BORROWER
+   ========================= */
+
+.borrower {
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+}
+
+.borrower mat-icon {
+  font-size: 20px;
+}
+
+/* =========================
+   DOCUMENT
+   ========================= */
+
+.document-card {
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+  padding: 18px;
+
+  border: 1px solid #e5e5e5;
+
+  border-radius: 9px;
+}
+
+.document-icon {
+  width: 45px;
+  height: 45px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 8px;
+
+  background: #eef7f8;
+}
+
+.document-icon mat-icon {
+  color: #008a9b;
+}
+
+.document-info {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 4px;
+}
+
+.document-title {
+  font-size: 16px;
+
+  font-weight: 600;
+}
+
+.document-id {
+  font-size: 12px;
+
+  opacity: 0.6;
+}
+
+/* =========================
+   DATES
+   ========================= */
+
+.date-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 16px;
+}
+
+.date-card {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 16px;
+
+  background: #f8f9fa;
+
+  border-radius: 8px;
+}
+
+.date-card > mat-icon {
+  font-size: 24px;
+
+  opacity: 0.7;
+}
+
+.date-card > div {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 4px;
+}
+
+/* =========================
+   STATUS
+   ========================= */
+
+.status-container {
+  padding: 5px 0;
+}
+
+.status-badge {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  padding: 7px 14px;
+
+  border-radius: 20px;
+
+  font-size: 13px;
+
+  font-weight: 600;
+}
+
+.status-badge mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+.status-borrowed {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status-late {
+  background: #f8d7da;
+  color: #842029;
+}
+
+.status-returned {
+  background: #d1e7dd;
+  color: #0f5132;
+}
+
+/* =========================
+   FOOTER
+   ========================= */
+
+.details-footer {
+  display: flex;
+
+  justify-content: flex-end;
+
+  padding: 16px 24px;
+
+  border-top: 1px solid #eee;
+}
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+
+@media (max-width: 600px) {
+  .details-header {
+    padding: 16px;
+  }
+
+  .details-content {
+    padding: 16px;
+  }
+
+  .info-grid,
+  .date-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .details-footer {
+    padding: 12px 16px;
+  }
 }
