@@ -107,9 +107,9 @@
         <!-- boxid -->
         <!-- <mat-form-field appearance="outline" class="full-width">
           <mat-label>Repertoire</mat-label>
-          <input placeholder="Pick one" matInput formControlName="box_id" [matAutocomplete]="auto" />
-          <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let option of boxs" [value]="option.id">{{option.name}}</mat-option>
+          <input placeholder="Pick one" matInput formControlName="box_id" value="box_id" [(ngModel)]="box" [matAutocomplete]="auto" />
+          <mat-autocomplete class="option" #auto="matAutocomplete">
+            <mat-option *ngFor="let option of location" [value]="option.id">{{option.link}}</mat-option>
           </mat-autocomplete>
           <mat-icon matSuffix> box </mat-icon>
           <mat-error *ngIf="form.controls.box_id.hasError('required')">
@@ -122,7 +122,7 @@
           <mat-select placeholder="Pick one" matInput formControlName="box_id" >
             <mat-option *ngFor="let option of location" [value]="option.id">{{option.link}}</mat-option>
           <mat-icon matSuffix> box </mat-icon>
-        </mat-select>
+        </mat-select> 
           
           <mat-error *ngIf="form.controls.box_id.hasError('required')">
             La repetoire du document est obligatoire

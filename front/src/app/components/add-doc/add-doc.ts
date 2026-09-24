@@ -136,6 +136,7 @@ export class AddDoc {
 
   edit(doc: Doc): void {
     const id = this.data?.data?.id;
+    console.log("data", doc);
 
     if (!id) {
       console.error('ID du document manquant');
@@ -168,8 +169,15 @@ export class AddDoc {
     const range = this.ranges.find(r => r.id === shelf?.parent_id);
     const room = this.rooms.find(r => r.id === range?.parent_id);
     const site = this.sites.find(s => s.id === room?.parent_id);
-    const location = `${site?.name ?? ''} > ${room?.name ?? ''} > ${range?.name ?? ''} > ${shelf?.name ?? ''} > ${bay?.name ?? ''} > ${box?.name ?? ''}`; 
+    const location = `${site?.name ?? ''} / ${room?.name ?? ''} / ${range?.name ?? ''} / ${shelf?.name ?? ''} / ${bay?.name ?? ''} / ${box?.name ?? ''}`; 
     return location;
+  }
+
+  getLocationData(loc: any){
+    const parts = loc.split(' / ').map((s: any) => s.trim());
+    const location = [{site : parts[0] ?? ''}, {room : parts[1] ?? ''}, {range : parts[2] ?? ''}, {shelf : parts[3] ?? ''}, {bay : parts[4] ?? ''}, {box : parts[5] ?? ''}]; 
+    console.log("location", location);
+    // return location;
   }
 
   cancel(): void {
