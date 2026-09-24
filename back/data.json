@@ -87,7 +87,8 @@
       "code": "",
       "updated_by": "",
       "created_by": "",
-      "status": "Emprunté"
+      "status": "Emprunté",
+      "id": "6PaUZPz9R4w"
     },
     {
       "title": "qsdsd",
@@ -329,6 +330,13 @@
       "email": "lecB@doc.com ",
       "role": "Archiviste",
       "status": "Desactivé"
+    },
+    {
+      "name": "sqd",
+      "email": "radlionempire@gmail.com",
+      "role": "Administrateur",
+      "status": "Actif",
+      "id": "NdDOIQ-ICNw"
     }
   ],
   "borrow": [
@@ -360,7 +368,8 @@
       "id": "3",
       "date": "05/08/25",
       "action": "Emprunté",
-      "actor": "Marie Claire "
+      "actor": "Marie Claire ",
+      "status": "Annormale"
     },
     {
       "title": "exomath",
