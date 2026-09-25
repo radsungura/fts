@@ -7,7 +7,7 @@
       "codebar": "Con-20",
       "category": "Juridique",
       "location": "Armoire A1",
-      "status": "Disponible"
+      "status": "Emprunté"
     },
     {
       "id": "2",
@@ -87,8 +87,7 @@
       "code": "",
       "updated_by": "",
       "created_by": "",
-      "status": "Emprunté",
-      "id": "6PaUZPz9R4w"
+      "status": "Emprunté"
     },
     {
       "title": "qsdsd",
@@ -381,16 +380,25 @@
       "id": "3",
       "date": "05/08/25",
       "action": "Emprunté",
-      "actor": "Marie Claire ",
-      "status": "Annormale"
+      "actor": "Marie Claire "
     },
     {
-      "title": "exomath",
-      "reference": "exo1",
-      "category": "livre",
-      "location": "Etagere1,rayon2",
-      "status": "active",
+      "documentId": "f86c",
+      "documentTitle": "Lettre de motivation",
+      "borrower": "Keryl Nobel",
+      "borrowDate": "2026-09-21",
+      "returnDate": "2026-09-28",
+      "status": "Emprunté",
       "id": "NitysGQFif0"
+    },
+    {
+      "documentId": "1",
+      "documentTitle": "Contrat X",
+      "borrower": "Carel",
+      "borrowDate": "2026-09-14",
+      "returnDate": "2026-09-21",
+      "status": "Emprunté",
+      "id": "YPVvuk71Ncg"
     }
   ],
   "repos": [
