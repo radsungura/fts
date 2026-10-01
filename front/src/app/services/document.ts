@@ -23,7 +23,7 @@ export class Document {
     return this.http.post<Doc>(this.api, doc);
   }
 
-  delete(id: number): Observable<void> {
+  delete(id: any): Observable<void> {
     return this.http.delete<void>(`${this.api}/${id}`);
   }
 
@@ -31,3 +31,4 @@ export class Document {
     return this.http.put<Doc>(`${this.api}/${id}`, doc);
   }
 }
+

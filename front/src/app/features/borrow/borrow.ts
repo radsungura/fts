@@ -173,7 +173,6 @@ export class Borrow {
   changePage(event: any): void {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
-
     this.updatePagination();
   }
 
@@ -194,13 +193,10 @@ export class Borrow {
     switch (status) {
       case 'Emprunté':
         return 'status-borrowed';
-
       case 'En retard':
         return 'status-late';
-
       case 'Retourné':
         return 'status-returned';
-
       default:
         return '';
     }
@@ -263,10 +259,6 @@ export class Borrow {
 
   /**
    * Retourner un document
-   *
-   * 1. On confirme le retour.
-   * 2. On met l'emprunt à "Retourné".
-   * 3. On remet automatiquement le document à "Actif".
    */
   returnDocument(mov: Mov): void {
     if (!mov.id) {
@@ -367,8 +359,9 @@ export class Borrow {
       width: '90vw',
       maxWidth: '450px',
       data: {
-        mode: 'borrow',
-        item: mov,
+        action: 'delete',
+        item: 'borrow',
+        data: mov,
       },
     });
 

@@ -31,6 +31,7 @@ export class Add {
   parents: any = [];
   level: any;
   form;
+  parent: any;
 
   constructor(
     private fb: FormBuilder,
@@ -39,18 +40,26 @@ export class Add {
     private serv: Repo,
   ) {
     const location = data?.data;
+
+    console.log('Add component data:', location);
+
+    this.form = this.fb.group({
+    const location = data?.data;
     this.form = this.fb.group({
       name: [location?.name ?? '', Validators.required],
       code: [location?.code ?? '', Validators.required],
       category: [location?.category ?? '', Validators.required],
-      address: [location?.address ?? '', Validators.required],
+      address: [location?.address ?? ''],
       desc: [location?.desc ?? '', Validators.required],
-      parent_id: [location?.parent_id ?? '', Validators.required],
+      parent_id: [location?.parent_id ?? ''],
       status: [location?.status ?? 'Actif', Validators.required],
       created_at: [location?.status ?? Date.now, Validators.required],
       update_at: [location?.status ?? Date.now, Validators.required],
     });
-    // this.parent = this.serv.filter(el => el.level == level+1)
+
+    this.serv.getAll().subscribe(el =>{
+      this.parent = el;
+    });
   }
 
   oncat(data: any): void {
@@ -62,12 +71,15 @@ export class Add {
 
   onSubmit(): void {
     this.servererror = false;
+    
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
 
     const locationData = this.form.getRawValue() as Location;
+    console.log("data", locationData, this.form.getRawValue(), this.data);
+    
     if (this.data.action === 'add') {
       this.add(locationData);
     } else {
@@ -75,29 +87,27 @@ export class Add {
     }
   }
 
-  add(location: Location): void {
+  add(location: any): void {
+    location.address = (parseInt(location.category) > 1)? this.getLocation(location.parent_id) : location.address;
     this.serv.create(location).subscribe({
-      next: (result: Location) => {
+      next: (result: any) => {
         this.dialogRef.close(result);
       },
-
       error: (error) => {
         console.error('Erreur lors de l’ajout du location :', error);
-
         this.servererror = true;
       },
     });
   }
 
   edit(location: Location): void {
+    location.address = (location.category > 1)? this.getLocation(location.parent_id) : location.address;
     const id = this.data?.data?.id;
-
     if (!id) {
       console.error('ID du location manquant');
       this.servererror = true;
       return;
     }
-
     this.serv.update(id, location).subscribe({
       next: (result: Location) => {
         this.dialogRef.close(result);
@@ -109,6 +119,21 @@ export class Add {
         this.servererror = true;
       },
     });
+  }
+
+  getLocation(id: any){
+    let location: any = "";
+    const box = this.parent.find((b: any) => b.id == id);
+    const bay = this.parent.find((el: any) => el.id === box?.parent_id);
+    const shelf = this.parent.find((s: any) => s.id === bay?.parent_id);
+    const range = this.parent.find((r: any) => r.id === shelf?.parent_id);
+    const room = this.parent.find((r: any) => r.id === range?.parent_id);
+    const site = this.parent.find((s: any) => s.id === room?.parent_id);
+    const path = [box, bay, shelf, range, room, site];
+    path.forEach(el => {
+      location += el?.name? `  >  ${el.name} ` : '';
+    });
+    return location;
   }
 
   cancel(): void {

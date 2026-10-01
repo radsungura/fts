@@ -153,8 +153,9 @@ export class Archive {
       width: '90vw',
       maxWidth: '450px',
       data: {
-        mode: 'document',
-        item: doc,
+        action: 'delete',
+        item: 'document',
+        data: doc,
       },
     });
 

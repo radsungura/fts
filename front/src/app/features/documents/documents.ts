@@ -157,6 +157,7 @@ export class Documents {
       width: '500px',
       data: {
         action: 'delete',
+        item: 'document',
         data: doc,
       },
     });

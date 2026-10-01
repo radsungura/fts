@@ -6,12 +6,10 @@
         {{ data.action === 'add' ? 'note_add' : 'edit_location' }}
       </mat-icon>
     </div>
-
     <div class="header-content">
       <h2>
         {{ data.action === 'add' ? 'Ajouter un repertoire' : 'Modifier le repertoire' }}
       </h2>
-
       <p>
         {{
           data.action === 'add'
@@ -20,7 +18,6 @@
         }}
       </p>
     </div>
-
     <button
       mat-icon-button
       type="button"
@@ -31,7 +28,6 @@
       <mat-icon>close</mat-icon>
     </button>
   </div>
-
   <!-- FORMULAIRE -->
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <!-- INFORMATIONS DU location -->
@@ -45,15 +41,15 @@
                 <!-- CATEGORIE -->
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Catégorie</mat-label>
-          <mat-select matInput formControlName="category" placeholder="Ex. Contrat" [(ngModel)]="level" 
+          <mat-select matInput type="number" formControlName="category" placeholder="Ex. Contrat" [(ngModel)]="level" 
             (ngModelChange)="oncat(level)" >
-            <mat-option value="1">Site</mat-option>
-            <mat-option value="2">Salle</mat-option>
-            <mat-option value="3">Travée</mat-option>
-            <mat-option value="4">Etagère</mat-option>
-            <mat-option value="5">Rayon</mat-option>
-            <mat-option value="6">Boite, classeur, Falde</mat-option>
-            <mat-option value="7">Document</mat-option>
+            <mat-option value=1>Site</mat-option>
+            <mat-option value= 2>Salle</mat-option>
+            <mat-option value= 3>Travée</mat-option>
+            <mat-option value= 4>Etagère</mat-option>
+            <mat-option value= 5>Rayon</mat-option>
+            <mat-option value= 6>Boite, classeur, Falde</mat-option>
+            <mat-option value= 7>Dossier</mat-option>
           </mat-select>
           <mat-icon matSuffix> category </mat-icon>
           <mat-error *ngIf="form.controls.category.hasError('required')">
@@ -62,7 +58,7 @@
         </mat-form-field>
 
         <!-- PARENT -->
-        <mat-form-field *ngIf="parents.length > 0" appearance="outline" class="full-width">
+        <mat-form-field *ngIf="parents.length > 0 && level !=1" appearance="outline" class="full-width">
           <mat-label>Repetoire Parent</mat-label>
           <mat-select matInput formControlName="parent_id" placeholder="Ex. Depot" >
             <mat-option *ngFor="let parent of parents" value="{{parent.id}}">{{parent.name}}</mat-option>
@@ -102,11 +98,8 @@
         <!-- LOCALISATION -->
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Localisation</mat-label>
-
           <input matInput formControlName="address" placeholder="Ex. Ville, Batiment, n°" />
-
           <mat-icon matSuffix> location_on </mat-icon>
-
           <mat-error *ngIf="form.controls.address.hasError('required')">
             La localisation est obligatoire
           </mat-error>

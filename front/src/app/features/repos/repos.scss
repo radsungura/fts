@@ -180,9 +180,12 @@ tr.mat-mdc-row:hover {
 /* VUE GRILLE */
 /* ========================= */
 
+.path{
+  color: #838485c2!important
+}
 .grid-container {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
+  flex-wrap: wrap;
   gap: 20px;
 }
 
@@ -190,10 +193,11 @@ tr.mat-mdc-row:hover {
   position: relative;
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  padding: 10px;
   background: white;
   border-radius: 12px;
-  min-height: 220px;
+  // min-height: 220px;
+  width: 150px;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
   transition:
     transform 0.2s ease,
