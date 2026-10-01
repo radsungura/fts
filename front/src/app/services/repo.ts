@@ -29,7 +29,7 @@ export class Repo {
     return this.http.put<Location>(`${this.api}/${id}`, Location);
   }
 
-  delete(id: number): Observable<void> {
+  delete(id: any): Observable<void> {
     return this.http.delete<void>(`${this.api}/${id}`);
   }
 }

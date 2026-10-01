@@ -1,4 +1,4 @@
-<mat-toolbar class="Location-toolbar">
+<mat-toolbar class="locations-toolbar">
   <div class="toolbar-title">
     <mat-icon>description</mat-icon>
     <span>Liste des Repetoires</span>
@@ -41,24 +41,40 @@
  
   <mat-form-field appearance="outline" class="status-field">
     <mat-label>Statut</mat-label>
-    <mat-select [(ngModel)]="statusFilter" (selectionChange)="searchLocations()">
-      <mat-option value="Tous"> Tous </mat-option>
-      <mat-option value="Actif"> Actif </mat-option>
-      <mat-option value="Fermé"> Fermé </mat-option>
+    <mat-select [(ngModel)]="catFilter" (selectionChange)="searchLocations()">
+      <mat-option value= 0> Tous </mat-option>
+      <mat-option value= 1> Sites </mat-option>
+      <mat-option value= 2> Salles </mat-option>
+      <mat-option value= 3> Travées </mat-option>
+      <mat-option value= 4> Etagères </mat-option>
+      <mat-option value= 5> Rayon </mat-option>
+      <mat-option value= 6> Boites/Classeurs </mat-option>
+      <mat-option value= 7> Dossier </mat-option>
     </mat-select>
   </mat-form-field>
 </div>
 
-
-<button mat-button (click)="display(parent, action = 'back')" *ngIf="parent">
+<!-- BREADCRUMB -->
+<div class="breadcrumb" *ngIf="breadcrumb.length > 0">
+  <button mat-button (click)="display(currentlocation[0], 'back')" *ngIf="currentlocation.length">
   <mat-icon>arrow_back</mat-icon>
   Retour
 </button>
-
+  <ng-container >
+    <button
+      disabled
+      mat-button
+      style="color: #838485c2"
+      type="button"
+      class="breadcrumb-item"
+    >
+      {{ path }}
+    </button>
+  </ng-container>
+</div>
 <!-- ===================== -->
 <!-- VUE LISTE -->
 <!-- ===================== -->
-
 <div *ngIf="view === 'list'" class="table-container">
   <table
     mat-table
@@ -79,22 +95,18 @@
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>Nom</th>
 
-      <td mat-cell *matCellDef="let element">
+      <td (click)="display(element, action = 'forward')" mat-cell *matCellDef="let element">
         <div class="location-title">
           <div class="location-icon">
             <mat-icon>
-        {{element.category == 1 ? 'warehouse' : ''}}
-        {{element.category == 2 ? 'gite' : ''}}
-        {{element.category == 3 ? 'view_column' : ''}}
-        {{element.category == 4 ? 'shelves' : ''}}
-        {{element.category == 5 ? 'splitscreen' : ''}}
-        {{element.category == 6 ? 'inventory' : ''}}
-        {{element.category == 7 ? 'folder' : ''}}
-        {{element.category == 4 ? 'shelves' : ''}}
-        {{element.category == 5 ? 'splitscreen' : ''}}
-        {{element.category == 6 ? 'inventory' : ''}}
-        {{element.category == 7 ? 'description' : ''}}
-    </mat-icon>
+              {{element.category == 1 ? 'gite' : ''}}
+              {{element.category == 2 ? 'warehouse' : ''}}
+              {{element.category == 3 ? 'view_column' : ''}}
+              {{element.category == 4 ? 'shelves' : ''}}
+              {{element.category == 5 ? 'splitscreen' : ''}}
+              {{element.category == 6 ? 'inventory' : ''}}
+              {{element.category == 7 ? 'folder' : ''}}
+            </mat-icon>
           </div>
 
           <span>
@@ -109,8 +121,14 @@
     <ng-container matColumnDef="category">
       <th mat-header-cell *matHeaderCellDef>Catégories</th>
 
-      <td mat-cell *matCellDef="let element">
-        {{ element.category }}
+      <td (click)="display(element, action = 'forward')" mat-cell *matCellDef="let element">
+        {{element.category == 1 ? 'Site' : ''}}
+        {{element.category == 2 ? 'Salle' : ''}}
+        {{element.category == 3 ? 'Travée' : ''}}
+        {{element.category == 4 ? 'Etagère' : ''}}
+        {{element.category == 5 ? 'Rayon' : ''}}
+        {{element.category == 6 ? 'Boite / Classeur' : ''}}
+        {{element.category == 7 ? 'Dossier' : ''}}
       </td>
     </ng-container>
 
@@ -119,7 +137,7 @@
     <ng-container matColumnDef="address">
       <th mat-header-cell *matHeaderCellDef>Adresse</th>
 
-      <td mat-cell *matCellDef="let element">
+      <td (click)="display(element, action = 'forward')" mat-cell *matCellDef="let element">
         <div class="location">
           <mat-icon>location_on</mat-icon>
 
@@ -133,7 +151,7 @@
     <ng-container matColumnDef="status">
       <th mat-header-cell *matHeaderCellDef>Statut</th>
 
-      <td mat-cell *matCellDef="let element">
+      <td (click)="display(element, action = 'forward')" mat-cell *matCellDef="let element">
         <span
           class="status-badge"
           [class.active]="element.status === 'Actif'"
@@ -213,15 +231,12 @@
   >
   </mat-paginator>
 </div>
-
 <!-- ===================== -->
 <!-- VUE GRILLE -->
 <!-- ===================== -->
-
 <div *ngIf="view === 'grid'" class="grid-container">
   <!-- back button -->
-
-  <div (click)="display(locations, action = 'enter')" class="location-card" *ngFor="let locations of filteredLocations">
+  <div (click)="display(locations, action = 'forward')" class="location-card" *ngFor="let locations of filteredLocations">
     <div class="card-icon">
       <mat-icon>
         {{locations.category == 1 ? 'warehouse' : ''}}
@@ -241,51 +256,11 @@
       <h3>
         {{ locations.name }}
       </h3>
-      <p>
-        {{ locations.category }}
-      </p>
+      
       <span class="location">
         <mat-icon>location_on</mat-icon>
         {{ locations.address }}
       </span>
-    </div>
-    <span
-      class="status-badge"
-      [class.active]="locations.status === 'Actif'"
-      [class.ferme]="locations.status === 'Fermé'"
-    >
-      <span class="status-dot"></span>
-
-      {{ locations.status }}
-    </span>
-    <div class="card-actions">
-      <button
-        mat-icon-button
-        color="primary"
-        matTooltip="Voir les détails"
-        type="button"
-        (click)="details(locations)"
-      >
-        <mat-icon>visibility</mat-icon>
-      </button>
-      <button
-        mat-icon-button
-        color="accent"
-        matTooltip="Modifier"
-        type="button"
-        (click)="edit(locations)"
-      >
-        <mat-icon>edit</mat-icon>
-      </button>
-      <button
-        mat-icon-button
-        color="warn"
-        matTooltip="Supprimer"
-        type="button"
-        (click)="delete(locations)"
-      >
-        <mat-icon>delete</mat-icon>
-      </button>
     </div>
   </div>
 
