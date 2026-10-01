@@ -41,10 +41,9 @@ export class Add {
   ) {
     const location = data?.data;
 
-    console.log('Add component data:', location);
-
-    this.form = this.fb.group({
-    const location = data?.data;
+    console.log('Add component data:', location);cd git
+    // this.form = this.fb.group({
+    // const location = data?.data;
     this.form = this.fb.group({
       name: [location?.name ?? '', Validators.required],
       code: [location?.code ?? '', Validators.required],
