@@ -39,13 +39,22 @@
         <!-- Nom -->
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Nom</mat-label>
-
-          <input matInput formControlName="name" placeholder="Ex. Jean Dupont" />
-
+          <input matInput formControlName="name" placeholder="Ex. Dupont" />
           <mat-icon matSuffix>person</mat-icon>
 
           <mat-error *ngIf="form.get('name')?.hasError('required')">
             Le nom est obligatoire
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Prénom -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Prénom</mat-label>
+          <input matInput formControlName="firstName" placeholder="Ex. Jean" />
+          <mat-icon matSuffix>person_outline</mat-icon>
+
+          <mat-error *ngIf="form.get('firstName')?.hasError('required')">
+            Le prénom est obligatoire
           </mat-error>
         </mat-form-field>
 

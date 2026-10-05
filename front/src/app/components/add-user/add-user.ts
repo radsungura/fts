@@ -64,6 +64,8 @@ export class AddUser {
       {
         name: [user?.name ?? '', Validators.required],
 
+        firstname: [user?.firstname ?? '', Validators.required],
+
         email: [user?.email ?? '', [Validators.required, Validators.email]],
 
         role: [user?.role ?? '', Validators.required],

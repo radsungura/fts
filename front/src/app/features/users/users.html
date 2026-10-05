@@ -63,7 +63,7 @@
       matInput
       [(ngModel)]="searchText"
       (ngModelChange)="searchUsers()"
-      placeholder="Nom, e-mail, rôle..."
+      placeholder="Nom, Prénom, E-mail, Rôle..."
     />
 
     <mat-icon matSuffix>search</mat-icon>
@@ -122,6 +122,23 @@
 
           <span>
             {{ element.name }}
+          </span>
+        </div>
+      </td>
+    </ng-container>
+
+    <!-- PRENOM -->
+    <ng-container matColumnDef="firstname">
+      <th mat-header-cell *matHeaderCellDef>Prénom</th>
+
+      <td mat-cell *matCellDef="let element">
+        <div class="user-firstname">
+          <div class="user-icon">
+            <mat-icon>person</mat-icon>
+          </div>
+
+          <span>
+            {{ element.firstname }}
           </span>
         </div>
       </td>
