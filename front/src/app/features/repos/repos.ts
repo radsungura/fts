@@ -112,38 +112,51 @@ export class Repos {
   }
 
   display(item: Location, action?: string) {
-    const parent = this.repos.filter((loc) => loc.id === item?.parent_id && loc.category === item.category - 1);
-    const childLocations = this.repos.filter((loc) => loc.parent_id === item.id && loc.parent_id !== 0);
+    const parent = this.repos.filter((loc) => loc.category === item.category - 1);
+    const child = this.repos.filter((loc) => loc.parent_id === item.id && loc.category === item.category + 1);
 
     if (action === 'back' && item.category > 1) {
-        this.filteredLocations = [];
-      parent.length? this.filteredLocations = parent : this.currentlocation;
-      this.currentlocation = parent || this.currentlocation;
-      this.getlocation(this.currentlocation[0].category > 1? this.currentlocation[0] :  null);
-    }else if (action === 'forward'){
-      this.filteredLocations = childLocations.length > 0 ? childLocations : [item];
-      this.currentlocation[0] = item;
-      this.getlocation(this.currentlocation[0]);
+      this.filteredLocations = [];
+      this.filteredLocations = parent.length? parent : this.currentlocation;
+      this.currentlocation = [item];
+      this.getlocation(action, parent[0]);
+    }else if (action === 'forward' && item.category < 7 && child.length){
+      this.filteredLocations = [];
+      this.filteredLocations = child;
+      this.currentlocation = [item];
+      this.getlocation(action, this.currentlocation[0]);
     }else{
-      this.filteredLocations = this.currentlocation;
+      // this.filteredLocations = [item];
     }
   }
 
-  getlocation(location: any) {
-  this.breadcrumb = [];
-  let current = location;
-  let path = "";
-  while (current) {
-    this.breadcrumb.unshift(current);
-    current = this.repos.find(
-      loc => loc.id === current?.parent_id
-    ) ?? null;
-  }
-  for (let i = 0; i < this.breadcrumb.length; i++) {
-    const el = this.breadcrumb[i];
-    path += " "+` ${el.name}   > `+" ";
-  }
-  this.path = path;
+  getlocation(action: any, location: any) {
+    this.breadcrumb = [];
+    let current = location;
+    let path = "";
+        console.log("loc", location)
+
+    while (current) {
+      this.breadcrumb.unshift(current);
+      current = this.repos.find(
+        loc => loc.id === current?.parent_id
+      ) ?? null;
+    }
+    if (action == 'back') {
+        for (let i: number = 0; i < this.breadcrumb.length - 1; i++) {
+      const el = this.breadcrumb[i];
+        path += " "+` ${el.name}   > `+" ";
+    }
+    } 
+    else {
+      for (let i: number = 0; i < this.breadcrumb.length; i++) {
+        const el = this.breadcrumb[i];
+        path += " "+` ${el.name}   > `+" ";
+      }
+    }
+        console.log("loc", this.breadcrumb)
+
+    this.path = path;
   }
 
   add() {
@@ -179,7 +192,7 @@ export class Repos {
       maxHeight: '1000vh',
       data: {
         action: 'edit',
-        data: Location,
+        data: loc,
       },
   });
 

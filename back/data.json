@@ -71,8 +71,8 @@
       "title": "Contrat",
       "reference": "C-2026-001",
       "category": "CONTRAT",
-      "location": "Dépôt Central / Archive principale / Comptabilité / Compte 2026 / juin / Piece comptable",
-      "desc": "CONTRAT ENTRE L4ENTREPRISE ET LE FOURNISSEUR D4ORDINATEUR",
+      "location": "Dépôt Central1 / Archive principale / Comptabilité / Compte 2026 / juin / Piece comptable",
+      "desc": "CONTRAT ENTRE L'ENTREPRISE ET LE FOURNISSEUR D4ORDINATEUR",
       "box_id": "85qlwrY6LEs",
       "bay": "",
       "shelf": "",
@@ -178,14 +178,15 @@
   ],
   "repos": [
     {
-      "name": "Dépôt Central",
+      "name": "Dépôt Central1",
       "code": "DEP-BUJA-001",
       "category": 1,
       "address": "Avenue de la Libération, n°5, Bujumbura",
       "desc": "Dépôt principal pour les archives administratives et institutionnelles",
+      "parent_id": "",
       "status": "Actif",
-      "created_at": "active",
-      "update_at": "active",
+      "created_at": "Actif",
+      "update_at": "Actif",
       "id": "1"
     },
     {
@@ -212,10 +213,12 @@
       "name": "Compte 2026",
       "code": "COM-2026",
       "category": 4,
-      "address": "bujumbura",
+      "address": "  >  Comptabilité   >  Archive principale   >  Dépôt Central1 ",
       "desc": "Compte 2026",
       "parent_id": "1LdoX5EVAwM",
       "status": "Actif",
+      "created_at": "Actif",
+      "update_at": "Actif",
       "id": "fWMLQuBgIRU"
     },
     {
@@ -269,16 +272,6 @@
       "id": "9iaM8llbxBY"
     },
     {
-      "name": "zdd",
-      "code": "zdz",
-      "category": "1",
-      "address": "zz",
-      "desc": "zrzr",
-      "parent_id": "",
-      "status": "Actif",
-      "id": "JTW6C6nPc2s"
-    },
-    {
       "name": "dgg",
       "code": "fggf",
       "category": "3",
@@ -289,46 +282,6 @@
       "id": "aY2FfJBXD2I"
     },
     {
-      "name": "zez",
-      "code": "zaea",
-      "category": "1",
-      "address": "zea",
-      "desc": "zea",
-      "parent_id": "",
-      "status": "Actif",
-      "id": "08c0-keWbCc"
-    },
-    {
-      "name": "zdaz",
-      "code": "azeaze",
-      "category": "1",
-      "address": "azea",
-      "desc": "azeaz",
-      "parent_id": "",
-      "status": "Actif",
-      "id": "v3BAXB3xSaU"
-    },
-    {
-      "name": "zaz",
-      "code": "az",
-      "category": "1",
-      "address": "a",
-      "desc": "az",
-      "parent_id": "",
-      "status": "Actif",
-      "id": "c8yePmDRIOM"
-    },
-    {
-      "name": "sd",
-      "code": "dza",
-      "category": "1",
-      "address": "adz",
-      "desc": "zda",
-      "parent_id": "",
-      "status": "Actif",
-      "id": "AH6c6qVNX4s"
-    },
-    {
       "name": "zda",
       "code": "aazda",
       "category": "2",
@@ -337,6 +290,48 @@
       "parent_id": "1",
       "status": "Actif",
       "id": "LbdrEp3C0mo"
+    },
+    {
+      "name": "Site 12",
+      "code": "S-008",
+      "category": 1,
+      "address": "Gitega",
+      "desc": "Archive historique",
+      "parent_id": "",
+      "status": "Actif",
+      "created_at": "Actif",
+      "update_at": "Actif",
+      "id": "RV1rOaep8Rc"
+    },
+    {
+      "name": "xcqxcqc",
+      "code": "qcq",
+      "category": "2",
+      "address": "  >  Dépôt Central1 ",
+      "desc": "qsc",
+      "parent_id": "1",
+      "status": "Actif",
+      "id": "Goq-K1yQOGo"
+    },
+    {
+      "name": "b2",
+      "code": "E3",
+      "category": 4,
+      "address": "  >  Comptabilité   >  Archive principale   >  Dépôt Central1 ",
+      "desc": "mlkm",
+      "parent_id": "1LdoX5EVAwM",
+      "status": "Actif",
+      "id": "NGNwUvwO1gg"
+    },
+    {
+      "name": "mlm",
+      "code": ":;",
+      "category": 7,
+      "address": "  >  Piece comptable   >  juin   >  Compte 2026   >  Comptabilité   >  Archive principale   >  Dépôt Central1 ",
+      "desc": "lk",
+      "parent_id": "85qlwrY6LEs",
+      "status": "Actif",
+      "id": "IsEOvhfUzaQ"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
