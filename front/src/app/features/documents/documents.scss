@@ -55,23 +55,10 @@
 /* TABLEAU */
 /* ========================= */
 
-.table-container::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-.table-container::-webkit-scrollbar-track {
-  background: #f1f5f9;
+.table-container {
+  overflow-x: auto;
   border-radius: 10px;
-}
-
-.table-container::-webkit-scrollbar-thumb {
-  background: #94a3b8;
-  border-radius: 10px;
-}
-
-.table-container::-webkit-scrollbar-thumb:hover {
-  background: #64748b;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 table {

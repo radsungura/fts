@@ -17,6 +17,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { DetailsDoc } from '../../components/details-doc/details-doc';
 import { AddDoc } from '../../components/add-doc/add-doc';
 import { Delete } from '../../components/delete/delete';
+import { BarcodeDialog } from '../../components/barcode-dialog/barcode-dialog';
 
 import { Document } from '../../services/document';
 import { Doc } from '../../../models/interfaces';
@@ -131,6 +132,16 @@ export class Documents {
       data: {
         action: 'details',
         item: doc,
+      },
+    });
+  }
+
+  barcode(doc: Doc) {
+    this.dialog.open(BarcodeDialog, {
+      width: '600px',
+      maxWidth: '95vw',
+      data: {
+        document: doc,
       },
     });
   }

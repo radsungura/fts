@@ -1,0 +1,48 @@
+<h2 mat-dialog-title>
+  <mat-icon>barcode</mat-icon>
+  Code-barres du document
+</h2>
+
+<mat-dialog-content>
+  <div class="barcode-container">
+    <div class="document-info">
+      <h3>
+        {{ data?.document?.title }}
+      </h3>
+
+      <p>
+        <strong>Référence :</strong>
+        {{ barcodeValue }}
+      </p>
+
+      <p>
+        <strong>Catégorie :</strong>
+        {{ data?.document?.category }}
+      </p>
+
+      <p>
+        <strong>Localisation :</strong>
+        {{ data?.document?.location }}
+      </p>
+    </div>
+
+    <div class="barcode-wrapper">
+      <svg #barcode></svg>
+    </div>
+
+    <div class="barcode-help">
+      <mat-icon>info</mat-icon>
+
+      <span> Cette étiquette peut être imprimée et collée sur le document physique. </span>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button type="button" (click)="close()">Fermer</button>
+
+  <button mat-raised-button color="primary" type="button" (click)="printBarcode()">
+    <mat-icon>print</mat-icon>
+    Imprimer
+  </button>
+</mat-dialog-actions>
