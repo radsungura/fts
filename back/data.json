@@ -52,12 +52,23 @@
       "status": "Disponible"
     },
     {
-      "id": "8e6c",
       "title": "Lettre d'affectation",
       "reference": "l-02",
       "category": "Correspondance",
-      "location": "Etagere1/rang2",
-      "status": "Actif"
+      "location": "Dépôt Central1 / Archive principale / Comptabilité / Compte 2026 / juin / Piece comptable",
+      "desc": "",
+      "box_id": "85qlwrY6LEs",
+      "bay": "",
+      "shelf": "",
+      "range": "",
+      "room": "",
+      "site": "",
+      "dept_id": "",
+      "code": "-l-02",
+      "updated_by": "",
+      "created_by": "",
+      "status": "Actif",
+      "id": "8e6c"
     },
     {
       "id": "8e6c",
@@ -186,7 +197,6 @@
       "parent_id": "",
       "status": "Actif",
       "created_at": "Actif",
-      "update_at": "Actif",
       "id": "1"
     },
     {
@@ -218,7 +228,6 @@
       "parent_id": "1LdoX5EVAwM",
       "status": "Actif",
       "created_at": "Actif",
-      "update_at": "Actif",
       "id": "fWMLQuBgIRU"
     },
     {
@@ -292,7 +301,7 @@
       "id": "LbdrEp3C0mo"
     },
     {
-      "name": "Site 12",
+      "name": "Site 123",
       "code": "S-008",
       "category": 1,
       "address": "Gitega",
@@ -300,17 +309,18 @@
       "parent_id": "",
       "status": "Actif",
       "created_at": "Actif",
-      "update_at": "Actif",
       "id": "RV1rOaep8Rc"
     },
     {
       "name": "xcqxcqc",
       "code": "qcq",
-      "category": "2",
+      "category": 2,
       "address": "  >  Dépôt Central1 ",
       "desc": "qsc",
       "parent_id": "1",
       "status": "Actif",
+      "created_at": "Actif",
+      "update_at": "Actif",
       "id": "Goq-K1yQOGo"
     },
     {
@@ -324,14 +334,34 @@
       "id": "NGNwUvwO1gg"
     },
     {
-      "name": "mlm",
-      "code": ":;",
+      "name": "Pièce Comptable",
+      "code": "COM-001",
       "category": 7,
       "address": "  >  Piece comptable   >  juin   >  Compte 2026   >  Comptabilité   >  Archive principale   >  Dépôt Central1 ",
-      "desc": "lk",
+      "desc": "ergkgmkglee",
       "parent_id": "85qlwrY6LEs",
       "status": "Actif",
       "id": "IsEOvhfUzaQ"
+    },
+    {
+      "name": "f",
+      "code": "df",
+      "category": 3,
+      "address": "  >  Archive principale   >  Dépôt Central1 ",
+      "desc": "df",
+      "parent_id": "fe-EagswnOk",
+      "status": "Actif",
+      "id": "DL51jQtijsk"
+    },
+    {
+      "name": "drt1",
+      "code": "trgrt",
+      "category": 1,
+      "address": "grtg",
+      "desc": "trg",
+      "parent_id": "",
+      "status": "Actif",
+      "id": "TUy2UZN7xuc"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

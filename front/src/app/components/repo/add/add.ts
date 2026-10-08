@@ -56,8 +56,8 @@ export class Add {
       desc: [location?.desc ?? '', Validators.required],
       parent_id: [location?.parent_id ?? ''],
       status: [location?.status ?? 'Actif', Validators.required],
-      created_at: [location?.status ?? Date.now, Validators.required],
-      update_at: [location?.status ?? Date.now, Validators.required],
+      created_at: [location?.created_at ?? Date.now, Validators.required],
+      update_at: [location?.updated_at ?? Date.now, Validators.required],
     });
 
     this.serv.getAll().subscribe(el =>{
@@ -79,6 +79,7 @@ export class Add {
     }
 
     const locationData = this.form.getRawValue() as Location;
+    console.log("data", this.form.getRawValue(), Date())
     if (this.data.action === 'add') {
       this.add(locationData);
     } else {
@@ -101,7 +102,6 @@ export class Add {
   }
 
   edit(location: any): void {
-
     location.address = (parseInt(location.category) > 1)? this.getLocation(location.parent_id) : location.address;
     location.category = parseInt(location.category);
     const id = this.data?.data?.id;

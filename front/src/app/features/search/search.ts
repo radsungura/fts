@@ -23,7 +23,6 @@ import { Doc } from '../../../models/interfaces';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
@@ -118,28 +117,22 @@ export class Search implements OnInit {
   autocomplete(query: string): void {
     this.searchdoc = query;
     this.query = query.trim();
-
     if (this.query.length >= 3) {
       this.isLoading = true;
-
       this.serv.search(this.query).subscribe({
         next: (results: Doc[]) => {
           this.results = results;
-
           this.isLoading = false;
         },
 
         error: (error) => {
           console.error('Erreur lors de la recherche :', error);
-
           this.results = [];
-
           this.isLoading = false;
         },
       });
     } else {
       this.results = [];
-
       /*
        * Si le champ est complètement vide,
        * on revient à la liste complète.

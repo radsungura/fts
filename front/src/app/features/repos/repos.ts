@@ -76,7 +76,6 @@ export class Repos {
   }
 
   searchLocations() {
-    // console.log("search", this.searchText, "type", this.catFilter);
     const search = this.searchText.toLowerCase().trim();
     const cat = this.catFilter? this.catFilter : 0;
     this.filteredLocations = this.repos.filter((Location) => {
@@ -86,15 +85,11 @@ export class Repos {
         Location.category?.toString().includes(search) ||
         Location.address?.toLowerCase().includes(search);
       const matchesStatus = this.catFilter == 0 || Location.category == this.catFilter;
-      console.log("search", matchesSearch, "cat", matchesStatus)
       return matchesSearch && matchesStatus;
 
     });
-
     this.pageIndex = 0;
   }
-
-  
 
   changePage(event: any) {
     this.pageIndex = event.pageIndex;
@@ -134,8 +129,6 @@ export class Repos {
     this.breadcrumb = [];
     let current = location;
     let path = "";
-        console.log("loc", location)
-
     while (current) {
       this.breadcrumb.unshift(current);
       current = this.repos.find(
@@ -154,8 +147,6 @@ export class Repos {
         path += " "+` ${el.name}   > `+" ";
       }
     }
-        console.log("loc", this.breadcrumb)
-
     this.path = path;
   }
 
