@@ -106,16 +106,8 @@ export class Borrow {
     });
   }
 
-  /**
-   * Mettre automatiquement le statut à "En retard"
-   * lorsque la date de retour prévue est dépassée.
-   *
-   * Attention :
-   * cette modification est uniquement pour l'affichage.
-   * Elle n'est pas enregistrée dans le backend.
-   */
   updateOverdueStatuses(movs: Mov[]): void {
-    const today = this.getToday();
+    const today : Date = this.getToday();
 
     movs.forEach((mov) => {
       // Un document déjà retourné reste "Retourné"
@@ -403,4 +395,5 @@ export class Borrow {
       }
     });
   }
+
 }
