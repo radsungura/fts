@@ -28,11 +28,16 @@ export interface Mov {
 
 export interface User {
   id?: number;
-  name: string;
+  uname: string;
+  fname: string;
+  lname: string;
   email: string;
+  pass: string;
+  passtemp: string;
   role: string;
   status: string;
-  createdAt?: string;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export interface Category {

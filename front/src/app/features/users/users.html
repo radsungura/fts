@@ -108,6 +108,21 @@
         {{ pageIndex * pageSize + i + 1 }}
       </td>
     </ng-container>
+    <ng-container matColumnDef="uname">
+      <th mat-header-cell *matHeaderCellDef>Nom Utilisateur</th>
+
+      <td mat-cell *matCellDef="let element">
+        <div class="user-name">
+          <div class="user-icon">
+            <mat-icon>person</mat-icon>
+          </div>
+
+          <span>
+            {{ element.uname }}
+          </span>
+        </div>
+      </td>
+    </ng-container>
 
     <!-- NOM -->
 
@@ -121,7 +136,8 @@
           </div>
 
           <span>
-            {{ element.name }}
+            {{ element.fname }}
+            {{ element.lname }} {{ element.name}}
           </span>
         </div>
       </td>
@@ -161,7 +177,7 @@
         <span
           class="status-badge"
           [class.active]="element.status === 'Actif'"
-          [class.Desactive]="element.status === 'Desactivé'"
+          [class.Inactif]="element.status === 'Inactif'"
         >
           <span class="status-dot"></span>
 

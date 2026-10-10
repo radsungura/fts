@@ -6,8 +6,13 @@
     </div>
 
     <div class="user-header-info">
-      <h2>{{ user?.name }}</h2>
-      <p>{{ user?.email }}</p>
+      <!-- <h2>{{ user?.uname }}</h2> -->
+      <h2>
+        <!-- {{ user?.name }}  -->
+        {{ user?.fname}}
+        {{ user?.lname}}
+      </h2>
+      <!-- <p>{{ user?.email }}</p> -->
     </div>
   </div>
 
@@ -23,7 +28,16 @@
       <div class="info-grid">
         <div class="info-item">
           <span class="label">Nom</span>
-          <span class="value">{{ user.name }}</span>
+          <span class="value">{{ user.fname }}</span>
+        </div>
+
+        <div class="info-item">
+          <span class="label">Prénom</span>
+          <span class="value">{{ user.lname }}</span>
+        </div>
+        <div class="info-item">
+          <span class="label">Nom Utilisateur</span>
+          <span class="value">{{ user.uname }}</span>
         </div>
 
         <div class="info-item">
@@ -41,11 +55,7 @@
       </h3>
 
       <div class="info-grid">
-        <div class="info-item">
-          <span class="label">Identifiant</span>
-          <span class="value">#{{ user.id }}</span>
-        </div>
-
+      
         <div class="info-item">
           <span class="label">Rôle</span>
           <span class="value role-badge">
@@ -69,11 +79,15 @@
           </span>
         </div>
 
-        <div class="info-item" *ngIf="user.createdAt">
+        <div class="info-item" *ngIf="user.created_at">
           <span class="label">Date de création</span>
           <span class="value">
-            {{ user.createdAt | date: 'dd/MM/yyyy HH:mm' }}
+            {{ user.created_at | date: 'dd/MM/yyyy HH:mm' }}
           </span>
+        </div>
+        <div class="info-item">
+          <span class="label">Date de modification</span>
+          <span class="value">{{ user.updated_at | date: 'dd/MM/yyyy HH:mm' }}</span>
         </div>
       </div>
     </div>

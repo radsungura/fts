@@ -40,7 +40,7 @@ import { UserService } from '../../services/user';
   styleUrl: './users.scss',
 })
 export class Users {
-  displayedColumns: string[] = ['id', 'name', 'email', 'role', 'statut', 'actions'];
+  displayedColumns: string[] = ['id', 'uname', 'name', 'email', 'role', 'statut', 'actions'];
   users: User[] = [];
   loading = false;
   searchText = '';
@@ -93,7 +93,9 @@ export class Users {
     this.filteredUsers = this.users.filter((user) => {
       const matchesSearch =
         !search ||
-        user.name.toLowerCase().includes(search) ||
+        user.uname.toLowerCase().includes(search) ||
+        user.fname.toLowerCase().includes(search) ||
+        user.lname.toLowerCase().includes(search) ||
         user.email.toLowerCase().includes(search) ||
         user.role.toLowerCase().includes(search) ||
         user.status.toLowerCase().includes(search);
