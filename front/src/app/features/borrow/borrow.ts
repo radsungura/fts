@@ -124,7 +124,7 @@ export class Borrow {
       }
 
       // Si la date de retour est dépassée
-      if (mov.returnDate < today) {
+      if (mov.returnDate < new Date(today)) {
         mov.status = 'En retard';
       } else {
         mov.status = 'Emprunté';
@@ -246,6 +246,24 @@ export class Borrow {
       maxHeight: '90vh',
       data: {
         action: 'edit',
+        data: mov,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.loadMov();
+      }
+    });
+  }
+
+  return(mov: Mov): void {
+    const dialogRef = this.dialog.open(AddBorrow, {
+      width: '90vw',
+      maxWidth: '650px',
+      maxHeight: '90vh',
+      data: {
+        action: 'return',
         data: mov,
       },
     });

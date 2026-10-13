@@ -1,5 +1,5 @@
 export interface Doc {
-  id?: number;
+  id?: string;
   title: string;
   reference: string;
   code: string;
@@ -17,12 +17,19 @@ export interface Doc {
 }
 
 export interface Mov {
-  id?: number;
-  documentId?: number;
+  id?: string;
+  documentId?: string;
   documentTitle: string;
   borrower: string;
-  borrowDate: string;
-  returnDate: string;
+  service: string;
+  returned_by: string;
+  bcreated_by: string;
+  rcreated_by: string;
+  bdesc: string;
+  rdesc: string;
+  borrowDate: Date;
+  returnDate: Date;
+  returned_at: Date;
   status: 'Emprunté' | 'En retard' | 'Retourné';
 }
 
@@ -56,7 +63,23 @@ export interface Location {
   category: number;
   parent_id: number;
   desc: string;
-  created_at?: string;
-  updated_at?: string;
+  created_at?: Date;
+  updated_at?: Date;
 }
 
+export type DateInput = 
+    | Date 
+    | string 
+    | number 
+    | [number, number, number, number?, number?, number?]
+    | {
+        year: number;
+        month?: number;
+        day?: number;
+        hours?: number;
+        hour?: number;
+        minutes?: number;
+        minute?: number;
+        seconds?: number;
+        second?: number;
+    };
