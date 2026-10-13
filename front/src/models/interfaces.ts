@@ -21,8 +21,9 @@ export interface Mov {
   documentId?: number;
   documentTitle: string;
   borrower: string;
-  borrowDate: string;
-  returnDate: string;
+  borrowDate: Date;
+  returnDate: Date;
+  desc:string;
   status: 'Emprunté' | 'En retard' | 'Retourné';
 }
 

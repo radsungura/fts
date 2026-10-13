@@ -1,4 +1,4 @@
 export const environment = {
     production: false,
-    URL: 'http://localhost:4000'
+    URL: 'http://rad-pc:4000'
 };
