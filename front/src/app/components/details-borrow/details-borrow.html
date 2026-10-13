@@ -51,25 +51,43 @@
         </div>
       </div>
     </div>
+    <div class="info-grid">
+      <!-- DOCUMENT -->
+      <div class="details-section">
+        <h3>
+          <mat-icon>description</mat-icon>
+          Document
+        </h3>
 
-    <!-- DOCUMENT -->
-    <div class="details-section">
-      <h3>
-        <mat-icon>description</mat-icon>
-        Document
-      </h3>
+        <div class="document-card">
+          <div class="document-icon">
+            <mat-icon> description </mat-icon>
+          </div>
 
-      <div class="document-card">
-        <div class="document-icon">
-          <mat-icon> description </mat-icon>
+          <div class="document-info">
+            <span class="document-title">
+              {{ mov.documentTitle }}
+            </span>
+
+            <span class="document-id"> Document #{{ mov.documentId }} </span>
+          </div>
         </div>
+      </div>
 
-        <div class="document-info">
-          <span class="document-title">
-            {{ mov.documentTitle }}
+      <!-- STATUT -->
+      <div class="details-section">
+        <h3>
+          <mat-icon>verified</mat-icon>
+          Statut
+        </h3>
+
+        <div class="status-container">
+          <span class="status-badge" [ngClass]="getStatusClass(mov.status)">
+            <mat-icon>
+              {{ getStatusIcon(mov.status) }}
+            </mat-icon>
+            {{ mov.status }}
           </span>
-
-          <span class="document-id"> Document #{{ mov.documentId }} </span>
         </div>
       </div>
     </div>
@@ -85,10 +103,8 @@
         <!-- DATE EMPRUNT -->
         <div class="date-card">
           <mat-icon> event </mat-icon>
-
           <div>
             <span class="label"> Date d'emprunt </span>
-
             <span class="value">
               {{ mov.borrowDate | date: 'dd/MM/yyyy' }}
             </span>
@@ -98,42 +114,32 @@
         <!-- DATE RETOUR -->
         <div class="date-card">
           <mat-icon> event_available </mat-icon>
-
           <div>
             <span class="label"> Retour prévu </span>
-
             <span class="value">
               {{ mov.returnDate | date: 'dd/MM/yyyy' }}
+            </span>
+          </div>
+        </div>
+        <div class="date-card" *ngIf="mov.returned_at">
+          <mat-icon> event_available </mat-icon>
+          <div>
+            <span class="label"> Retour Réel </span>
+            <span class="value">
+              {{ mov.returned_at | date: 'dd/MM/yyyy' }}
             </span>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- STATUT -->
-    <div class="details-section">
-      <h3>
-        <mat-icon>verified</mat-icon>
-        Statut
-      </h3>
-
-      <div class="status-container">
-        <span class="status-badge" [ngClass]="getStatusClass(mov.status)">
-          <mat-icon>
-            {{ getStatusIcon(mov.status) }}
-          </mat-icon>
-
-          {{ mov.status }}
-        </span>
-      </div>
-    </div>
+    
   </div>
 
   <!-- PIED -->
   <div class="details-footer">
     <button mat-raised-button color="primary" type="button" (click)="close()">
       <mat-icon> close </mat-icon>
-
       Fermer
     </button>
   </div>
