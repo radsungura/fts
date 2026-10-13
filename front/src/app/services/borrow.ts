@@ -21,7 +21,7 @@ export class Borrows {
     return this.http.post<Mov>(this.api, doc);
   }
 
-  delete(id: number): Observable<void> {
+  delete(id: any): Observable<void> {
     return this.http.delete<void>(`${this.api}/${id}`);
   }
 

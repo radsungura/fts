@@ -107,7 +107,6 @@ export class Borrow {
   }
 
   updateOverdueStatuses(movs: Mov[]): void {
-    const today : Date = this.getToday();
 
     movs.forEach((mov) => {
       // Un document déjà retourné reste "Retourné"
@@ -116,7 +115,7 @@ export class Borrow {
       }
 
       // Si la date de retour est dépassée
-      if (mov.returnDate < today) {
+      if (mov.returnDate < new Date()) {
         mov.status = 'En retard';
       } else {
         mov.status = 'Emprunté';
@@ -269,97 +268,7 @@ export class Borrow {
         this.loadMov();
       }
     });
-    
-    // if (!mov.id) {
-    //   console.error('ID de l’emprunt manquant');
-    //   return;
-    // }
-
-    // if (!mov.documentId) {
-    //   console.error('ID du document manquant');
-    //   return;
-    // }
-
-    // const confirmed = window.confirm(`Confirmer le retour du document "${mov.documentTitle}" ?`);
-
-    // if (!confirmed) {
-    //   return;
-    // }
-
-    // /*
-    //  * Nouveau statut de l'emprunt
-    //  */
-    // const returnedMov: Mov = {
-    //   ...mov,
-    //   status: 'Retourné',
-    // };
-
-    // /*
-    //  * 1. Mettre l'emprunt à "Retourné"
-    //  */
-    // this.data.update(mov.id, returnedMov).subscribe({
-    //   next: () => {
-    //     console.log(`L’emprunt #${mov.id} a été marqué comme retourné.`);
-
-    //     /*
-    //      * 2. Récupérer le document correspondant
-    //      */
-    //     this.documentService.getAll().subscribe({
-    //       next: (documents: Doc[]) => {
-    //         const document = documents.find((doc) => doc.id === mov.documentId);
-
-    //         if (!document) {
-    //           console.error(`Document #${mov.documentId} introuvable.`);
-
-    //           // L'emprunt est quand même retourné
-    //           this.loadMov();
-    //           return;
-    //         }
-
-    //         /*
-    //          * 3. Remettre le document à "Actif"
-    //          */
-    //         const updatedDocument: Doc = {
-    //           ...document,
-    //           status: 'Actif',
-    //         };
-
-    //         this.documentService.update(document.id!, updatedDocument).subscribe({
-    //           next: () => {
-    //             console.log(`Le document "${document.title}" est maintenant Actif.`);
-
-    //             /*
-    //              * 4. Recharger la liste
-    //              */
-    //             this.loadMov();
-    //           },
-
-    //           error: (error) => {
-    //             console.error('Erreur lors de la mise à jour du statut du document :', error);
-
-    //             /*
-    //              * L'emprunt est déjà retourné.
-    //              * On recharge malgré l'erreur.
-    //              */
-    //             this.loadMov();
-    //           },
-    //         });
-    //       },
-
-    //       error: (error) => {
-    //         console.error('Erreur lors du chargement des documents :', error);
-
-    //         this.loadMov();
-    //       },
-    //     });
-    //   },
-
-    //   error: (error) => {
-    //     console.error('Erreur lors du retour du document :', error);
-    //   },
-    // });
   }
-
   /**
    * Supprimer un emprunt
    */
