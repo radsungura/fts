@@ -31,7 +31,13 @@ export class SearchService {
 
   search(query: string): Observable<any[]> {
     // Simuler un filtrage basé sur le nom du médicament
-    const results = this.source.value.filter(doc => doc.title.toLowerCase().includes(query.toLowerCase()));
+    const results = this.source.value.filter((doc: Doc) => 
+      doc.title.toLowerCase().includes(query.toLowerCase())||
+      doc.reference.toLowerCase().includes(query.toLowerCase()) ||
+      doc.category.toLowerCase().includes(query.toLowerCase())||
+      doc.location.toLowerCase().includes(query.toLowerCase()) ||
+      doc.desc?.toLowerCase().includes(query.toLowerCase()) 
+    );
     
     return of(results); // Retourner un Observable
   }

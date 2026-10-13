@@ -41,15 +41,25 @@
                 <!-- CATEGORIE -->
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Catégorie</mat-label>
-          <mat-select matInput type="number" formControlName="category" placeholder="Ex. Contrat" [(ngModel)]="level" 
-            (ngModelChange)="oncat(level)" >
-            <mat-option value=1>Site</mat-option>
-            <mat-option value= 2>Salle</mat-option>
-            <mat-option value= 3>Travée</mat-option>
-            <mat-option value= 4>Etagère</mat-option>
-            <mat-option value= 5>Rayon</mat-option>
-            <mat-option value= 6>Boite, classeur, Falde</mat-option>
-            <mat-option value= 7>Dossier</mat-option>
+          <mat-select formControlName="category" type="number" placeholder="Ex. Contrat" 
+             *ngIf="data.action === 'edit'">
+            <mat-option [value]=1>Site</mat-option>
+            <mat-option [value]=2>Salle</mat-option>
+            <mat-option [value]=3>Travée</mat-option>
+            <mat-option [value]=4>Etagère</mat-option>
+            <mat-option [value]=5>Rayon</mat-option>
+            <mat-option [value]=6>Boite, classeur, Falde</mat-option>
+            <mat-option [value]=7>Dossier</mat-option>
+          </mat-select>
+          <mat-select formControlName="category" type="number" placeholder="Ex. Contrat" 
+            [(ngModel)]="level" (ngModelChange)="oncat(level)" *ngIf="data.action !== 'edit'">
+            <mat-option [value]=1>Site</mat-option>
+            <mat-option [value]=2>Salle</mat-option>
+            <mat-option [value]=3>Travée</mat-option>
+            <mat-option [value]=4>Etagère</mat-option>
+            <mat-option [value]=5>Rayon</mat-option>
+            <mat-option [value]=6>Boite, classeur, Falde</mat-option>
+            <mat-option [value]=7>Dossier</mat-option>
           </mat-select>
           <mat-icon matSuffix> category </mat-icon>
           <mat-error *ngIf="form.controls.category.hasError('required')">
@@ -72,11 +82,8 @@
         <!-- TITRE -->
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Nom</mat-label>
-
           <input matInput formControlName="name" placeholder="Archive principale" />
-
           <mat-icon matSuffix> description </mat-icon>
-
           <mat-error *ngIf="form.controls.name.hasError('required')">
             Le nom est obligatoire
           </mat-error>
@@ -85,11 +92,8 @@
         <!-- REFERENCE -->
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Référence</mat-label>
-
           <input matInput formControlName="code" placeholder="Ex. DEPO-BUJA-001" />
-
           <mat-icon matSuffix> tag </mat-icon>
-
           <mat-error *ngIf="form.controls.code.hasError('required')">
             La référence est obligatoire
           </mat-error>

@@ -56,6 +56,17 @@
           </mat-error>
         </mat-form-field>
 
+        <!-- Prénom -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Prénom</mat-label>
+          <input matInput formControlName="firstName" placeholder="Ex. Jean" />
+          <mat-icon matSuffix>person_outline</mat-icon>
+
+          <mat-error *ngIf="form.get('firstName')?.hasError('required')">
+            Le prénom est obligatoire
+          </mat-error>
+        </mat-form-field>
+
         <!-- Email -->
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Adresse e-mail</mat-label>

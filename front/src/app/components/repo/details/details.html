@@ -1,1 +1,131 @@
-<p>details works!</p>
+<div class="rep-details">
+  <!-- En-tête -->
+  <div class="details-header">
+    <div class="rep-avatar">
+      <mat-icon>location_on</mat-icon>
+    </div>
+
+    <div class="rep-header-info">
+      <h2>{{ rep?.name }}</h2>
+      <p>{{ rep?.code }}</p>
+    </div>
+  </div>
+
+  <!-- Corps -->
+  <div class="details-body" *ngIf="rep">
+    <!-- Informations personnelles -->
+    <div class="section">
+      <h3>
+        <mat-icon>person_outline</mat-icon>
+        Informations personnelles
+      </h3>
+
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="label">Nom</span>
+          <span class="value">{{ rep.name }}</span>
+        </div>
+
+        <div class="info-item">
+          <span class="label">Reference</span>
+          <span class="value">{{ rep.code }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Informations du compte -->
+    <div class="section">
+      <h3>
+        <mat-icon>manage_accounts</mat-icon>
+        Informations du compte
+      </h3>
+
+      <div class="info-grid">
+        <!-- <div class="info-item">
+          <span class="label">Identifiant</span>
+          <span class="value">#{{ rep.id }}</span>
+        </div> -->
+
+        <div class="info-item">
+          <span class="label">Type</span>
+          <span class="value role-badge">
+            <mat-icon>
+                {{rep.category == 1 ? 'gite' : ''}}
+                {{rep.category == 2 ? 'warehouse' : ''}}
+                {{rep.category == 3 ? 'view_column' : ''}}
+                {{rep.category == 4 ? 'shelves' : ''}}
+                {{rep.category == 5 ? 'splitscreen' : ''}}
+                {{rep.category == 6 ? 'inventory' : ''}}
+                {{rep.category == 7 ? 'folder' : ''}}
+            </mat-icon>
+                {{rep.category == 1 ? 'Site' : ''}}
+                {{rep.category == 2 ? 'Salle' : ''}}
+                {{rep.category == 3 ? 'Travée' : ''}}
+                {{rep.category == 4 ? 'Etagère' : ''}}
+                {{rep.category == 5 ? 'Rayon' : ''}}
+                {{rep.category == 6 ? 'Boite / Classeur' : ''}}
+                {{rep.category == 7 ? 'Dossier' : ''}}
+          </span>
+        </div>
+
+        <div class="info-item">
+          <span class="label">Statut</span>
+
+          <span
+            class="status-badge"
+            [class.active]="rep.status === 'Actif'"
+            [class.inactive]="rep.status === 'Inactif'"
+          >
+            <mat-icon>
+              {{ rep.status === 'Actif' ? 'check_circle' : 'cancel' }}
+            </mat-icon>
+
+            {{ rep.status }}
+          </span>
+        </div>
+
+        <div class="info-item" *ngIf="rep.created_at">
+          <span class="label">Date de création</span>
+          <span class="value">
+            {{ rep.created_at }}
+            <!-- {{ rep.created_at | date: 'dd/MM/yyyy HH:mm' }} -->
+          </span>
+        </div>
+
+         <div class="info-item">
+          <span class="label">Déscription</span>
+          <span class="value role-badge">
+            {{ rep.desc }}
+          </span>
+        </div>
+
+      </div>
+      <div class="section">
+
+            <span class="label">Localisation</span>
+
+        <div class="info-location" *ngIf="!rep.address.length">
+            <span class="value role-badge">
+                <span>  &nbsp;&nbsp;&nbsp;>>>&nbsp;&nbsp;&nbsp;</span>
+                {{ rep.address }}
+            </span>
+        </div>
+          
+
+        <div class="info-location" *ngIf="rep.address.length">
+            <span class="value role-badge" *ngFor="let el of rep.location; let i = index">
+                <span>&nbsp;&nbsp;&nbsp;>>>&nbsp;&nbsp;&nbsp;</span>
+                {{ el }}  
+            </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pied de fenêtre -->
+  <div class="details-footer">
+    <button mat-stroked-button type="button" (click)="dialogRef.close()">
+      Fermer
+    </button>
+  </div>
+</div>
