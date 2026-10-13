@@ -6,6 +6,21 @@
   overflow: hidden;
 }
 
+.status-badge {
+  background: #d4edda;
+  color: rgb(36, 112, 226);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  height: fit-content;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
 /* =========================
    EN-TÊTE
    ========================= */
@@ -106,9 +121,8 @@
 
 .form-grid {
   display: grid;
-
+  align-items: baseline;
   grid-template-columns: repeat(2, 1fr);
-
   gap: 8px 16px;
 }
 

@@ -21,19 +21,24 @@ export interface Mov {
   documentId?: number;
   documentTitle: string;
   borrower: string;
-  borrowDate: string;
-  returnDate: string;
+  borrowDate: Date;
+  returnDate: Date;
+  desc:string;
   status: 'Emprunté' | 'En retard' | 'Retourné';
 }
 
 export interface User {
   id?: number;
-  name: string;
-  firstname: string;
+  uname: string;
+  fname: string;
+  lname: string;
   email: string;
+  pass: string;
+  passtemp: string;
   role: string;
   status: string;
-  createdAt?: string;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export interface Category {
