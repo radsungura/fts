@@ -42,21 +42,21 @@
   <mat-form-field appearance="outline" class="status-field">
     <mat-label>Statut</mat-label>
     <mat-select [(ngModel)]="catFilter" (selectionChange)="searchLocations()">
-      <mat-option value= 0> Tous </mat-option>
-      <mat-option value= 1> Sites </mat-option>
-      <mat-option value= 2> Salles </mat-option>
-      <mat-option value= 3> Travées </mat-option>
-      <mat-option value= 4> Etagères </mat-option>
-      <mat-option value= 5> Rayon </mat-option>
-      <mat-option value= 6> Boites/Classeurs </mat-option>
-      <mat-option value= 7> Dossier </mat-option>
+      <mat-option [value]= 0> Tous </mat-option>
+      <mat-option [value]= 1> Sites </mat-option>
+      <mat-option [value]= 2> Salles </mat-option>
+      <mat-option [value]= 3> Travées </mat-option>
+      <mat-option [value]= 4> Etagères </mat-option>
+      <mat-option [value]= 5> Rayon </mat-option>
+      <mat-option [value]= 6> Boites/Classeurs </mat-option>
+      <mat-option [value]= 7> Dossier </mat-option>
     </mat-select>
   </mat-form-field>
 </div>
 
 <!-- BREADCRUMB -->
 <div class="breadcrumb" *ngIf="breadcrumb.length > 0">
-  <button mat-button (click)="display(currentlocation[0], 'back')" *ngIf="currentlocation.length">
+  <button mat-button (click)="display(filteredLocations[0], 'back')" *ngIf="currentlocation.length">
   <mat-icon>arrow_back</mat-icon>
   Retour
 </button>

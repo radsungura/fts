@@ -103,7 +103,7 @@
       <td mat-cell *matCellDef="let element">
         <div class="location">
           <mat-icon>location_on</mat-icon>
-          {{ element.location.slice(0, 30)  }} ...
+          {{ element.location.slice(0, 30) }} ...
         </div>
       </td>
     </ng-container>
@@ -143,6 +143,15 @@
             (click)="details(element)"
           >
             <mat-icon>visibility</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            color="primary"
+            matTooltip="Afficher le code-barres"
+            type="button"
+            (click)="barcode(element)"
+          >
+            <mat-icon>qr_code_2</mat-icon>
           </button>
 
           <button

@@ -39,7 +39,12 @@ export class Add {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private serv: Repo,
   ) {
-    const location = data?.data;
+
+    let loc = this.data?.data;
+    if (loc) {
+      loc.category = this.data? String(loc.category): '';
+    }
+    const location = loc? loc : null;
 
     this.form = this.fb.group({
       name: [location?.name ?? '', Validators.required],
@@ -49,8 +54,8 @@ export class Add {
       desc: [location?.desc ?? '', Validators.required],
       parent_id: [location?.parent_id ?? ''],
       status: [location?.status ?? 'Actif', Validators.required],
-      created_at: [location?.status ?? Date.now, Validators.required],
-      update_at: [location?.status ?? Date.now, Validators.required],
+      created_at: [location?.created_at ?? Date.now, Validators.required],
+      update_at: [location?.updated_at ?? Date.now, Validators.required],
     });
 
     this.serv.getAll().subscribe(el =>{
@@ -61,21 +66,18 @@ export class Add {
   oncat(data: any): void {
     this.serv.getAll().subscribe((locations: Location[]) => {
       this.parents = locations.filter((el) => el.category == (parseInt(data) - 1));
-      console.log('parents', this.parents, locations.map((el) => el.category), parseInt(data) - 1);
     });
   }
 
   onSubmit(): void {
     this.servererror = false;
-    
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
 
     const locationData = this.form.getRawValue() as Location;
-    console.log("data", locationData, this.form.getRawValue(), this.data);
-    
+    console.log("data", this.form.getRawValue(), Date())
     if (this.data.action === 'add') {
       this.add(locationData);
     } else {
@@ -85,6 +87,7 @@ export class Add {
 
   add(location: any): void {
     location.address = (parseInt(location.category) > 1)? this.getLocation(location.parent_id) : location.address;
+    location.category = parseInt(location.category);
     this.serv.create(location).subscribe({
       next: (result: any) => {
         this.dialogRef.close(result);
@@ -96,8 +99,9 @@ export class Add {
     });
   }
 
-  edit(location: Location): void {
-    location.address = (location.category > 1)? this.getLocation(location.parent_id) : location.address;
+  edit(location: any): void {
+    location.address = (parseInt(location.category) > 1)? this.getLocation(location.parent_id) : location.address;
+    location.category = parseInt(location.category);
     const id = this.data?.data?.id;
     if (!id) {
       console.error('ID du location manquant');
