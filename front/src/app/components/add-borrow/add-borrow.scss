@@ -1,3 +1,9 @@
+.form-grid{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
 .borrow-form {
   width: 100%;
   max-width: 650px;
@@ -50,21 +56,18 @@
 }
 
 form {
-  padding: 24px;
+  padding: 0 24px 24px;;
 }
 
 .form-section {
-  margin-bottom: 25px;
+  margin-bottom: -25px;
 }
 
 .form-section h3 {
   display: flex;
   align-items: center;
-
   gap: 8px;
-
-  margin-bottom: 18px;
-
+  // margin-bottom: 18px;
   font-size: 16px;
 }
 

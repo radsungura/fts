@@ -1,4 +1,4 @@
-<div class="borrow-form">
+<div *ngIf="data.action === 'add' || data.action === 'edit'"  class="borrow-form">
   <!-- EN-TÊTE -->
   <div class="form-header">
     <div class="header-icon">
@@ -28,68 +28,79 @@
 
   <!-- FORMULAIRE -->
   <form [formGroup]="form" (ngSubmit)="data.action === 'add' ? add() : edit()">
+
     <!-- DOCUMENT -->
     <div class="form-section">
       <h3>
         <mat-icon>description</mat-icon>
         Document
       </h3>
+      <div class="form-grid">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Sélectionner un document</mat-label>
+          <mat-select formControlName="documentId" (selectionChange)="onDocumentChange($event.value)">
+            <mat-option [value]="null"> Sélectionner un document </mat-option>
+            <mat-option
+              *ngFor="let doc of documents"
+              [value]="doc.id"
+              [disabled]="doc.status === 'Emprunté'"
+            >
+              {{ doc.title }}
+             
+              <span *ngIf="doc.status === 'Emprunté'"> — Déjà emprunté </span>
+              <p style="opacity: 0.65; font-size: 13px; margin:auto">
+                <span > Référence : {{ doc.reference }} </span>
+              </p>
+            </mat-option>
+          </mat-select>
 
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Sélectionner un document</mat-label>
+          <mat-icon matSuffix> description </mat-icon>
 
-        <mat-select formControlName="documentId" (selectionChange)="onDocumentChange($event.value)">
-          <mat-option [value]="null"> Sélectionner un document </mat-option>
+          <mat-error *ngIf="form.controls.documentId.hasError('required')">
+            Veuillez sélectionner un document.
+          </mat-error>
+        </mat-form-field>
 
-          <mat-option
-            *ngFor="let doc of documents"
-            [value]="doc.id"
-            [disabled]="doc.status === 'Emprunté'"
-          >
-            {{ doc.title }}
-            <span *ngIf="doc.status === 'Emprunté'"> — Déjà emprunté </span>
-          </mat-option>
-        </mat-select>
+        <!-- TITRE AUTOMATIQUE -->
+        <!-- <mat-form-field appearance="outline" class="full-width" [hidden]="true">
+          <mat-label>Titre du document</mat-label>
 
-        <mat-icon matSuffix> description </mat-icon>
+          <input matInput formControlName="documentTitle" readonly />
 
-        <mat-error *ngIf="form.controls.documentId.hasError('required')">
-          Veuillez sélectionner un document.
-        </mat-error>
-      </mat-form-field>
+          <mat-icon matSuffix> title </mat-icon>
 
-      <!-- TITRE AUTOMATIQUE -->
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Titre du document</mat-label>
-
-        <input matInput formControlName="documentTitle" readonly />
-
-        <mat-icon matSuffix> title </mat-icon>
-
-        <mat-error *ngIf="form.controls.documentTitle.hasError('required')">
-          Le titre du document est obligatoire.
-        </mat-error>
-      </mat-form-field>
+          <mat-error *ngIf="form.controls.documentTitle.hasError('required')">
+            Le titre du document est obligatoire.
+          </mat-error>
+        </mat-form-field> -->
+      </div>
     </div>
 
     <!-- EMPRUNTEUR -->
     <div class="form-section">
       <h3>
         <mat-icon>person</mat-icon>
-        Emprunteur
+        Acteurs
       </h3>
-
-      <mat-form-field appearance="outline" class="full-width">
+      <div class="form-grid">
+        <mat-form-field appearance="outline" class="full-width">
         <mat-label>Nom de l’emprunteur</mat-label>
-
-        <input matInput formControlName="borrower" placeholder="Ex. Jean Nkurunziza" />
-
+        <input matInput formControlName="borrower" placeholder="Ex. Jean Nkurunziza" [readonly]="data.action !== 'add'"/>
         <mat-icon matSuffix> person </mat-icon>
-
         <mat-error *ngIf="form.controls.borrower.hasError('required')">
           Le nom de l’emprunteur est obligatoire.
         </mat-error>
       </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Nom de l’auteur</mat-label>
+        <input matInput formControlName="returned_by" placeholder="Ex. Jean Nkurunziza" [readonly]="data.action === 'add'"/>
+        <mat-icon matSuffix> person </mat-icon>
+        <mat-error *ngIf="form.controls.returned_by.hasError('required')">
+          Le nom de l’auteur est obligatoire.
+        </mat-error>
+      </mat-form-field>
+    </div>
+      
     </div>
 
     <!-- DATES -->
@@ -99,59 +110,78 @@
         Dates de l’emprunt
       </h3>
 
-      <div class="date-grid">
+      <div class="date-grid form-grid">
         <!-- DATE EMPRUNT -->
         <mat-form-field appearance="outline">
           <mat-label>Date d’emprunt</mat-label>
-
-          <input matInput type="date" formControlName="borrowDate" />
-
-          <mat-icon matSuffix> event </mat-icon>
-
+          <input matInput formControlName="borrowDate" [matDatepicker]="borrowPicker" placeholder="MM/DD/YYYY">
+          <mat-datepicker-toggle matIconSuffix [for]="borrowPicker"></mat-datepicker-toggle>
+          <mat-datepicker #borrowPicker></mat-datepicker>
           <mat-error *ngIf="form.controls.borrowDate.hasError('required')">
             La date d’emprunt est obligatoire.
           </mat-error>
         </mat-form-field>
 
         <!-- DATE RETOUR -->
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline" *ngIf="form.controls.status.value !== 'Retourné'">
           <mat-label>Retour prévu</mat-label>
-
-          <input matInput type="date" formControlName="returnDate" />
-
-          <mat-icon matSuffix> event_available </mat-icon>
-
+          <input matInput formControlName="returnDate" [matDatepicker]="returnPicker" placeholder="MM/DD/YYYY">
+          <mat-datepicker-toggle matIconSuffix [for]="returnPicker"></mat-datepicker-toggle>
+          <mat-datepicker #returnPicker></mat-datepicker>
           <mat-error *ngIf="form.controls.returnDate.hasError('required')">
             La date de retour est obligatoire.
           </mat-error>
+        </mat-form-field>
+
+          <!-- DATE REEL -->
+        <mat-form-field appearance="outline" *ngIf="form.controls.status.value === 'Retourné'">
+          <mat-label>Retour réel</mat-label>
+          <input matInput formControlName="returned_at" [matDatepicker]="returnPicker" placeholder="MM/DD/YYYY">
+          <mat-datepicker-toggle matIconSuffix [for]="returnPicker"></mat-datepicker-toggle>
+          <mat-datepicker #returnPicker></mat-datepicker>
+          <!-- <mat-error *ngIf="form.controls.returned_at.hasError('required')">
+            La date de retour est obligatoire.
+          </mat-error> -->
         </mat-form-field>
       </div>
     </div>
 
     <!-- STATUT -->
     <div class="form-section">
-      <h3>
-        <mat-icon>verified</mat-icon>
-        Statut de l’emprunt
-      </h3>
-
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Statut</mat-label>
-
-        <mat-select formControlName="status">
-          <mat-option value="Emprunté"> Emprunté </mat-option>
-
-          <mat-option value="En retard"> En retard </mat-option>
-
-          <mat-option value="Retourné"> Retourné </mat-option>
-        </mat-select>
-
-        <mat-icon matSuffix> verified </mat-icon>
-
-        <mat-error *ngIf="form.controls.status.hasError('required')">
-          Le statut est obligatoire.
-        </mat-error>
-      </mat-form-field>
+      <div class="form-grid">
+        <h3>
+          <mat-icon>verified</mat-icon>
+          Statut de l’emprunt
+        </h3>
+        <h3>
+          <mat-icon>warning</mat-icon>
+          Remarque
+        </h3>
+      </div>
+      <div class="form-grid">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Statut</mat-label>
+          <mat-select formControlName="status">
+            <mat-option value="Emprunté"> Emprunté </mat-option>
+            <mat-option value="En retard"> En retard </mat-option>
+            <mat-option value="Retourné"> Retourné </mat-option>
+          </mat-select>
+          <mat-icon matSuffix> verified </mat-icon>
+          <mat-error *ngIf="form.controls.status.hasError('required')">
+            Le statut est obligatoire.
+          </mat-error>
+        </mat-form-field>
+              <!-- Description -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Description</mat-label>
+          <textarea matInput formControlName="bdesc" placeholder="Ex. le document contient les contrats du juin 2024" >
+          </textarea>
+          <mat-icon matSuffix> description </mat-icon>
+          <mat-error *ngIf="form.controls.bdesc.hasError('required')">
+            La description est obligatoire
+          </mat-error>
+        </mat-form-field>
+      </div>
     </div>
 
     <!-- ERREUR SERVEUR -->
@@ -165,16 +195,211 @@
     <div class="form-footer">
       <button mat-stroked-button type="button" (click)="cancel()">
         <mat-icon> close </mat-icon>
-
         Annuler
       </button>
 
       <button mat-raised-button color="primary" type="submit">
         <mat-icon>
-          {{ data.action === 'add' ? 'add' : 'save' }}
+          save
         </mat-icon>
+        Enregistrer le retour
+      </button>
+    </div>
+  </form>
+</div>
+<div *ngIf="data.action === 'return'"  class="borrow-form">
+  <!-- EN-TÊTE -->
+  <div class="form-header">
+    <div class="header-icon">
+      <mat-icon>swap_horiz</mat-icon>
+    </div>
+    <div class="header-content">
+      <h2>
+       Retour 
+      </h2>
+      <p>
+        Enregistrez un retour de document
+      </p>
+    </div>
+    <button mat-icon-button type="button" class="close-button" (click)="cancel()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
 
-        {{ data.action === 'add' ? 'Enregistrer' : 'Enregistrer les modifications' }}
+  <!-- FORMULAIRE -->
+  <form [formGroup]="form" (ngSubmit)="return()">
+
+    <!-- DOCUMENT -->
+    <div class="form-section">
+      <h3>
+        <mat-icon>description</mat-icon>
+        Document
+      </h3>
+      <div class="form-grid">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Sélectionner un document</mat-label>
+          <mat-select formControlName="documentId" (selectionChange)="onDocumentChange($event.value)">
+            <mat-option [value]="null"> Sélectionner un document </mat-option>
+            <mat-option
+              *ngFor="let doc of documents"
+              [value]="doc.id"
+              [disabled]="doc.status === 'Emprunté'"
+            >
+              {{ doc.title }}
+              <span *ngIf="doc.status === 'Emprunté'"> — Déjà emprunté </span>
+            </mat-option>
+          </mat-select>
+
+          <mat-icon matSuffix> description </mat-icon>
+
+          <mat-error *ngIf="form.controls.documentId.hasError('required')">
+            Veuillez sélectionner un document.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- TITRE AUTOMATIQUE -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Titre du document</mat-label>
+
+          <input matInput formControlName="documentTitle" readonly />
+
+          <mat-icon matSuffix> title </mat-icon>
+
+          <mat-error *ngIf="form.controls.documentTitle.hasError('required')">
+            Le titre du document est obligatoire.
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- EMPRUNTEUR -->
+    <div class="form-section">
+      <h3>
+        <mat-icon>person</mat-icon>
+        Emprunteur
+      </h3>
+      <div class="form-grid"><mat-form-field appearance="outline" class="full-width">
+        <mat-label>Nom de l’emprunteur</mat-label>
+        <input matInput formControlName="borrower" placeholder="Ex. Jean Nkurunziza" />
+        <mat-icon matSuffix> person </mat-icon>
+        <mat-error *ngIf="form.controls.borrower.hasError('required')">
+          Le nom de l’emprunteur est obligatoire.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Nom de l’auteur</mat-label>
+        <input matInput formControlName="returned_by" placeholder="Ex. Jean Nkurunziza"/>
+        <mat-icon matSuffix> person </mat-icon>
+        <mat-error *ngIf="form.controls.returned_by.hasError('required')">
+          Le nom de l’auteur est obligatoire.
+        </mat-error>
+      </mat-form-field>
+    </div>
+      
+    </div>
+
+    <!-- DATES -->
+    <div class="form-section">
+      <h3>
+        <mat-icon>calendar_month</mat-icon>
+        Dates de l’emprunt
+      </h3>
+
+      <div class="date-grid form-grid">
+        <!-- DATE EMPRUNT -->
+        <mat-form-field appearance="outline">
+          <mat-label>Date d’emprunt</mat-label>
+          <input matInput formControlName="borrowDate" [matDatepicker]="borrowPicker" placeholder="MM/DD/YYYY">
+          <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
+          <mat-datepicker-toggle matIconSuffix [for]="borrowPicker"></mat-datepicker-toggle>
+          <mat-datepicker #borrowPicker></mat-datepicker>
+          <mat-error *ngIf="form.controls.borrowDate.hasError('required')">
+            La date d’emprunt est obligatoire.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- DATE RETOUR -->
+        <mat-form-field appearance="outline" *ngIf="form.controls.status.value !== 'Retourné'">
+          <mat-label>Retour prévu</mat-label>
+          <input matInput formControlName="returnDate" [matDatepicker]="returnPicker" placeholder="MM/DD/YYYY">
+          <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
+          <mat-datepicker-toggle matIconSuffix [for]="returnPicker"></mat-datepicker-toggle>
+          <mat-datepicker #returnPicker></mat-datepicker>
+          <mat-error *ngIf="form.controls.returnDate.hasError('required')">
+            La date de retour est obligatoire.
+          </mat-error>
+        </mat-form-field>
+
+         <mat-form-field appearance="outline" *ngIf="form.controls.status.value === 'Retourné'">
+          <mat-label>Retour réel</mat-label>
+          <input matInput formControlName="returned_at" [matDatepicker]="returnPicker" placeholder="MM/DD/YYYY">
+          <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
+          <mat-datepicker-toggle matIconSuffix [for]="returnPicker"></mat-datepicker-toggle>
+          <mat-datepicker #returnPicker></mat-datepicker>
+          <mat-error *ngIf="form.controls.returned_at.hasError('required')">
+            La date de retour est obligatoire.
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- STATUT -->
+    <div class="form-section">
+      <div class="form-grid">
+        <h3>
+          <mat-icon>verified</mat-icon>
+          Statut de l’emprunt
+        </h3>
+        <h3>
+          <mat-icon>warning</mat-icon>
+          Remarque
+        </h3>
+      </div>
+      <div class="form-grid">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Statut</mat-label>
+          <mat-select formControlName="status">
+            <mat-option value="Emprunté"> Emprunté </mat-option>
+            <mat-option value="En retard"> En retard </mat-option>
+            <mat-option value="Retourné"> Retourné </mat-option>
+          </mat-select>
+          <mat-icon matSuffix> verified </mat-icon>
+          <mat-error *ngIf="form.controls.status.hasError('required')">
+            Le statut est obligatoire.
+          </mat-error>
+        </mat-form-field>
+              <!-- Description -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Description</mat-label>
+          <textarea matInput formControlName="rdesc" placeholder="Ex. le document contient les contrats du juin 2024" >
+          </textarea>
+          <mat-icon matSuffix> description </mat-icon>
+          <mat-error *ngIf="form.controls.rdesc.hasError('required')">
+            La description est obligatoire
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- ERREUR SERVEUR -->
+    <div class="server-error" *ngIf="servererror">
+      <mat-icon> error_outline </mat-icon>
+
+      <span> Une erreur est survenue. Veuillez vérifier les informations et réessayer. </span>
+    </div>
+
+    <!-- BOUTONS -->
+    <div class="form-footer">
+      <button mat-stroked-button type="button" (click)="cancel()">
+        <mat-icon> close </mat-icon>
+        Annuler
+      </button>
+
+      <button mat-raised-button color="primary" type="submit">
+        <mat-icon>
+          save
+        </mat-icon>
+        Enregistrer le retour
       </button>
     </div>
   </form>

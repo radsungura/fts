@@ -1,22 +1,42 @@
 {
   "documents": [
     {
-      "id": "1",
       "title": "Contrat X",
       "reference": "Con-20",
-      "codebar": "Con-20",
       "category": "Juridique",
-      "location": "Armoire A1",
-      "status": "Emprunté"
+      "location": "Dépôt Central / Archive principale / Comptabilité / Compte 2026 / juin / Piece comptable",
+      "desc": "",
+      "box_id": "85qlwrY6LEs",
+      "bay": "",
+      "shelf": "",
+      "range": "",
+      "room": "",
+      "site": "",
+      "dept_id": "",
+      "code": "-Con-20",
+      "updated_by": "",
+      "created_by": "",
+      "status": "Disponible",
+      "id": "1"
     },
     {
-      "id": "2",
       "title": "Facture 2023",
       "reference": "Fac-45",
-      "codebar": "Fac-45",
       "category": "Finance",
-      "location": "Armoire B2",
-      "status": "Emprunté"
+      "location": "Dépôt Central / Archive principale / Comptabilité / Compte 2026 / juin / dfdsfs",
+      "desc": "",
+      "box_id": "AYoNlOQxfoI",
+      "bay": "",
+      "shelf": "",
+      "range": "",
+      "room": "",
+      "site": "",
+      "dept_id": "",
+      "code": "-Fac-45",
+      "updated_by": "",
+      "created_by": "",
+      "status": "Disponible",
+      "id": "2"
     },
     {
       "id": "3",
@@ -33,7 +53,7 @@
       "location": "Etagere 2/rang 3",
       "reference": "l-5",
       "category": "Correspondance",
-      "status": "En retard"
+      "status": "Retourné"
     },
     {
       "title": "Lettre de motivation",
@@ -90,7 +110,6 @@
       "status": "Disponible"
     },
     {
-      "id": "6PaUZPz9R4w",
       "title": "Contrat",
       "reference": "C-2026-001",
       "category": "CONTRAT",
@@ -141,14 +160,19 @@
       "title": "<W",
       "reference": "wx<x",
       "category": "<wx<",
-      "location": "Dépôt Central => Archive principale => Comptabilité => Compte 2026 => juin => Piece comptable",
+      "location": "Dépôt Central / Archive principale / Comptabilité / Compte 2026 / juin / Piece comptable",
       "desc": "<wx<w",
       "box_id": "85qlwrY6LEs",
+      "bay": "",
+      "shelf": "",
+      "range": "",
+      "room": "",
+      "site": "",
       "dept_id": "x<wx<w",
       "code": "x<wx<w-wx<x",
       "updated_by": "",
       "created_by": "",
-      "status": "Emprunté",
+      "status": "Disponible",
       "id": "ZtuzeVJIVgU"
     },
     {
@@ -250,7 +274,7 @@
   "users": [
     {
       "id": "1",
-      "lname": "jfhg",
+      "lname": "jfhg1",
       "fname": "rad",
       "uname": "rad",
       "email": "admin@gmail.com",
@@ -259,7 +283,7 @@
       "passtemp": "74d188",
       "status": "Actif",
       "created_at": "2026-10-09T22:26:50.804Z",
-      "updated_at": "2026-10-10T17:53:37.219Z"
+      "updated_at": "2026-10-11T09:33:44.138Z"
     },
     {
       "id": "2",
@@ -332,8 +356,14 @@
       "documentId": "3",
       "documentTitle": "Rapport RH",
       "borrower": "Jean Dupont",
-      "borrowDate": "09/10/2026",
-      "returnDate": "09/17/2026",
+      "returned_by": "",
+      "bdesc": "",
+      "rdesc": "",
+      "borrowDate": "2026-09-10T00:00:00.000+02:00",
+      "returnDate": "2026-09-17T00:00:00.000+02:00",
+      "returned_at": "",
+      "bcreated_by": "",
+      "rcreated_by": "",
       "status": "Retourné",
       "id": "1"
     },
@@ -341,40 +371,61 @@
       "documentId": "91d2",
       "documentTitle": "Lettre de motivation",
       "borrower": "Marie Labelle",
-      "borrowDate": "09/05/2026",
-      "returnDate": "10/12/2026",
-      "status": "Retourné",
+      "returned_by": "",
+      "bdesc": "",
+      "rdesc": "",
+      "borrowDate": "2026-09-05T00:00:00.000+02:00",
+      "returnDate": "2026-10-12T00:00:00.000+02:00",
+      "returned_at": "",
+      "bcreated_by": "",
+      "rcreated_by": "",
+      "status": "Emprunté",
       "id": "2"
     },
     {
-      "documentId": "8e6c",
-      "documentTitle": "Lettre d'affectation",
-      "borrower": "Paul Dubois",
-      "borrowDate": "09/01/2026",
-      "returnDate": "09/08/2026",
-      "status": "Annormale",
-      "id": "3",
-      "date": "05/08/25",
-      "action": "Emprunté",
-      "actor": "Marie Claire "
-    },
-    {
-      "documentId": "f86c",
+      "documentId": "91d2",
       "documentTitle": "Lettre de motivation",
-      "borrower": "Keryl Nobel",
-      "borrowDate": "2026-09-21",
-      "returnDate": "2026-09-28",
-      "status": "Emprunté",
-      "id": "NitysGQFif0"
+      "borrower": "rad",
+      "returned_by": "",
+      "bdesc": "",
+      "rdesc": "normale",
+      "borrowDate": "2026-10-10T00:00:00.000+02:00",
+      "returnDate": "2026-10-17T00:00:00.000+02:00",
+      "returned_at": "2026-10-11T14:10:48.507Z",
+      "bcreated_by": "",
+      "rcreated_by": "",
+      "status": "Retourné",
+      "id": "_2s2bFoP_gA"
     },
     {
-      "documentId": "1",
-      "documentTitle": "Contrat X",
-      "borrower": "Carel",
-      "borrowDate": "2026-09-14",
-      "returnDate": "2026-09-21",
-      "status": "Emprunté",
-      "id": "YPVvuk71Ncg"
+      "documentId": "3",
+      "documentTitle": "Rapport RH",
+      "borrower": "rad",
+      "returned_by": "rad",
+      "bdesc": "dd",
+      "rdesc": "",
+      "borrowDate": "2026-11-09T23:00:00.000Z",
+      "returnDate": null,
+      "returned_at": "2026-10-11T14:18:57.451Z",
+      "bcreated_by": "",
+      "rcreated_by": "",
+      "status": "Retourné",
+      "id": "Ui2N6HiMkL4"
+    },
+    {
+      "documentId": "3",
+      "documentTitle": "Rapport RH",
+      "borrower": "rd",
+      "returned_by": "rd",
+      "bdesc": "",
+      "rdesc": "",
+      "borrowDate": "2026-04-09T22:00:00.000Z",
+      "returnDate": "2026-07-09T22:00:00.000Z",
+      "returned_at": "2026-10-11T14:21:50.305Z",
+      "bcreated_by": "",
+      "rcreated_by": "",
+      "status": "Retourné",
+      "id": "izY4nFvolpY"
     }
   ],
   "repos": [

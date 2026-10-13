@@ -25,7 +25,7 @@ export class Repo {
     return this.http.post<Location>(this.api, Location);
   }
 
-  update(id: number, Location: Location): Observable<Location> {
+  update(id: any, Location: Location): Observable<Location> {
     return this.http.put<Location>(`${this.api}/${id}`, Location);
   }
 

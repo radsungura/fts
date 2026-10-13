@@ -83,7 +83,11 @@ export class AddUser {
     
     this.serv.getAll().subscribe(el => {
       this.users = el;
-    })
+      console.log(this.users);
+      
+    });
+  this.uexist = false;
+
   }
   // passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
   //   const password = control.get('password')?.value;
