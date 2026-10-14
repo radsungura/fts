@@ -92,9 +92,9 @@ export class AddDoc {
       dept_id: [doc?.dept_id ?? ''],
       code: [doc?.code ?? ''],
       updated_by: [doc?.updated_by ?? ''],
-      created_by: [doc?.created_by ?? ''],
-      created_at: [doc?.created_at ?? Date.now, Validators.required],
-      updated_at: [doc?.updated_at ?? Date.now, Validators.required],
+      created_by: [doc?.created_by ?? new Date().toISOString()],
+      created_at: [doc?.created_at ?? new Date().toISOString()],
+      updated_at: [doc?.updated_at ?? new Date().toISOString()],
       status: [doc?.status ?? 'Actif', Validators.required],
     });
   }
