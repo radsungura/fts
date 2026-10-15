@@ -101,21 +101,19 @@
 
       </div>
       <div class="section">
-
             <span class="label">Localisation</span>
-
+            
         <div class="info-location" *ngIf="!rep.address.length">
             <span class="value role-badge">
-                <span>  &nbsp;&nbsp;&nbsp;>>>&nbsp;&nbsp;&nbsp;</span>
-                {{ rep.address }}
+              <span>  &nbsp;&nbsp;&nbsp;>>>&nbsp;&nbsp;&nbsp;</span>
+              {{ rep.address }}
             </span>
         </div>
-          
 
         <div class="info-location" *ngIf="rep.address.length">
             <span class="value role-badge" *ngFor="let el of rep.location; let i = index">
-                <span>&nbsp;&nbsp;&nbsp;>>>&nbsp;&nbsp;&nbsp;</span>
-                {{ el }}  
+              <span>&nbsp;&nbsp;&nbsp;>>>&nbsp;&nbsp;&nbsp;</span>
+              {{ el }}  
             </span>
         </div>
       </div>

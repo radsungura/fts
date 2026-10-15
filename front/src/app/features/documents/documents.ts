@@ -21,6 +21,7 @@ import { BarcodeDialog } from '../../components/barcode-dialog/barcode-dialog';
 
 import { Document } from '../../services/document';
 import { Doc } from '../../../models/interfaces';
+import { Scan } from '../../components/scan/scan';
 
 @Component({
   selector: 'app-documents',
@@ -136,6 +137,13 @@ export class Documents {
     });
   }
 
+  scann() {
+    this.dialog.open(Scan, {
+      width: '600px',
+      maxWidth: '95vw',
+    });
+  }
+
   barcode(doc: Doc) {
     this.dialog.open(BarcodeDialog, {
       width: '600px',
@@ -156,7 +164,7 @@ export class Documents {
       },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe((result: Doc) => {
       if (result) {
         this.loadDocs();
       }

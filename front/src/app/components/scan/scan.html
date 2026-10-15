@@ -1,0 +1,7 @@
+<zxing-scanner
+  [formats]="allowedFormats"
+  (scanSuccess)="onCodeScanned($event)"
+  [tryHarder]="true"
+  [videoConstraints]="{ facingMode: 'environment' }"
+  >
+</zxing-scanner>

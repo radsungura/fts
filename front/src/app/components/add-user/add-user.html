@@ -93,6 +93,20 @@
             Le nom d'utilisateur est obligatoire
           </mat-error>
         </mat-form-field>
+        <!-- service -->
+         <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Service</mat-label>
+          <mat-select formControlName="role">
+            <mat-option value=""> Sélectionner un service </mat-option>
+            <mat-option *ngFor="let service of services" [value]="service">
+              {{ service }}
+            </mat-option>
+          </mat-select>
+          <mat-icon matSuffix>badge</mat-icon>
+          <mat-error *ngIf="form.get('service')?.hasError('required')">
+            Le rôle est obligatoire
+          </mat-error>
+        </mat-form-field>
       </div>
     </div>
 
@@ -108,7 +122,6 @@
         <!-- Rôle -->
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Rôle</mat-label>
-
           <mat-select formControlName="role">
             <mat-option value=""> Sélectionner un rôle </mat-option>
             <mat-option *ngFor="let role of roles" [value]="role">
@@ -120,6 +133,7 @@
             Le rôle est obligatoire
           </mat-error>
         </mat-form-field>
+        
         <!-- Statut -->
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Statut</mat-label>

@@ -43,15 +43,13 @@
       </h3> -->
 
       <div class="info-grid">
-        <div class="info-item">
+        <!-- <div class="info-item">
           <span class="label"> Identifiant </span>
 
           <span class="value"> #{{ document.id }} </span>
-        </div>
-
+        </div> -->
         <div class="info-item">
           <span class="label"> Titre </span>
-
           <span class="value">
             {{ document.title }}
           </span>
@@ -59,19 +57,25 @@
 
         <div class="info-item">
           <span class="label"> Référence </span>
-
           <span class="value reference-badge">
             {{ document.reference }}
           </span>
         </div>
-
         <div class="info-item">
           <span class="label"> Catégorie </span>
-
           <span class="value category-badge">
             {{ document.category }}
           </span>
         </div>
+
+        <div class="info-item">
+          <span class="label"> Service </span>
+          <span class="value reference-badge">
+            {{ document.dept_id }}
+          </span>
+        </div>
+
+
       </div>
     </div>
 
@@ -85,39 +89,33 @@
 
       <div class="info-grid">
         <div class="info-item">
-          <span class="label"> Localisation </span>
-
-          <span class="location-value">
-            <mat-icon> location_on </mat-icon>
-
-            {{ document.location }}
-          </span>
-        </div>
-
-        <div class="info-item">
           <span class="label"> Statut </span>
-
           <span
             class="status-badge"
-            [class.active]="document.status === 'Actif'"
+            [class.disponible]="document.status === 'Disponible'"
             [class.borrowed]="document.status === 'Emprunté'"
             [class.archived]="document.status === 'Archivé'"
           >
             <span class="status-dot"></span>
-
             {{ document.status }}
           </span>
         </div>
 
         <div class="info-item">
           <span class="label"> Description </span>
-
           <span>
             <span class="status-dot"></span>
             {{ document.desc }}
           </span>
         </div>
-
+      </div>
+      <div class="info-location" *ngIf="document.address.length">
+        <mat-icon style="color: red;">location_on</mat-icon>
+        <!-- <span class="label"> Localisation </span> -->
+          <span class="role-badge" *ngFor="let el of document.address; let i = index">
+            <span>&nbsp;&nbsp;&nbsp;>>>&nbsp;&nbsp;&nbsp;</span>
+            {{ el }}
+          </span>
       </div>
     </div>
   </div>

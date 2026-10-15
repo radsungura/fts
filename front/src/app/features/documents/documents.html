@@ -5,7 +5,7 @@
   </div>
 
   <div class="toolbar-actions">
-    <button
+    <!-- <button
       mat-icon-button
       type="button"
       (click)="toggleView()"
@@ -14,8 +14,7 @@
       <mat-icon>
         {{ view === 'list' ? 'grid_view' : 'view_list' }}
       </mat-icon>
-    </button>
-
+    </button> -->
     <button mat-raised-button class="add-btn" type="button" (click)="add()">
       <mat-icon>add</mat-icon>
       Ajouter
@@ -36,6 +35,17 @@
     />
     <mat-icon matSuffix>search</mat-icon>
   </mat-form-field>
+<!-- call codebar scanner -->
+    <button
+      mat-icon-button
+      color="primary"
+      matTooltip="Scanner le code bar"
+      type="button"
+      (click)="scann()"
+    >
+      <mat-icon>qr_code_2</mat-icon>
+    </button>
+
   <mat-form-field appearance="outline" class="status-field">
     <mat-label>Statut</mat-label>
     <mat-select [(ngModel)]="statusFilter" (selectionChange)="searchDocuments()">
