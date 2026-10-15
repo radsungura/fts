@@ -39,6 +39,7 @@ export class AddUser {
   users: User[] = [];
   // Rôles disponibles
   roles = ['Administrateur', 'Utilisateur', 'Gestionnaire', 'Archiviste'];
+  services = ['Juridique', 'Crédit', 'Commerciale'];
 
   // Statuts disponibles
   statuses = ['Actif', 'Inactif'];
@@ -68,6 +69,7 @@ export class AddUser {
         uname: [user?.uname ?? '', Validators.required],
         email: [user?.email ?? '', [Validators.required, Validators.email]],
         role: [user?.role ?? '', Validators.required],
+        service: [user?.service ?? '', Validators.required],
         pass: [user?.pass ?? ''],
         passtemp: [user?.passtemp ?? ''],
         status: [user?.status ?? 'Actif', Validators.required],

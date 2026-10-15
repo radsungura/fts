@@ -41,6 +41,7 @@ export interface User {
   email: string;
   pass: string;
   passtemp: string;
+  service: string;
   role: string;
   status: string;
   created_at?: string;
@@ -51,7 +52,15 @@ export interface Category {
   id?: number;
   name: string;
   desc: string;
-  createdAt?: string;
+  created_at?: string;
+}
+
+export interface Service {
+  id?: number;
+  name: string;
+  desc: string;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export interface Location {
@@ -67,12 +76,7 @@ export interface Location {
   updated_at?: Date;
 }
 
-export type DateInput = 
-    | Date 
-    | string 
-    | number 
-    | [number, number, number, number?, number?, number?]
-    | {
+export type DateInput = | Date | string | number | [number, number, number, number?, number?, number?] | {
         year: number;
         month?: number;
         day?: number;
@@ -82,4 +86,4 @@ export type DateInput =
         minute?: number;
         seconds?: number;
         second?: number;
-    };
+}

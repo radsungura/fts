@@ -66,7 +66,6 @@
     </div>
 
     <!-- Bas sidebar -->
-
     <div class="sidebar-footer">
       <!-- <button mat-stroked-button class="theme-button" type="button" (click)="toggleDarkMode()">
         <mat-icon>
@@ -77,7 +76,6 @@
           {{ isDarkMode ? 'Mode clair' : 'Mode sombre' }}
         </span>
       </button> -->
-
       <div class="sidebar-version">Smart Archive · v1.0</div>
     </div>
   </mat-sidenav>
@@ -88,10 +86,8 @@
 
   <mat-sidenav-content>
     <!-- HEADER -->
-
     <mat-toolbar class="toolbar">
       <!-- Menu -->
-
       <button
         mat-icon-button
         class="menu-btn"
@@ -103,7 +99,6 @@
       </button>
 
       <!-- Titre -->
-
       <div class="page-title">
         <span>GESTION DOCUMENTAIRE</span>
       </div>
@@ -130,7 +125,6 @@
       <mat-menu #notifMenu="matMenu" class="notification-menu">
         <div class="notification-header">
           <strong>Notifications</strong>
-
           <span *ngIf="unreadCount > 0">
             {{ unreadCount }} non lue{{ unreadCount > 1 ? 's' : '' }}
           </span>
@@ -143,7 +137,6 @@
             <mat-icon [class.unread-icon]="!notif.read">
               {{ notif.read ? 'fiber_manual_record' : 'circle' }}
             </mat-icon>
-
             <span>
               {{ notif.message }}
             </span>
@@ -153,7 +146,6 @@
 
           <button mat-menu-item *ngIf="unreadCount > 0" (click)="markAllAsRead()">
             <mat-icon>done_all</mat-icon>
-
             <span> Marquer tout comme lu </span>
           </button>
         </ng-container>
@@ -174,17 +166,14 @@
         <div class="user-avatar">
           <mat-icon>person</mat-icon>
         </div>
-
         <div class="user-info">
           <span class="user-name">
             {{ user.name }}
           </span>
-
           <span class="user-role">
             {{ user.role }}
           </span>
         </div>
-
         <mat-icon class="expand-icon"> expand_more </mat-icon>
       </button>
 
@@ -204,13 +193,11 @@
 
         <button mat-menu-item>
           <mat-icon>person</mat-icon>
-
           <span>Mon profil</span>
         </button>
 
         <button mat-menu-item>
           <mat-icon>settings</mat-icon>
-
           <span>Paramètres</span>
         </button>
 
@@ -218,14 +205,12 @@
 
         <button mat-menu-item>
           <mat-icon>logout</mat-icon>
-
           <span>Déconnexion</span>
         </button>
       </mat-menu>
     </mat-toolbar>
-
+    
     <!-- CONTENU -->
-
     <main class="content">
       <router-outlet></router-outlet>
     </main>
