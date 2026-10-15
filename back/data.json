@@ -13,7 +13,7 @@
       "room": "",
       "site": "",
       "dept_id": "",
-      "code": "-Con-20",
+      "code": "8901057200080",
       "updated_by": "",
       "created_by": "",
       "status": "Disponible",
@@ -253,9 +253,9 @@
     },
     {
       "title": "jgjh",
-      "reference": "jkj",
+      "reference": "8901057200080",
       "category": "ljkl",
-      "location": "Dépôt Central / Archive principale / Comptabilité / Compte 2026 / juin / Piece comptable",
+      "location": "Dépôt Central1 / Archive principale / Comptabilité / Compte 2026 / juin / Piece comptable",
       "desc": "ggggg",
       "box_id": "85qlwrY6LEs",
       "bay": "er-xPDkqz-Q",
@@ -264,9 +264,11 @@
       "room": "fe-EagswnOk",
       "site": "1",
       "dept_id": "kjnkjn",
-      "code": "kjnkjn-jkj",
+      "code": "kjnkjn-8901057200080",
       "updated_by": "",
       "created_by": "",
+      "created_at": "2026-10-15T12:24:19.962Z",
+      "updated_at": "2026-10-15T12:24:19.962Z",
       "status": "Disponible",
       "id": "4uUdXaJ1yyM"
     }
@@ -463,24 +465,6 @@
       "id": "3"
     },
     {
-      "name": "hhd",
-      "code": "dfh",
-      "category": 1,
-      "address": "hdhd",
-      "desc": "bxf",
-      "status": "Actif",
-      "id": "BDgM55NrhVM"
-    },
-    {
-      "name": "<wcwc",
-      "code": "<wc<",
-      "category": 1,
-      "address": "<c<wc",
-      "desc": "<wc<",
-      "status": "Actif",
-      "id": "o_uU4SgNgZI"
-    },
-    {
       "name": "doc",
       "code": "doc-112",
       "category": "7",
@@ -657,14 +641,42 @@
       "id": "DL51jQtijsk"
     },
     {
-      "name": "drt1",
-      "code": "trgrt",
-      "category": 1,
-      "address": "grtg",
-      "desc": "trg",
-      "parent_id": "",
-      "status": "Actif",
-      "id": "TUy2UZN7xuc"
+      "id": "5714",
+      "name": "Cave",
+      "code": "S2",
+      "category": 2,
+      "address": "  >  Dépôt Central1 ",
+      "desc": "depot des documents comptable",
+      "parent_id": "1",
+      "status": "Actif"
+    },
+    {
+      "id": "fcf0",
+      "name": "DMS",
+      "code": "T1",
+      "category": 3,
+      "address": "  >  Cave   >  Dépôt Central1 ",
+      "desc": "Comptabilité DMS",
+      "parent_id": "5714",
+      "status": "Actif"
+    },
+    {
+      "id": "081b",
+      "name": "Comptabilité 2024",
+      "code": "E1",
+      "category": 4,
+      "address": "  >  DMS   >  Cave   >  Dépôt Central1 ",
+      "desc": "Comptabilité 2024 pour DMS",
+      "parent_id": "fcf0",
+      "status": "Actif"
+    }
+  ],
+  "services": [
+    {
+      "name": "CREDIT",
+      "desc": "Service Credit",
+      "created_at": "",
+      "updated_at": "string"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

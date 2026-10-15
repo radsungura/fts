@@ -26,31 +26,10 @@
   <div class="details-content">
     <!-- INFORMATIONS EMPRUNT -->
     <div class="details-section">
-      <h3>
+      <!-- <h3>
         <mat-icon>swap_horiz</mat-icon>
         Informations de l'emprunt
-      </h3>
-
-      <div class="info-grid">
-        <!-- ID -->
-        <div class="info-item">
-          <span class="label"> ID de l'emprunt </span>
-
-          <span class="value"> #{{ mov.id }} </span>
-        </div>
-
-        <!-- EMPRUNTEUR -->
-        <div class="info-item">
-          <span class="label"> Emprunteur </span>
-
-          <span class="value borrower">
-            <mat-icon>person</mat-icon>
-
-            {{ mov.borrower }}
-          </span>
-        </div>
-      </div>
-    </div>
+      </h3> -->
     <div class="info-grid">
       <!-- DOCUMENT -->
       <div class="details-section">
@@ -91,13 +70,36 @@
         </div>
       </div>
     </div>
+      
+    </div>
+   
+    <div class="info-grid">
+      <!-- EMPRUNTEUR -->
+      <div class="info-item">
+        <span class="label"> Emprunteur </span>
+        <span class="value borrower">
+          <mat-icon>person</mat-icon>
+          {{ mov.borrower }}
+        </span>
+      </div>
+       <!-- auteur -->
+      <div class="info-item">
+        <span class="label"> Auteur </span>
+        <span class="value">
+          <mat-icon>person</mat-icon>
+          {{ mov.bcreated_by }}
+        </span>
+      </div>
+    </div>
+
+   
 
     <!-- DATES -->
     <div class="details-section">
-      <h3>
+      <!-- <h3>
         <mat-icon>calendar_month</mat-icon>
         Dates
-      </h3>
+      </h3> -->
 
       <div class="date-grid">
         <!-- DATE EMPRUNT -->

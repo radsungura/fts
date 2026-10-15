@@ -30,5 +30,9 @@ export class Document {
   update(id: any, doc: Doc): Observable<Doc> {
     return this.http.put<Doc>(`${this.api}/${id}`, doc);
   }
+
+  findByCode(code: string): Observable<Doc> {
+    return this.http.get<Doc>(`${this.api}/code/${code}`);
+  }
 }
 

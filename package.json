@@ -15,5 +15,8 @@
   "type": "commonjs",
   "devDependencies": {
     "concurrently": "^10.0.5"
+  },
+  "dependencies": {
+    "jsbarcode": "^3.12.3"
   }
 }
