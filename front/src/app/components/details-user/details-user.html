@@ -26,14 +26,11 @@
       </h3>
 
       <div class="info-grid">
-        <div class="info-item">
-          <span class="label">Nom</span>
-          <span class="value">{{ user.fname }}</span>
-        </div>
-
-        <div class="info-item">
-          <span class="label">Prénom</span>
-          <span class="value">{{ user.lname }}</span>
+         <div class="info-item">
+          <span class="label">Nom et Prénom</span>
+          <span class="value">
+            {{ user.fname }} {{ user.lname }}
+          </span>
         </div>
         <div class="info-item">
           <span class="label">Nom Utilisateur</span>
@@ -43,6 +40,10 @@
         <div class="info-item">
           <span class="label">Adresse e-mail</span>
           <span class="value">{{ user.email }}</span>
+        </div>
+         <div class="info-item">
+          <span class="label">Service</span>
+          <span class="value">{{ user.service }}</span>
         </div>
       </div>
     </div>

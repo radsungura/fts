@@ -48,19 +48,24 @@ export interface User {
   updated_at?: string;
 }
 
-export interface Category {
+export interface Cat {
   id?: number;
   name: string;
+  code: string;
   desc: string;
-  created_at?: string;
+  status: 'Actif' | 'Inactif';
+  created_at?: Date;
+  updated_at?: Date;
 }
 
-export interface Service {
-  id?: number;
+export interface Serv {
+  id?: string;
   name: string;
+  code: string;
   desc: string;
-  created_at?: string;
-  updated_at?: string;
+  status: 'Actif' | 'Inactif';
+  created_at?: Date;
+  updated_at?: Date;
 }
 
 export interface Location {

@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { Mov } from '../../../models/interfaces';
+import { ServService } from '../../services/services';
 
 @Component({
   selector: 'app-details-borrow',
@@ -19,8 +20,8 @@ import { Mov } from '../../../models/interfaces';
   styleUrl: './details-borrow.scss',
 })
 export class DetailsBorrow {
-  mov: Mov;
-
+  mov: any | {} = {};
+  serv: any[] = [];
   constructor(
     public dialogRef: MatDialogRef<DetailsBorrow>,
 
@@ -29,50 +30,45 @@ export class DetailsBorrow {
       mode?: string;
       item: Mov;
     },
+    private srvs: ServService
   ) {
-    this.mov = data.item;
+    this.srvs.getAll().subscribe(el => {
+      this.serv = el;
+      this.mov = data.item;
+      this.mov.service = this.getServ(data.item.service);
+    });
   }
 
-  /*
-   * Fermer la fenêtre
-   */
+  getServ(serv: any) {
+    const res = this.serv.find(el => el.id === serv )?.name;
+    return res;
+  }
+  
   close(): void {
     this.dialogRef.close();
   }
 
-  /*
-   * Classe CSS selon le statut
-   */
   getStatusClass(status: string): string {
     switch (status) {
       case 'Emprunté':
         return 'status-borrowed';
-
       case 'En retard':
         return 'status-late';
-
       case 'Retourné':
         return 'status-returned';
-
       default:
         return '';
     }
   }
 
-  /*
-   * Icône selon le statut
-   */
   getStatusIcon(status: string): string {
     switch (status) {
       case 'Emprunté':
         return 'schedule';
-
       case 'En retard':
         return 'warning';
-
       case 'Retourné':
         return 'check_circle';
-
       default:
         return 'info';
     }

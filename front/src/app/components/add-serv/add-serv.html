@@ -1,0 +1,110 @@
+<div class="cat-form-container">
+  <!-- En-tête -->
+  <div class="form-header">
+    <div class="header-icon">
+      <mat-icon>
+        {{ data.mode === 'add' ? 'add' : 'edit' }}
+      </mat-icon>
+    </div>
+
+    <div class="header-content">
+      <h2>
+        {{ data.mode === 'add' ? 'Ajouter un service' : 'Modifier le service' }}
+      </h2>
+
+      <!-- <p>
+        {{
+          data.mode === 'add'
+            ? 'Créer un nouveau Categorie'
+            : 'Modifier le categorie'
+        }}
+      </p> -->
+    </div>
+
+    <button mat-icon-button type="button" class="close-button" (click)="dialogRef.close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <!-- Formulaire -->
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="cat-form">
+    <!-- Informations personnelles -->
+    <div class="form-section">
+      <div class="form-grid">
+        
+         <!-- code -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label style="color: red;"  *ngIf="exist">La reference existe déjà</mat-label>
+          <mat-label  *ngIf="!exist">Reference</mat-label>
+          <input matInput formControlName="code" placeholder="CRD" (input)="checkName(form.controls.code.value)" [readonly]="data.mode === 'edit'"/>
+          <mat-icon matSuffix>fingerprint</mat-icon>
+          <mat-error *ngIf="form.get('code')?.hasError('required')">
+            La reference est obligatoire
+          </mat-error>
+        </mat-form-field>
+        <!-- Nom -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Nom</mat-label>
+          <input matInput formControlName="name" placeholder="Ex. Jean Dupont" />
+          <mat-icon matSuffix>work</mat-icon>
+          <mat-error *ngIf="form.get('name')?.hasError('required')">
+            La categorie est obligatoire
+          </mat-error>
+        </mat-form-field>
+
+      </div>
+    </div>
+
+    <!-- Informations du compte -->
+    <div class="form-section">
+      <!-- <h3>
+        <mat-icon>manage_accounts</mat-icon>
+        Informations du compte
+      </h3> -->
+
+      <div class="form-grid">
+        <!-- Statut -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Statut</mat-label>
+          <mat-select formControlName="status">
+            <mat-option value=""> Sélectionner le status </mat-option>
+            <mat-option *ngFor="let status of statuses" [value]="status">
+              {{ status }}
+            </mat-option>
+          </mat-select>
+
+          <mat-icon matSuffix>toggle_on</mat-icon>
+
+          <mat-error *ngIf="form.get('status')?.hasError('required')">
+            Le statut est obligatoire
+          </mat-error>
+        </mat-form-field>
+      </div>
+            <!-- Description -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Description</mat-label>
+          <textarea matInput formControlName="desc" placeholder="Ex. la categorie contient les pièces comptable" >
+          </textarea>
+          <mat-icon matSuffix> description </mat-icon>
+          <mat-error *ngIf="form.controls.desc.hasError('required')">
+            La description est obligatoire
+          </mat-error>
+        </mat-form-field>
+    </div>
+
+    <!-- Boutons -->
+    <div class="form-actions">
+      <button mat-stroked-button type="button" (click)="dialogRef.close()">
+        <mat-icon>close</mat-icon>
+        Annuler
+      </button>
+
+        <button mat-raised-button color="primary" type="submit" [disabled]="exist" >
+        <mat-icon>
+          {{ data.mode === 'add' ? 'person_add' : 'save' }}
+        </mat-icon>
+        {{ data.mode === 'add' ? 'Ajouter' : 'Enregistrer' }}
+      </button>
+    </div>
+  </form>
+</div>

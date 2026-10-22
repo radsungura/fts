@@ -26,82 +26,88 @@
   <div class="details-content">
     <!-- INFORMATIONS EMPRUNT -->
     <div class="details-section">
-      <!-- <h3>
-        <mat-icon>swap_horiz</mat-icon>
-        Informations de l'emprunt
-      </h3> -->
-    <div class="info-grid">
-      <!-- DOCUMENT -->
-      <div class="details-section">
-        <h3>
-          <mat-icon>description</mat-icon>
-          Document
-        </h3>
+      <div class="info-grid">
+        <!-- DOCUMENT -->
+        <div class="details-section">
+          <!-- <h3>
+            <mat-icon>description</mat-icon>
+            Document
+          </h3> -->
 
-        <div class="document-card">
-          <div class="document-icon">
-            <mat-icon> description </mat-icon>
+          <div class="document-card">
+            <div class="document-icon">
+              <mat-icon> description </mat-icon>
+            </div>
+            <div class="document-info">
+              <span class="document-title">
+                {{ mov.documentTitle }}
+              </span>
+              <span class="document-id"> Document #{{ mov.documentId }} </span>
+            </div>
           </div>
+        </div>
 
-          <div class="document-info">
-            <span class="document-title">
-              {{ mov.documentTitle }}
+        <!-- SERVICE -->
+        <div class="details-section">
+          <div class="document-card">
+            <div class="document-icon">
+              <mat-icon> work </mat-icon>
+            </div>
+            <div class="document-info">
+              <span class="document-title">
+                {{ mov.service }}
+              </span>
+            </div>
+          </div>
+        </div>
+    
+        <!-- EMPRUNTEUR -->
+        <div class="date-card">
+            <mat-icon>person</mat-icon>
+          <div>
+            <span class="label"> Emprunteur </span>
+            <span class="value borrower">
+              {{ mov.borrower }}
             </span>
-
-            <span class="document-id"> Document #{{ mov.documentId }} </span>
           </div>
         </div>
-      </div>
+        <!-- auteur -->
+        <div class="date-card">
+            <mat-icon>person</mat-icon>
+            <div>
+              <span class="label"> Auteur </span>
+              <span class="value">
+                {{ mov.bcreated_by }}
+              </span>
+            </div>
+        </div>
 
-      <!-- STATUT -->
-      <div class="details-section">
-        <h3>
-          <mat-icon>verified</mat-icon>
-          Statut
-        </h3>
-
-        <div class="status-container">
-          <span class="status-badge" [ngClass]="getStatusClass(mov.status)">
-            <mat-icon>
-              {{ getStatusIcon(mov.status) }}
-            </mat-icon>
-            {{ mov.status }}
-          </span>
+        <!-- Return by -->
+        <div class="date-card" *ngIf="mov.status === 'Retourné'">
+            <mat-icon>person</mat-icon>
+          <div>
+            <span class="label"> Remeteur </span>
+            <span class="value borrower">
+              {{ mov.returned_by }}
+            </span>
+          </div>
+        </div>
+        <!-- auteur -->
+        <div class="date-card" *ngIf="mov.status === 'Retourné'">
+            <mat-icon>person</mat-icon>
+            <div>
+              <span class="label"> Auteur </span>
+              <span class="value">
+                {{ mov.rcreated_by }}
+              </span>
+            </div>
         </div>
       </div>
     </div>
-      
-    </div>
-   
-    <div class="info-grid">
-      <!-- EMPRUNTEUR -->
-      <div class="info-item">
-        <span class="label"> Emprunteur </span>
-        <span class="value borrower">
-          <mat-icon>person</mat-icon>
-          {{ mov.borrower }}
-        </span>
-      </div>
-       <!-- auteur -->
-      <div class="info-item">
-        <span class="label"> Auteur </span>
-        <span class="value">
-          <mat-icon>person</mat-icon>
-          {{ mov.bcreated_by }}
-        </span>
-      </div>
-    </div>
-
-   
 
     <!-- DATES -->
-    <div class="details-section">
-      <!-- <h3>
-        <mat-icon>calendar_month</mat-icon>
-        Dates
-      </h3> -->
-
       <div class="date-grid">
+     
         <!-- DATE EMPRUNT -->
         <div class="date-card">
           <mat-icon> event </mat-icon>
@@ -123,7 +129,7 @@
             </span>
           </div>
         </div>
-        <div class="date-card" *ngIf="mov.returned_at">
+        <div class="date-card" *ngIf="mov.status === 'Retourné'">
           <mat-icon> event_available </mat-icon>
           <div>
             <span class="label"> Retour Réel </span>
@@ -132,17 +138,50 @@
             </span>
           </div>
         </div>
+             <!-- STATUT -->
+        <div class="document-card">
+            <mat-icon>verified</mat-icon>
+            Statut
+          <div class="status-container">
+            <!-- <span class="label">Statut</span> -->
+            <span class="status-badge" [ngClass]="getStatusClass(mov.status)">
+              <mat-icon>
+                {{ getStatusIcon(mov.status) }}
+              </mat-icon>
+              {{ mov.status }}
+            </span>
+          </div>
+        </div>
+        <!-- bdesc -->
+         <div class="date-card">
+          <mat-icon>description</mat-icon>
+          <div>
+            <span class="label"> Remarques d'emprunt</span>
+            <span class="value">
+              {{ mov.rdesc }}
+            </span>
+          </div>
+        </div>
+        <!-- rdesc -->
+         <div class="date-card" *ngIf="mov.status === 'Retourné'">
+          <mat-icon>description</mat-icon>
+          <div>
+            <span class="label"> Remarques de retour</span>
+            <span class="value">
+              {{ mov.rdesc }}
+            </span>
+          </div>
+        </div>
       </div>
-    </div>
 
     
   </div>
 
   <!-- PIED -->
-  <div class="details-footer">
+  <!-- <div class="details-footer">
     <button mat-raised-button color="primary" type="button" (click)="close()">
       <mat-icon> close </mat-icon>
       Fermer
     </button>
-  </div>
+  </div> -->
 </div>
