@@ -22,6 +22,7 @@ import { Borrows } from '../../services/borrow';
 import { Document } from '../../../app/services/document';
 
 import { Mov, Doc } from '../../../models/interfaces';
+import { HistoriqueService } from '../../services/historique.service';
 
 @Component({
   selector: 'app-borrow',
@@ -70,6 +71,7 @@ export class Borrow {
     private dialog: MatDialog,
     private data: Borrows,
     private documentService: Document,
+    private historiqueService: HistoriqueService,
   ) {}
 
   ngOnInit(): void {
@@ -107,7 +109,6 @@ export class Borrow {
   }
 
   updateOverdueStatuses(movs: Mov[]): void {
-
     movs.forEach((mov) => {
       // Un document déjà retourné reste "Retourné"
       if (mov.status === 'Retourné') {
@@ -196,20 +197,40 @@ export class Borrow {
   /**
    * Ajouter un nouvel emprunt
    */
+
   addMov(): void {
+    const existingIds = new Set(this.mov.map((m) => String(m.id)));
+
     const dialogRef = this.dialog.open(AddBorrow, {
       width: '90vw',
       maxWidth: '650px',
       maxHeight: '90vh',
-      data: {
-        action: 'add',
-      },
+      data: { action: 'add' },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.loadMov();
-      }
+      if (!result) return;
+
+      this.data.getAll().subscribe({
+        next: (movs) => {
+          const created = movs.find((m) => !existingIds.has(String(m.id)));
+
+          if (created) {
+            this.historiqueService.add({
+              action: 'Emprunt',
+              document: created.documentTitle,
+              utilisateur: created.borrower,
+              details: `Emprunt enregistré. Retour prévu le ${created.returnDate}.`,
+            });
+          }
+
+          this.loadMov();
+        },
+        error: (error) => {
+          console.error('Impossible de vérifier le nouvel emprunt :', error);
+          this.loadMov();
+        },
+      });
     });
   }
 
@@ -243,6 +264,13 @@ export class Borrow {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
+        this.historiqueService.add({
+          action: 'Modification',
+          document: mov.documentTitle,
+          utilisateur: mov.borrower,
+          details: `Modification de l'emprunt #${mov.id}.`,
+        });
+
         this.loadMov();
       }
     });
@@ -252,8 +280,7 @@ export class Borrow {
    * Retourner un document
    */
   return(mov: Mov): void {
-
-     const dialogRef = this.dialog.open(AddBorrow, {
+    const dialogRef = this.dialog.open(AddBorrow, {
       width: '90vw',
       maxWidth: '650px',
       maxHeight: '90vh',
@@ -265,10 +292,17 @@ export class Borrow {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
+        this.historiqueService.add({
+          action: 'Retour',
+          document: mov.documentTitle,
+          utilisateur: mov.borrower,
+          details: `Retour du document pour l'emprunt #${mov.id}.`,
+        });
+
         this.loadMov();
       }
     });
-    
+
     // if (!mov.id) {
     //   console.error('ID de l’emprunt manquant');
     //   return;
@@ -382,7 +416,12 @@ export class Borrow {
 
         this.data.delete(mov.id).subscribe({
           next: () => {
-            console.log(`L’emprunt #${mov.id} a été supprimé.`);
+            this.historiqueService.add({
+              action: 'Suppression',
+              document: mov.documentTitle,
+              utilisateur: mov.borrower,
+              details: `Suppression de l'emprunt #${mov.id}.`,
+            });
 
             this.loadMov();
           },
@@ -394,5 +433,4 @@ export class Borrow {
       }
     });
   }
-
 }

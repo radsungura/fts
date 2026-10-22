@@ -8,20 +8,31 @@ import { Users } from './features/users/users';
 import { Archive } from './features/archive/archive';
 import { Borrow } from './features/borrow/borrow';
 import { Search } from './features/search/search';
+import { AuditComponent } from './features/audit/audit';
+import { Historique } from './features/history/history';
 
 export const routes: Routes = [
   {
-    path: '', component: Layout,
-    
+    path: '',
+    component: Layout,
+
     children: [
-        { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-        { path: 'dashboard', component: Dashboard },
-        { path: 'documents', component: Documents },
-        { path: 'repos', component: Repos },
-        { path: 'search', component: Search },
-        { path: 'borrow', component: Borrow },
-        { path: 'archive', component: Archive },
-        { path: 'users', component: Users }
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: 'dashboard', component: Dashboard },
+      { path: 'documents', component: Documents },
+      { path: 'repos', component: Repos },
+      { path: 'search', component: Search },
+      { path: 'borrow', component: Borrow },
+      { path: 'archive', component: Archive },
+      { path: 'users', component: Users },
+      {
+        path: 'audit',
+        component: AuditComponent,
+      },
+      {
+        path: 'history',
+        component: Historique,
+      },
     ],
   },
   { path: 'login', component: Login },

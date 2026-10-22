@@ -1,0 +1,285 @@
+<div class="audit-page">
+  <header class="page-header">
+    <div class="header-content">
+      <div class="title-icon">
+        <mat-icon>fact_check</mat-icon>
+      </div>
+
+      <div class="header-text">
+        <h1>Audit et traçabilité</h1>
+        <p>Suivi des opérations, contrôle des anomalies et rapports de gestion documentaire.</p>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <button type="button" class="btn btn-outline" (click)="loadEntries()">
+        <mat-icon>refresh</mat-icon>
+        <span>Actualiser</span>
+      </button>
+
+      <button type="button" class="btn btn-outline" (click)="printReport()">
+        <mat-icon>print</mat-icon>
+        <span>Imprimer</span>
+      </button>
+
+      <button type="button" class="btn btn-primary" (click)="exportCsv()">
+        <mat-icon>download</mat-icon>
+        <span>Exporter CSV</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="demo-notice">
+    <mat-icon>info</mat-icon>
+    <div class="notice-content">
+      <strong>Mode frontend — données locales</strong>
+      <p>
+        Le journal contient {{ demoCount }} événement(s) de démonstration. Il ne représente pas
+        encore un historique réel et centralisé.
+      </p>
+    </div>
+  </div>
+
+  <section class="summary-grid" aria-label="Synthèse de l'audit">
+    <article class="summary-card">
+      <div class="summary-top">
+        <span>Opérations enregistrées</span>
+        <mat-icon class="summary-icon icon-blue">receipt_long</mat-icon>
+      </div>
+      <div class="summary-value">{{ totalCount }}</div>
+      <div class="summary-caption">Événements dans le journal local</div>
+    </article>
+
+    <article class="summary-card">
+      <div class="summary-top">
+        <span>Opérations réussies</span>
+        <mat-icon class="summary-icon icon-green">check_circle</mat-icon>
+      </div>
+      <div class="summary-value">{{ successCount }}</div>
+      <div class="summary-caption">Résultat déclaré « Réussi »</div>
+    </article>
+
+    <article class="summary-card">
+      <div class="summary-top">
+        <span>Échecs</span>
+        <mat-icon class="summary-icon icon-red">error</mat-icon>
+      </div>
+      <div class="summary-value">{{ failureCount }}</div>
+      <div class="summary-caption">Événements déclarés en échec</div>
+    </article>
+
+    <article class="summary-card">
+      <div class="summary-top">
+        <span>À vérifier</span>
+        <mat-icon class="summary-icon icon-orange">policy</mat-icon>
+      </div>
+      <div class="summary-value">{{ reviewCount }}</div>
+      <div class="summary-caption">Événements à examiner</div>
+    </article>
+  </section>
+
+  <section class="audit-panel">
+    <div class="panel-heading">
+      <div>
+        <h2>Journal des opérations</h2>
+        <p>Rechercher, filtrer et consulter les événements.</p>
+      </div>
+
+      <span class="result-counter"> {{ filteredEntries.length }} résultat(s) </span>
+    </div>
+
+    <div class="filters">
+      <div class="filter-field search-field">
+        <label for="audit-search">Recherche</label>
+        <div class="input-wrapper">
+          <mat-icon>search</mat-icon>
+          <input
+            id="audit-search"
+            type="search"
+            [(ngModel)]="searchTerm"
+            (ngModelChange)="onFilterChange()"
+            placeholder="Utilisateur, document, référence..."
+          />
+        </div>
+      </div>
+
+      <div class="filter-field">
+        <label for="audit-action">Type d'opération</label>
+        <select id="audit-action" [(ngModel)]="actionFilter" (ngModelChange)="onFilterChange()">
+          <option value="">Toutes les opérations</option>
+          <option *ngFor="let action of actions" [value]="action">
+            {{ action }}
+          </option>
+        </select>
+      </div>
+
+      <div class="filter-field">
+        <label for="audit-result">Résultat</label>
+        <select id="audit-result" [(ngModel)]="resultFilter" (ngModelChange)="onFilterChange()">
+          <option value="">Tous les résultats</option>
+          <option *ngFor="let result of results" [value]="result">
+            {{ result }}
+          </option>
+        </select>
+      </div>
+
+      <div class="filter-field">
+        <label for="audit-start">Du</label>
+        <input
+          id="audit-start"
+          type="date"
+          [(ngModel)]="startDate"
+          (ngModelChange)="onFilterChange()"
+        />
+      </div>
+
+      <div class="filter-field">
+        <label for="audit-end">Au</label>
+        <input
+          id="audit-end"
+          type="date"
+          [(ngModel)]="endDate"
+          (ngModelChange)="onFilterChange()"
+        />
+      </div>
+
+      <div class="filter-actions">
+        <button type="button" class="btn btn-outline reset-button" (click)="resetFilters()">
+          <mat-icon>filter_alt_off</mat-icon>
+          <span>Réinitialiser</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <table class="audit-table">
+        <thead>
+          <tr>
+            <th>Identifiant / Date</th>
+            <th>Utilisateur</th>
+            <th>Opération</th>
+            <th>Élément concerné</th>
+            <th>Description</th>
+            <th>Résultat</th>
+            <th>Source</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let entry of paginatedEntries; trackBy: trackById">
+            <td class="date-cell">
+              <strong>{{ entry.id }}</strong>
+              <span>{{ entry.date | date: 'dd/MM/yyyy' }}</span>
+              <small>{{ entry.date | date: 'HH:mm:ss' }}</small>
+            </td>
+
+            <td>
+              <div class="user-cell">
+                <mat-icon class="user-avatar">person</mat-icon>
+                <span>{{ entry.user }}</span>
+              </div>
+            </td>
+
+            <td>
+              <span class="action-badge" [ngClass]="actionClass(entry.action)">
+                {{ entry.action }}
+              </span>
+            </td>
+
+            <td class="entity-cell">
+              <strong>{{ entry.entity }}</strong>
+              <span class="secondary-text">{{ entry.entityId }}</span>
+            </td>
+
+            <td class="description-cell">
+              {{ entry.description }}
+            </td>
+
+            <td>
+              <span class="status-badge" [ngClass]="resultClass(entry.result)">
+                <span class="status-dot"></span>
+                {{ entry.result }}
+              </span>
+            </td>
+
+            <td>
+              <span class="source-badge" [class.demo-source]="entry.source === 'demo'">
+                {{ entry.source === 'demo' ? 'Démo' : 'Application' }}
+              </span>
+            </td>
+          </tr>
+
+          <tr *ngIf="paginatedEntries.length === 0">
+            <td colspan="7" class="empty-state">
+              <mat-icon>search_off</mat-icon>
+              <strong>Aucun résultat trouvé</strong>
+              <p>Modifie les filtres ou réinitialise la recherche.</p>
+              <button type="button" class="btn btn-outline" (click)="resetFilters()">
+                Réinitialiser les filtres
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <footer class="pagination">
+      <div class="pagination-info">
+        Affichage de {{ firstItem }} à {{ lastItem }} sur {{ filteredEntries.length }} opération(s)
+      </div>
+
+      <div class="pagination-controls">
+        <button
+          type="button"
+          class="page-button"
+          [disabled]="currentPage === 1"
+          (click)="setPage(currentPage - 1)"
+          aria-label="Page précédente"
+          title="Page précédente"
+        >
+          <mat-icon>chevron_left</mat-icon>
+        </button>
+
+        <span class="page-number"> Page {{ currentPage }} / {{ totalPages }} </span>
+
+        <button
+          type="button"
+          class="page-button"
+          [disabled]="currentPage >= totalPages"
+          (click)="setPage(currentPage + 1)"
+          aria-label="Page suivante"
+          title="Page suivante"
+        >
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+      </div>
+    </footer>
+  </section>
+
+  <section class="maintenance-panel">
+    <div class="maintenance-content">
+      <div class="maintenance-icon">
+        <mat-icon>settings</mat-icon>
+      </div>
+      <div>
+        <h3>Gestion des données de démonstration</h3>
+        <p>
+          Ces commandes concernent uniquement le journal local du navigateur. Elles ne suppriment
+          aucune donnée des autres modules FTS.
+        </p>
+      </div>
+    </div>
+
+    <div class="maintenance-actions">
+      <button type="button" class="btn btn-outline" (click)="clearDemoData()">
+        <mat-icon>delete_outline</mat-icon>
+        <span>Effacer les exemples</span>
+      </button>
+
+      <button type="button" class="btn btn-outline" (click)="restoreDemoData()">
+        <mat-icon>restart_alt</mat-icon>
+        <span>Restaurer les exemples</span>
+      </button>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,171 @@
+<div class="history-container">
+  <header class="history-header">
+    <div class="header-title">
+      <div class="header-icon">
+        <mat-icon>history</mat-icon>
+      </div>
+
+      <div>
+        <h1>Historique des documents</h1>
+        <p>Suivi chronologique des opérations sur les documents physiques</p>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <button mat-stroked-button (click)="exportCsv()">
+        <mat-icon>download</mat-icon>
+        Exporter CSV
+      </button>
+
+      <button mat-flat-button color="primary" (click)="print()">
+        <mat-icon>print</mat-icon>
+        Imprimer
+      </button>
+    </div>
+  </header>
+
+  <section class="history-stats">
+    <div class="stat-card">
+      <div class="stat-icon">
+        <mat-icon>receipt_long</mat-icon>
+      </div>
+      <div>
+        <span>Total des événements</span>
+        <strong>{{ entries.length }}</strong>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon loan">
+        <mat-icon>assignment_ind</mat-icon>
+      </div>
+      <div>
+        <span>Emprunts</span>
+        <strong>
+          {{ totalEmprunts }}
+        </strong>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon return">
+        <mat-icon>assignment_return</mat-icon>
+      </div>
+      <div>
+        <span>Retours</span>
+        <strong>
+          {{ totalRetours }}
+        </strong>
+      </div>
+    </div>
+  </section>
+
+  <section class="history-panel">
+    <div class="panel-heading">
+      <div>
+        <h2>Journal des opérations</h2>
+        <p>{{ filteredEntries.length }} résultat(s)</p>
+      </div>
+      <mat-icon class="heading-icon">manage_search</mat-icon>
+    </div>
+
+    <div class="filters">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Rechercher</mat-label>
+        <mat-icon matPrefix>search</mat-icon>
+        <input
+          matInput
+          [(ngModel)]="searchText"
+          (ngModelChange)="filter()"
+          placeholder="Document, référence, utilisateur..."
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Type d'opération</mat-label>
+        <mat-select [(ngModel)]="actionFilter" (selectionChange)="filter()">
+          <mat-option value="Toutes">Toutes les opérations</mat-option>
+          <mat-option *ngFor="let action of actions" [value]="action">
+            {{ action }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Du</mat-label>
+        <input matInput type="date" [(ngModel)]="dateFrom" (ngModelChange)="filter()" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Au</mat-label>
+        <input matInput type="date" [(ngModel)]="dateTo" (ngModelChange)="filter()" />
+      </mat-form-field>
+
+      <button
+        mat-stroked-button
+        class="reset-button"
+        (click)="searchText = ''; actionFilter = 'Toutes'; dateFrom = ''; dateTo = ''; filter()"
+        matTooltip="Réinitialiser les filtres"
+      >
+        <mat-icon>restart_alt</mat-icon>
+        Réinitialiser
+      </button>
+    </div>
+
+    <div class="table-wrapper">
+      <table class="history-table">
+        <thead>
+          <tr>
+            <th>Date et heure</th>
+            <th>Opération</th>
+            <th>Document</th>
+            <th>Référence</th>
+            <th>Utilisateur</th>
+            <th>Détails</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let entry of paginatedEntries">
+            <td class="date-cell">
+              <strong>{{ entry.date | date: 'dd/MM/yyyy' }}</strong>
+              <span>{{ entry.date | date: 'HH:mm:ss' }}</span>
+            </td>
+
+            <td>
+              <span class="action-badge" [ngClass]="actionClass(entry.action)">
+                {{ entry.action }}
+              </span>
+            </td>
+
+            <td class="document-cell">
+              <mat-icon>description</mat-icon>
+              <span>{{ entry.document }}</span>
+            </td>
+
+            <td>{{ entry.reference || '—' }}</td>
+            <td>{{ entry.utilisateur || 'Non renseigné' }}</td>
+            <td class="details-cell">{{ entry.details }}</td>
+          </tr>
+
+          <tr *ngIf="paginatedEntries.length === 0">
+            <td colspan="6" class="empty-state">
+              <mat-icon>history_toggle_off</mat-icon>
+              <strong>Aucun événement trouvé</strong>
+              <span>Les opérations enregistrées apparaîtront ici.</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <mat-paginator
+      [length]="filteredEntries.length"
+      [pageIndex]="pageIndex"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="[5, 10, 20, 50]"
+      (page)="changePage($event)"
+      showFirstLastButtons
+    ></mat-paginator>
+  </section>
+</div>
