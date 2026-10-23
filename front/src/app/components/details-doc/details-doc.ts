@@ -35,7 +35,6 @@ export class DetailsDoc {
 
   getLocation(loc: any){
     const temp = loc.split('/');
-    // console.log("loc", temp.reverse());
     return temp;
   }
   getServ(serv: any){

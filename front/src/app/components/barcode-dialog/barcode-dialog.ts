@@ -26,8 +26,7 @@ export class BarcodeDialog implements AfterViewInit {
     public dialogRef: MatDialogRef<BarcodeDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
-    const documentId = data?.document?.code;
-
+    const documentId = data?.document?.reference ?? data?.document?.code ?? data?.document?.id ?? '';
     this.barcodeValue = this.formatBarcode(documentId);
   }
 
@@ -36,20 +35,18 @@ export class BarcodeDialog implements AfterViewInit {
   }
 
   formatBarcode(id: any): string {
+
     if (id === undefined || id === null || id === '') {
       return 'DOC-UNKNOWN';
     }
 
     const numericId = Number(id);
-
     if (!isNaN(numericId)) {
-      let code = `DOC-${numericId.toString().padStart(6, '0')}`;
-      
-      return code;
+      return numericId.toString().padStart(6, '0');
     }
-
-    return `DOC-${id}`;
+    return id;
   }
+
 
   generateBarcode(): void {
     if (!this.barcode?.nativeElement) {
@@ -65,6 +62,7 @@ export class BarcodeDialog implements AfterViewInit {
       margin: 10,
       textMargin: 8,
     });
+
   }
   escapeHtml(value: string): string {
     return value
@@ -78,7 +76,7 @@ export class BarcodeDialog implements AfterViewInit {
   printBarcode(): void {
     const documentTitle = this.data?.document?.title ?? '';
     const reference = this.data?.document?.reference ?? '';
-    const codebar = this.data?.document?.codebar ?? '';
+    const codebar = this.data?.document?.code ?? '';
     const category = this.data?.document?.category ?? '';
     const location = this.data?.document?.location ?? '';
 
@@ -231,7 +229,7 @@ export class BarcodeDialog implements AfterViewInit {
         </div>
 
         <div class="barcode-number">
-          ${this.escapeHtml(codebar)}
+          codebar ${this.escapeHtml(codebar)}
         </div>
 
       </div>
