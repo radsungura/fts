@@ -6,7 +6,8 @@ import { Repo } from '../../services/repo';
 import { Document } from '../../services/document';
 import { UserService } from '../../services/user';
 import { Borrows } from '../../services/borrow';
-import {Doc} from '../../../models/interfaces'
+import { CatService } from '../../services/categories';
+import { ServService } from '../../services/services';
 
 @Component({
   selector: 'app-delete',
@@ -27,14 +28,16 @@ export class Delete {
     private docs: Document,
     private users: UserService,
     private borrows: Borrows,
+    private cat: CatService,
+    private serv: ServService,
 
   ) {
-    console.log('Delete dialog data:', data);
+    // console.log('Delete dialog data:', data);
   }
 
   async delete() {
     console.log('Delete dialog data:', this.data);
-    let data = this.data.data;
+    const data = this.data.data;
     if (this.data.item === 'document') {
       try {
         await this.docs.delete(data.id).subscribe((el) => {
@@ -68,6 +71,26 @@ export class Delete {
      if (this.data.item === 'user') {
       try {
         await this.users.delete(data.id).subscribe((el) => {
+          this.dialogRef.close(el); // renvoie les données modifiées
+        });
+      } catch (error){
+        console.error("error", error);
+        this.servererror = true;
+      }
+    };
+    if (this.data.item === 'cat') {
+      try {
+        await this.cat.delete(data.id).subscribe((el) => {
+          this.dialogRef.close(el); // renvoie les données modifiées
+        });
+      } catch (error){
+        console.error("error", error);
+        this.servererror = true;
+      }
+    };
+    if (this.data.item === 'serv') {
+      try {
+        await this.serv.delete(data.id).subscribe((el) => {
           this.dialogRef.close(el); // renvoie les données modifiées
         });
       } catch (error){

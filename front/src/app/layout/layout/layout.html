@@ -43,25 +43,46 @@
           <span>Emprunts</span>
         </a>
 
-        <!-- <a mat-list-item routerLink="/audit" routerLinkActive="active">
-          <mat-icon>archive</mat-icon>
-          <span>Archives</span>
-        </a> -->
-
         <a mat-list-item routerLink="/repos" routerLinkActive="active">
           <mat-icon>location_on</mat-icon>
           <span>Emplacements</span>
         </a>
 
-        <a mat-list-item routerLink="/users" routerLinkActive="active">
-          <mat-icon>group</mat-icon>
-          <span>Utilisateurs</span>
-        </a>
+        
+        <!-- admin -->
+        <!-- <a mat-list-item routerLink="/admin" routerLinkActive="active">
+          <mat-icon>settings</mat-icon>
+          <span>Parametres</span>
+        </a> -->
 
-        <a mat-list-item routerLink="/" routerLinkActive="active">
-          <mat-icon>fact_check</mat-icon>
-          <span>Audit Trail</span>
-        </a>
+        <mat-accordion mat-list-item>
+          <mat-expansion-panel mat-list-item (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
+            <mat-expansion-panel-header>
+              <mat-panel-title > 
+                <mat-icon>settings</mat-icon>
+                <span>Parametres</span>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+              <a mat-list-item routerLink="/users" routerLinkActive="active">
+                <mat-icon>group</mat-icon>
+                <span>Utilisateurs</span>
+              </a>
+
+              <a mat-list-item routerLink="/audit" routerLinkActive="active">
+                <mat-icon>fact_check</mat-icon>
+                <span>Audit Trail</span>
+              </a>
+
+              <a mat-list-item routerLink="/categories" routerLinkActive="active">
+                <mat-icon>category</mat-icon>
+                <span>Categories</span>
+              </a>
+              <a mat-list-item routerLink="/services" routerLinkActive="active">
+                <mat-icon>work</mat-icon>
+                <span>Services</span>
+              </a>
+          </mat-expansion-panel>
+        </mat-accordion>
       </mat-nav-list>
     </div>
 

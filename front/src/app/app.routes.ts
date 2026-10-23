@@ -8,6 +8,9 @@ import { Users } from './features/users/users';
 import { Archive } from './features/archive/archive';
 import { Borrow } from './features/borrow/borrow';
 import { Search } from './features/search/search';
+import { Audit } from './features/audit/audit';
+import { Services } from './features/services/services';
+import { Categories } from './features/categories/categories';
 
 export const routes: Routes = [
   {
@@ -21,7 +24,10 @@ export const routes: Routes = [
         { path: 'search', component: Search },
         { path: 'borrow', component: Borrow },
         { path: 'archive', component: Archive },
-        { path: 'users', component: Users }
+        { path: 'users', component: Users },
+        { path: 'audit', component: Audit },
+        { path: 'services', component: Services },
+        { path: 'categories', component: Categories }
     ],
   },
   { path: 'login', component: Login },

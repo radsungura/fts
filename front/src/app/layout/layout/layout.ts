@@ -1,7 +1,6 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -10,6 +9,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @Component({
   selector: 'app-layout',
@@ -25,12 +25,13 @@ import { MatDividerModule } from '@angular/material/divider';
     MatMenuModule,
     MatBadgeModule,
     MatDividerModule,
+    MatExpansionModule
   ],
   templateUrl: './layout.html',
   styleUrls: ['./layout.scss'],
 })
 export class Layout {
-
+  readonly panelOpenState = signal(false);
   isDarkMode = false;
 
   drawerOpened = true;

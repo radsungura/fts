@@ -284,25 +284,10 @@ export class Borrow {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result === true) {
-        if (!mov.id) {
-          console.error('ID de l’emprunt manquant');
-          return;
-        }
-
-        this.data.delete(mov.id).subscribe({
-          next: () => {
-            console.log(`L’emprunt #${mov.id} a été supprimé.`);
-
+      if (result) {
             this.loadMov();
-          },
-
-          error: (error) => {
-            console.error('Erreur lors de la suppression :', error);
-          },
-        });
-      }
-    });
+          }
+      });
   }
 
 }

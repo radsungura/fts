@@ -7,11 +7,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
-import { Doc } from '../../../models/interfaces';
+import { Cat, Doc } from '../../../models/interfaces';
 import { Location } from '../../../models/interfaces';
 import { Document } from '../../services/document';
 import { Repo } from '../../services/repo';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { ServService } from '../../services/services';
+import { CatService } from '../../services/categories';
 
 @Component({
   selector: 'app-add-doc',
@@ -49,12 +51,15 @@ export class AddDoc {
   shelf: any;
   bay: any;
   form;
-
+  servcs: any[] = [];
+  cats: Cat[] = []
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<AddDoc>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private serv: Document, private repos: Repo
+    private serv: Document, private repos: Repo,
+    private srvc: ServService,
+    private cat: CatService,
   ) {
     const doc = data?.data;
     this.repos.getAll().subscribe(rep => 
@@ -76,6 +81,12 @@ export class AddDoc {
 
       }
     );
+    this.srvc.getAll().subscribe(el=>{
+      this.servcs = el;
+    });
+    this.cat.getAll().subscribe(el=>{
+      this.cats = el;
+    });
 
     this.form = this.fb.group({
       title: [doc?.title ?? '', Validators.required],

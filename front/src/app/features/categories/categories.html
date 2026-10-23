@@ -1,0 +1,241 @@
+<mat-toolbar class="cats-toolbar">
+  <div class="toolbar-title">
+    <mat-icon>people</mat-icon>
+    <span>Liste des Categories</span>
+  </div>
+
+  <div class="toolbar-actions">
+    <button mat-raised-button class="add-btn" type="button" (click)="add()">
+      <mat-icon>add</mat-icon>
+      Ajouter
+    </button>
+  </div>
+</mat-toolbar>
+
+<!-- =========================
+     STATISTIQUES
+========================= -->
+
+<!-- <div class="stats-container">
+  <div class="stat-card">
+    <div class="stat-icon">
+      <mat-icon>group</mat-icon>
+    </div>
+
+    <div class="stat-content">
+      <span class="stat-label">Total utilisateurs</span>
+      <span class="stat-value">{{ totalcats }}</span>
+    </div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-icon">
+      <mat-icon>check_circle</mat-icon>
+    </div>
+
+    <div class="stat-content">
+      <span class="stat-label">Utilisateurs actifs</span>
+      <span class="stat-value">{{ activecats }}</span>
+    </div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-icon">
+      <mat-icon>cancel</mat-icon>
+    </div>
+
+    <div class="stat-content">
+      <span class="stat-label">Utilisateurs désactivés</span>
+      <span class="stat-value">{{ inactivecats }}</span>
+    </div>
+  </div>
+</div> -->
+
+<!-- =========================
+     FILTRES
+========================= -->
+
+<div class="filters">
+  <mat-form-field appearance="outline" class="search-field">
+    <mat-label>Rechercher un categorie</mat-label>
+
+    <input
+      matInput
+      [(ngModel)]="searchText"
+      (ngModelChange)="searchcats()"
+      placeholder="Nom, Prénom, E-mail, Rôle..."
+    />
+
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="status-field">
+    <mat-label>Statut</mat-label>
+
+    <mat-select [(ngModel)]="statusFilter" (selectionChange)="searchcats()">
+      <mat-option value="Tous"> Tous </mat-option>
+
+      <mat-option value="Actif"> Actif </mat-option>
+
+      <mat-option value="Desactivé"> Désactivé </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<!-- =========================
+     TABLE
+========================= -->
+
+<div class="table-container">
+  <!-- Chargement -->
+
+  <div *ngIf="loading" class="loading-container">
+    <mat-spinner></mat-spinner>
+    <p>Chargement des categories...</p>
+  </div>
+
+  <table
+    *ngIf="!loading"
+    mat-table
+    [dataSource]="filteredcats.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize)"
+  >
+    <!-- ID -->
+
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>ID</th>
+
+      <td mat-cell *matCellDef="let element; let i = index">
+        {{ pageIndex * pageSize + i + 1 }}
+      </td>
+    </ng-container>
+        <!-- code -->
+
+    <ng-container matColumnDef="code">
+      <th mat-header-cell *matHeaderCellDef>Reference</th>
+
+      <td mat-cell *matCellDef="let element">
+        <div class="email">
+          <!-- <mat-icon>email</mat-icon> -->
+          {{ element.code }}
+        </div>
+      </td>
+    </ng-container>
+    <!-- NOM -->
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Nom</th>
+
+      <td mat-cell *matCellDef="let element">
+        <div class="cat-name">
+          <!-- <div class="cat-icon">
+            <mat-icon>person</mat-icon>
+          </div> -->
+          <span>
+            {{ element.name}}
+          </span>
+        </div>
+      </td>
+    </ng-container>
+
+    <!-- PRENOM -->
+    <ng-container matColumnDef="desc">
+      <th mat-header-cell *matHeaderCellDef>Description</th>
+
+      <td mat-cell *matCellDef="let element">
+        <div class="cat-firstname">
+          <!-- <div class="cat-icon">
+            <mat-icon>person</mat-icon>
+          </div> -->
+
+          <span>
+            {{ element.desc }}
+          </span>
+        </div>
+      </td>
+    </ng-container>
+
+    <!-- STATUT -->
+
+    <ng-container matColumnDef="statut">
+      <th mat-header-cell *matHeaderCellDef>Statut</th>
+
+      <td mat-cell *matCellDef="let element">
+        <span
+          class="status-badge"
+          [class.active]="element.status === 'Actif'"
+          [class.Inactif]="element.status === 'Inactif'"
+        >
+          <span class="status-dot"></span>
+
+          {{ element.status }}
+        </span>
+      </td>
+    </ng-container>
+
+    <!-- ACTIONS -->
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+
+      <td mat-cell *matCellDef="let element">
+        <div class="actions">
+          <button
+            mat-icon-button
+            color="primary"
+            matTooltip="Voir les détails"
+            type="button"
+            (click)="details(element)"
+          >
+            <mat-icon>visibility</mat-icon>
+          </button>
+
+          <button
+            mat-icon-button
+            color="accent"
+            matTooltip="Modifier"
+            type="button"
+            (click)="edit(element)"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+
+          <button
+            mat-icon-button
+            color="warn"
+            matTooltip="Supprimer"
+            type="button"
+            (click)="delete(element)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <!-- Aucun résultat -->
+
+  <div class="empty-state" *ngIf="!loading && filteredcats.length === 0">
+    <mat-icon>person_off</mat-icon>
+
+    <h3>Aucun utilisateur trouvé</h3>
+
+    <p>Aucun utilisateur ne correspond à votre recherche.</p>
+  </div>
+
+  <!-- Pagination -->
+
+  <mat-paginator
+    [length]="filteredcats.length"
+    [pageSize]="pageSize"
+    [pageIndex]="pageIndex"
+    [pageSizeOptions]="[5, 10, 25]"
+    (page)="changePage($event)"
+    showFirstLastButtons
+  >
+  </mat-paginator>
+</div>

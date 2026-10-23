@@ -69,12 +69,12 @@
 
         <!-- Departement -->
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Service</mat-label>
-
-          <input matInput formControlName="dept_id" placeholder="Ex. Juridique" />
-
+          <mat-label>Service Propriétaire</mat-label>
+          <mat-select formControlName="dept_id">
+            <!-- <mat-option value="">Service Propriétaire</mat-option> -->
+            <mat-option *ngFor="let el of servcs" [value]="el.id">{{el.name}}</mat-option>
+          </mat-select>
           <mat-icon matSuffix> service </mat-icon>
-
           <mat-error *ngIf="form.controls.dept_id.hasError('required')">
             Le service est obligatoire
           </mat-error>
@@ -82,8 +82,11 @@
 
         <!-- CATEGORIE -->
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Catégorie</mat-label>
-          <input matInput formControlName="category" placeholder="Ex. Contrat" />
+          <mat-label>Catégorie du document</mat-label>
+          <mat-select formControlName="category">
+            <!-- <mat-option value="">Categorie du document</mat-option> -->
+            <mat-option *ngFor="let el of cats" [value]="el.id">{{el.name}}</mat-option>
+          </mat-select>
           <mat-icon matSuffix> category </mat-icon>
           <mat-error *ngIf="form.controls.category.hasError('required')">
             La catégorie est obligatoire

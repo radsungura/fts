@@ -471,3 +471,11 @@ mat-nav-list a.active mat-icon {
 .sidenav-container.dark-mode .sidebar-version {
   color: #d1d5db;
 }
+mat-expansion-panel{
+  background: transparent;
+}
+mat-expansion-panel mat-icon {
+  margin-right: 14px;
+
+  color: rgba(255, 255, 255, 0.8);
+}

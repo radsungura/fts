@@ -1,0 +1,24 @@
+import { CommonModule } from '@angular/common';
+import { Component, Inject } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Cat } from '../../../models/interfaces';
+
+@Component({
+  selector: 'app-details-cat',
+  imports: [CommonModule, MatCardModule, MatButtonModule, MatIconModule, MatTooltipModule],
+  templateUrl: './details-cat.html',
+  styleUrl: './details-cat.scss',
+})
+export class DetailsCat {
+  cat: Cat | undefined;
+  constructor(
+    public dialogRef: MatDialogRef<DetailsCat>,
+    @Inject(MAT_DIALOG_DATA) public data: { item: Cat },
+  ) {
+    this.cat = data.item;
+  }
+}

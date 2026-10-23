@@ -7,11 +7,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
-import { Mov, Doc } from '../../../models/interfaces';
+import { Mov, Doc, Serv } from '../../../models/interfaces';
 import { Borrows } from '../../services/borrow';
-import { Document } from '../../../app/services/document';
+import { Document } from '../../services/document';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { Functions } from '../../services/functions';
+import { ServService } from '../../services/services';
 
 @Component({
   selector: 'app-add-borrow',
@@ -32,7 +33,7 @@ import { Functions } from '../../services/functions';
   styleUrl: './add-borrow.scss',
 })
 export class AddBorrow implements OnInit {
-  servererror = false;
+  borrowererror = false;
   documents: Doc[] = [];
 
   private fb = inject(FormBuilder);
@@ -41,6 +42,7 @@ export class AddBorrow implements OnInit {
     documentId: ['', Validators.required],
     documentTitle: ['', Validators.required],
     borrower: ['', Validators.required],
+    service: ['', Validators.required],
     returned_by: [''],
     bdesc: [''],
     rdesc: [''],
@@ -52,16 +54,20 @@ export class AddBorrow implements OnInit {
     status: ['', Validators.required],
   });
 
+  servs: Serv[] = [];
+
   constructor(
     public dialogRef: MatDialogRef<AddBorrow>,
     @Inject(MAT_DIALOG_DATA)
     public data: any,
-    private serv: Borrows,
-    private documentService: Document,
-    private func: Functions
+    private borrow: Borrows,
+    private docService: Document,
+    private func: Functions,
+    private serv: ServService
   ) {
-    console.log(data.data);
-    
+    this.serv.getAll().subscribe((el) => {
+      this.servs = el;
+    });
   }
 
   ngOnInit(): void {
@@ -71,6 +77,7 @@ export class AddBorrow implements OnInit {
         documentId: this.data.data.documentId ?? null,
         documentTitle: this.data.data.documentTitle ?? '',
         borrower: this.data.data.borrower ?? '',
+        service: this.data.data.service ?? '',
         bdesc: this.data.data.bdesc ?? '',
         rdesc: this.data.data.rdesc ?? '',
         borrowDate: this.data.data.borrowDate ?? '',
@@ -86,6 +93,7 @@ export class AddBorrow implements OnInit {
         documentId: this.data.data.documentId ?? null,
         documentTitle: this.data.data.documentTitle ?? '',
         borrower: this.data.data.borrower ?? '',
+        service: this.data.data.service ?? '',
         bdesc: this.data.data.bdesc ?? '',
         rdesc: this.data.data.rdesc ?? '',
         borrowDate: this.data.data.borrowDate ?? '',
@@ -103,7 +111,7 @@ export class AddBorrow implements OnInit {
    * Charger les documents
    */
   loadDocuments(): void {
-    this.documentService.getAll().subscribe({
+    this.docService.getAll().subscribe({
       next: (docs) => {
         this.documents = docs;
       },
@@ -131,7 +139,7 @@ export class AddBorrow implements OnInit {
    */
 
   add(): void {
-    this.servererror = false;
+    this.borrowererror = false;
 
     if (this.form.invalid) {
       this.form.markAllAsTouched();
@@ -142,7 +150,7 @@ export class AddBorrow implements OnInit {
 
     // Vérifier que le document a bien été sélectionné
     if (!item.documentId) {
-      this.servererror = true;
+      this.borrowererror = true;
       return;
     }
 
@@ -151,14 +159,14 @@ export class AddBorrow implements OnInit {
 
     if (!selectedDocument) {
       console.error('Document introuvable');
-      this.servererror = true;
+      this.borrowererror = true;
       return;
     }
 
     // Vérifier que le document n'est pas déjà emprunté
     if (selectedDocument.status === 'Emprunté') {
       console.error('Ce document est déjà emprunté');
-      this.servererror = true;
+      this.borrowererror = true;
       return;
     }
 
@@ -168,10 +176,10 @@ export class AddBorrow implements OnInit {
       status: 'Emprunté',
     };
 
-    this.documentService.update(selectedDocument.id!, updatedDocument).subscribe({
+    this.docService.update(selectedDocument.id!, updatedDocument).subscribe({
       next: () => {
         // 2. Enregistrer l'emprunt
-        this.serv.create(item).subscribe({
+        this.borrow.create(item).subscribe({
           next: (result: Mov) => {
             this.dialogRef.close(result);
           },
@@ -181,7 +189,7 @@ export class AddBorrow implements OnInit {
 
             // Si la création de l'emprunt échoue,
             // on remet le document à son état précédent.
-            this.documentService.update(selectedDocument.id!, selectedDocument).subscribe({
+            this.docService.update(selectedDocument.id!, selectedDocument).subscribe({
               next: () => {
                 console.log('Le document a été remis à son état initial.');
               },
@@ -190,7 +198,7 @@ export class AddBorrow implements OnInit {
               },
             });
 
-            this.servererror = true;
+            this.borrowererror = true;
           },
         });
       },
@@ -198,7 +206,7 @@ export class AddBorrow implements OnInit {
       error: (error) => {
         console.error('Erreur lors de la mise à jour du document :', error);
 
-        this.servererror = true;
+        this.borrowererror = true;
       },
     });
   }
@@ -206,8 +214,9 @@ export class AddBorrow implements OnInit {
   // ajouter un retour du document
 
   return(): void {
+    console.log('Editing borrow record', this.form?.value);
 
-    this.servererror = false;
+    this.borrowererror = false;
 
     if (this.form.invalid) {
       this.form.markAllAsTouched();
@@ -218,7 +227,7 @@ export class AddBorrow implements OnInit {
 
     if (!id) {
       console.error('ID du mouvement manquant');
-      this.servererror = true;
+      this.borrowererror = true;
       return;
     }
 
@@ -231,7 +240,7 @@ export class AddBorrow implements OnInit {
     const selectedDocument = this.documents.find((doc) => doc.id === item.documentId && doc.status === 'Emprunté') || null;
     if (!selectedDocument) {
       console.error('Document emprunté introuvable');
-      this.servererror = true;
+      this.borrowererror = true;
       return;
     }
 
@@ -240,31 +249,28 @@ export class AddBorrow implements OnInit {
       status: 'Disponible',
     };
 
-    this.documentService.update(selectedDocument?.id!, updatedDocument).subscribe({
+    this.docService.update(selectedDocument?.id!, updatedDocument).subscribe({
       next: (res: Doc) => {
-        this.serv.update(id, item).subscribe({
+        this.borrow.update(id, item).subscribe({
           next: (result: Mov) => {
             this.dialogRef.close(result);
           },
           error: (error) => {
             console.error('Erreur lors de la modification de l’emprunt :', error);
-            this.servererror = true;
+            this.borrowererror = true;
           },
         });
       },
       error: (error) => {
         console.error('Erreur lors de la modification ddu document :', error);
-        this.servererror = true;
+        this.borrowererror = true;
       },
     });
   }
 
-  /*
-   * Modifier un emprunt
-   */
-
   edit(): void {
-    this.servererror = false;
+    console.log('Editing borrow record', this.form?.value);
+    this.borrowererror = false;
 
     if (this.form.invalid) {
       this.form.markAllAsTouched();
@@ -275,13 +281,13 @@ export class AddBorrow implements OnInit {
 
     if (!id) {
       console.error('ID du mouvement manquant');
-      this.servererror = true;
+      this.borrowererror = true;
       return;
     }
 
     const item = this.form.getRawValue() as unknown  as Mov;
 
-    this.serv.update(id, item).subscribe({
+    this.borrow.update(id, item).subscribe({
       next: (result: Mov) => {
         this.dialogRef.close(result);
       },
@@ -289,7 +295,7 @@ export class AddBorrow implements OnInit {
       error: (error) => {
         console.error('Erreur lors de la modification de l’emprunt :', error);
 
-        this.servererror = true;
+        this.borrowererror = true;
       },
     });
   }

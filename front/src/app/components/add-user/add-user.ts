@@ -15,7 +15,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { UserService } from '../../services/user';
-import { User } from '../../../models/interfaces';
+import { Serv, User } from '../../../models/interfaces';
+import { ServService } from '../../services/services';
 
 @Component({
   selector: 'app-add-user',
@@ -45,11 +46,12 @@ export class AddUser {
   statuses = ['Actif', 'Inactif'];
   uexist: boolean = false;
   uname: string = "";
-
+  servcs: Serv[]=[];
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<AddUser>,
-    @Inject(MAT_DIALOG_DATA) public data: any, private serv: UserService
+    @Inject(MAT_DIALOG_DATA) public data: any, private serv: UserService,
+    private srvc: ServService
   ) {
     const user = data?.item;
     const isAddMode = data?.mode === 'add';
@@ -82,6 +84,10 @@ export class AddUser {
       //   validators: this.passwordMatchValidator,
       // },
     );
+
+    this.srvc.getAll().subscribe(el=>{
+      this.servcs = el;
+    })
     
     this.serv.getAll().subscribe(el => {
       this.users = el;
@@ -141,6 +147,7 @@ export class AddUser {
   // }
 
   onSubmit(): void {
+    
     let checkuname = this.checkUname(this.uname);
     if (this.form.invalid && !checkuname) {
       this.form.markAllAsTouched();
@@ -215,7 +222,6 @@ export class AddUser {
 
   passgenerate(){
     const rand = (n = 8) => crypto.randomUUID().replace(/-/g, '').slice(0, n);
-    // console.log(rand(6));
     return rand(6);
   }
 
@@ -241,7 +247,7 @@ export class AddUser {
   }
 
   checkUname(uname: string){
-    let exist = this.users.find(el=> el.uname === uname);
+    let exist = this.users.find(el=> el.uname === uname || el.email === uname);
     this.uexist = exist? true : false;
     return this.uexist;
   }

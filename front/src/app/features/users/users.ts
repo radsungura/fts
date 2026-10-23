@@ -157,8 +157,6 @@ export class Users {
   }
 
   edit(user: User) {
-    console.log('✏️ Modifier le user :', user);
-
     const dialogRef = this.dialog.open(AddUser, {
       width: '90vw',
       maxHeight: '1000vh',
@@ -189,33 +187,19 @@ export class Users {
   }
 
   delete(user: User) {
-    console.log('🗑️ Supprimer le user :', user);
-
     const dialogRef = this.dialog.open(Delete, {
       width: '500px',
       data: {
-        mode: 'user',
-        item: user,
+        action: 'delete',
+        item: 'user',
+        data: user,
       },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result && user.id) {
-        this.data.delete(user.id).subscribe({
-          next: () => {
             this.loadUsers();
-
-            this.snackBar.open('Utilisateur supprimé avec succès', 'Fermer', {
-              duration: 3000,
-            });
-          },
-          error: () => {
-            this.snackBar.open('Erreur lors de la suppression de l’utilisateur', 'Fermer', {
-              duration: 4000,
-            });
-          },
-        });
-      }
-    });
+        };
+      });
   }
 }
