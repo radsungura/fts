@@ -20,8 +20,9 @@ export class DetailsDoc {
   constructor(
     public dialogRef: MatDialogRef<DetailsDoc>,
     @Inject(MAT_DIALOG_DATA)
-    public data: { item: Doc },
+    public data: any,
   ){
+    console.log("data", data);
     this.document = data.item;
     this.document.address = this.getLocation(data.item.location);
 
@@ -30,7 +31,7 @@ export class DetailsDoc {
     getLocation(loc: any){
     const temp = loc.split('/');
     console.log("loc", temp.reverse());
-    return temp;
+    return temp || [];
   }
   close(): void {
     this.dialogRef.close();

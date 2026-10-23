@@ -16,7 +16,7 @@
       "code": "8901057200080",
       "updated_by": "",
       "created_by": "",
-      "status": "Disponible",
+      "status": "Emprunté",
       "id": "1"
     },
     {
@@ -39,23 +39,6 @@
       "id": "2"
     },
     {
-      "id": "3",
-      "title": "Rapport RH",
-      "reference": "Rap-26",
-      "category": "Ressources",
-      "location": "Armoire C1",
-      "status": "Disponible"
-    },
-    {
-      "id": "91d2",
-      "title": "Lettre de motivation",
-      "cotegory": "Correspondance",
-      "location": "Etagere 2/rang 3",
-      "reference": "l-5",
-      "category": "Correspondance",
-      "status": "Retourné"
-    },
-    {
       "title": "Lettre de motivation",
       "reference": "l-2",
       "category": "Correspondance",
@@ -75,14 +58,6 @@
       "id": "f86c"
     },
     {
-      "id": "6303",
-      "title": "Contrat de prestation",
-      "reference": "c-21",
-      "category": "Contrats",
-      "location": "Et2/R1",
-      "status": "Disponible"
-    },
-    {
       "title": "Lettre d'affectation",
       "reference": "l-02",
       "category": "Correspondance",
@@ -94,23 +69,17 @@
       "range": "",
       "room": "",
       "site": "",
-      "dept_id": "",
-      "code": "-l-02",
+      "dept_id": "jurid",
+      "code": "jurid-l-02",
       "updated_by": "",
-      "created_by": "",
-      "status": "Actif",
+      "created_by": "2026-10-23T15:18:01.914Z",
+      "created_at": "2026-10-23T15:18:01.914Z",
+      "updated_at": "2026-10-23T15:18:01.914Z",
+      "status": "Disponible",
       "id": "8e6c"
     },
     {
-      "id": "8e6c",
-      "title": "Lettre d'affectation",
-      "reference": "l-02",
-      "category": "Correspondance",
-      "location": "Etagere1/rang2",
-      "status": "Disponible"
-    },
-    {
-      "title": "Contrat",
+      "title": "Contrat1",
       "reference": "C-2026-001",
       "category": "CONTRAT",
       "location": "Dépôt Central1 / Archive principale / Comptabilité / Compte 2026 / juin / Piece comptable",
@@ -121,156 +90,14 @@
       "range": "",
       "room": "",
       "site": "",
-      "dept_id": "<wx<",
-      "code": "<wx<-<wx<w",
+      "dept_id": "4",
+      "code": "4-C-2026-001",
       "updated_by": "",
       "created_by": "",
-      "status": "Actif",
+      "created_at": "2026-10-22T14:55:51.129Z",
+      "updated_at": "2026-10-22T14:55:51.129Z",
+      "status": "Disponible",
       "id": "OYnGf1O24Nk"
-    },
-    {
-      "title": "fdfd",
-      "reference": "dfd",
-      "category": "dfdf",
-      "location": "Dépôt Central => Archive principale => Comptabilité => Compte 2026 => juin => Piece comptable",
-      "desc": "df",
-      "box_id": "85qlwrY6LEs",
-      "dept_id": "df",
-      "code": "df-dfd",
-      "updated_by": "",
-      "created_by": "",
-      "status": "Disponible",
-      "id": "bA7d5Xouebk"
-    },
-    {
-      "title": "xXqxXQX",
-      "reference": "qx",
-      "category": "qxQX",
-      "location": "Dépôt Central => Archive principale => Comptabilité => Compte 2026 => juin => Piece comptable",
-      "desc": "qxQXX",
-      "box_id": "85qlwrY6LEs",
-      "dept_id": "qxQX",
-      "code": "qxQX-qx",
-      "updated_by": "",
-      "created_by": "",
-      "status": "Disponible",
-      "id": "UaaLtaVZsYo"
-    },
-    {
-      "title": "<W",
-      "reference": "wx<x",
-      "category": "<wx<",
-      "location": "Dépôt Central / Archive principale / Comptabilité / Compte 2026 / juin / Piece comptable",
-      "desc": "<wx<w",
-      "box_id": "85qlwrY6LEs",
-      "bay": "",
-      "shelf": "",
-      "range": "",
-      "room": "",
-      "site": "",
-      "dept_id": "x<wx<w",
-      "code": "x<wx<w-wx<x",
-      "updated_by": "",
-      "created_by": "",
-      "status": "Disponible",
-      "id": "ZtuzeVJIVgU"
-    },
-    {
-      "title": "dfsdf",
-      "reference": "sdfsdfdf",
-      "category": "esdfsd",
-      "location": "Dépôt Central / Archive principale / Comptabilité / Compte 2026 / juin / Piece comptable",
-      "desc": "sdfsdf",
-      "box_id": "85qlwrY6LEs",
-      "bay": "xcwx",
-      "shelf": "",
-      "range": "",
-      "room": "",
-      "site": "",
-      "dept_id": "esdfsd",
-      "code": "esdfsd-sdfsdfdf",
-      "updated_by": "",
-      "created_by": "",
-      "status": "Disponible",
-      "id": "m0uvbvoNTuM"
-    },
-    {
-      "title": "zeaze",
-      "reference": "zeaea",
-      "category": "azeaze",
-      "location": "Dépôt Central / Archive principale / Comptabilité / Compte 2026 / juin / Piece comptable",
-      "desc": "azeaz",
-      "box_id": "85qlwrY6LEs",
-      "bay": "",
-      "shelf": "",
-      "range": "",
-      "room": "",
-      "site": "",
-      "dept_id": "zaeazeez",
-      "code": "zaeazeez-zeaea",
-      "updated_by": "",
-      "created_by": "",
-      "status": "Disponible",
-      "id": "Nw6_ENI0348"
-    },
-    {
-      "title": "wxcwx",
-      "reference": "wxcwxc",
-      "category": "wxc",
-      "location": "Dépôt Central / Archive principale / Comptabilité / Compte 2026 / juin / Piece comptable",
-      "desc": "wxcw",
-      "box_id": "85qlwrY6LEs",
-      "bay": "",
-      "shelf": "",
-      "range": "",
-      "room": "",
-      "site": "",
-      "dept_id": "wxcw",
-      "code": "wxcw-wxcwxc",
-      "updated_by": "",
-      "created_by": "",
-      "status": "Disponible",
-      "id": "iUs1v15o8BY"
-    },
-    {
-      "title": "<wx<",
-      "reference": "<wxw<x<w",
-      "category": "<wx<",
-      "location": "Dépôt Central / Archive principale / Comptabilité / Compte 2026 / juin / dfdsfs",
-      "desc": "sdfsdfsdf",
-      "box_id": "AYoNlOQxfoI",
-      "bay": "juin",
-      "shelf": "",
-      "range": "",
-      "room": "",
-      "site": "",
-      "dept_id": "<wx",
-      "code": "<wx-<wxw<x<w",
-      "updated_by": "",
-      "created_by": "",
-      "status": "Disponible",
-      "id": "0ao8oJ7nd6c"
-    },
-    {
-      "title": "jgjh",
-      "reference": "8901057200080",
-      "category": "ljkl",
-      "location": "Dépôt Central1 / Archive principale / Comptabilité / Compte 2026 / juin / Piece comptable",
-      "desc": "ggggg",
-      "box_id": "85qlwrY6LEs",
-      "bay": "er-xPDkqz-Q",
-      "shelf": "fWMLQuBgIRU",
-      "range": "1LdoX5EVAwM",
-      "room": "fe-EagswnOk",
-      "site": "1",
-      "dept_id": "kjnkjn",
-      "code": "kjnkjn-8901057200080",
-      "updated_by": "",
-      "created_by": "",
-      "created_at": "2026-10-15T12:24:19.962Z",
-      "updated_at": "2026-10-15T12:24:19.962Z",
-      "status": "Disponible",
-      "id": "4uUdXaJ1yyM"
     }
   ],
   "users": [
@@ -281,24 +108,12 @@
       "uname": "rad",
       "email": "admin@gmail.com",
       "role": "Administrateur",
+      "service": "3",
       "pass": "",
       "passtemp": "74d188",
       "status": "Actif",
       "created_at": "2026-10-09T22:26:50.804Z",
-      "updated_at": "2026-10-11T09:33:44.138Z"
-    },
-    {
-      "id": "2",
-      "lname": "ijk",
-      "fname": ",nkn",
-      "uname": "jkj",
-      "email": "empA@doc.com",
-      "role": "Archiviste",
-      "pass": "",
-      "passtemp": "75efd2",
-      "status": "Actif",
-      "created_at": "",
-      "updated_at": "2026-10-10T17:20:22.956Z"
+      "updated_at": "2026-10-22T16:28:00.951Z"
     },
     {
       "id": "3",
@@ -307,11 +122,12 @@
       "uname": "rad",
       "email": "leck@doc.com",
       "role": "Archiviste",
+      "service": "3",
       "pass": "",
       "passtemp": "5a4fc9",
       "status": "Actif",
       "created_at": "2026-10-09T21:45:11.569Z",
-      "updated_at": "2026-10-10T17:53:45.287Z"
+      "updated_at": "2026-10-22T15:59:25.972Z"
     },
     {
       "id": "NdDOIQ-ICNw",
@@ -320,11 +136,12 @@
       "uname": "rad",
       "email": "radlionempire@gmail.com",
       "role": "Administrateur",
+      "service": "3",
       "pass": "",
       "passtemp": "c82b6b",
       "status": "Actif",
       "created_at": "",
-      "updated_at": "2026-10-10T17:20:42.820Z"
+      "updated_at": "2026-10-22T15:59:30.352Z"
     },
     {
       "id": "Zof3pbrHq9c",
@@ -333,11 +150,12 @@
       "uname": "rad lion",
       "email": "radlionempire@gmail.com",
       "role": "Gestionnaire",
+      "service": "4",
       "pass": "",
       "passtemp": "5d19be",
       "status": "Inactif",
       "created_at": "2026-10-09T16:22:43.954Z",
-      "updated_at": "2026-10-09T22:10:48.937Z"
+      "updated_at": "2026-10-22T15:59:35.654Z"
     },
     {
       "id": "F0TDn3mtewo",
@@ -346,11 +164,12 @@
       "uname": "rad lion",
       "email": "radlionempire@gmail.com",
       "role": "Gestionnaire",
+      "service": "3",
       "pass": "",
       "passtemp": "c46e4d",
       "status": "Actif",
       "created_at": "2026-10-09T16:22:43.954Z",
-      "updated_at": "2026-10-10T17:21:20.721Z"
+      "updated_at": "2026-10-22T15:59:41.609Z"
     }
   ],
   "borrow": [
@@ -358,12 +177,13 @@
       "documentId": "3",
       "documentTitle": "Rapport RH",
       "borrower": "Jean Dupont",
-      "returned_by": "",
+      "service": "3",
+      "returned_by": "jack",
       "bdesc": "",
       "rdesc": "",
       "borrowDate": "2026-09-10T00:00:00.000+02:00",
       "returnDate": "2026-09-17T00:00:00.000+02:00",
-      "returned_at": "",
+      "returned_at": "2026-09-13T00:00:00.000+02:00",
       "bcreated_by": "",
       "rcreated_by": "",
       "status": "Retourné",
@@ -373,6 +193,7 @@
       "documentId": "91d2",
       "documentTitle": "Lettre de motivation",
       "borrower": "Marie Labelle",
+      "service": "3",
       "returned_by": "",
       "bdesc": "",
       "rdesc": "",
@@ -388,6 +209,7 @@
       "documentId": "91d2",
       "documentTitle": "Lettre de motivation",
       "borrower": "rad",
+      "service": "3",
       "returned_by": "",
       "bdesc": "",
       "rdesc": "normale",
@@ -398,21 +220,6 @@
       "rcreated_by": "",
       "status": "Retourné",
       "id": "_2s2bFoP_gA"
-    },
-    {
-      "documentId": "3",
-      "documentTitle": "Rapport RH",
-      "borrower": "rad",
-      "returned_by": "rad",
-      "bdesc": "dd",
-      "rdesc": "",
-      "borrowDate": "2026-11-09T23:00:00.000Z",
-      "returnDate": null,
-      "returned_at": "2026-10-11T14:18:57.451Z",
-      "bcreated_by": "",
-      "rcreated_by": "",
-      "status": "Retourné",
-      "id": "Ui2N6HiMkL4"
     },
     {
       "documentId": "3",
@@ -428,6 +235,38 @@
       "rcreated_by": "",
       "status": "Retourné",
       "id": "izY4nFvolpY"
+    },
+    {
+      "documentId": "1",
+      "documentTitle": "Contrat X",
+      "borrower": "kjkjk",
+      "service": "3",
+      "returned_by": "jack",
+      "bdesc": "jhjjk",
+      "rdesc": "",
+      "borrowDate": null,
+      "returnDate": null,
+      "returned_at": "2026-10-22T18:31:54.013Z",
+      "bcreated_by": "",
+      "rcreated_by": "",
+      "status": "Retourné",
+      "id": "64c2"
+    },
+    {
+      "id": "33ca",
+      "documentId": "1",
+      "documentTitle": "Contrat X",
+      "borrower": "jj",
+      "service": "4",
+      "returned_by": "",
+      "bdesc": "ok",
+      "rdesc": "",
+      "borrowDate": "2026-10-20T00:00:00.000+02:00",
+      "returnDate": "2026-10-22T00:00:00.000+02:00",
+      "returned_at": "",
+      "bcreated_by": "",
+      "rcreated_by": "",
+      "status": "Emprunté"
     }
   ],
   "repos": [
@@ -673,10 +512,78 @@
   ],
   "services": [
     {
+      "id": "4",
       "name": "CREDIT",
+      "code": "CRD",
       "desc": "Service Credit",
-      "created_at": "",
-      "updated_at": "string"
+      "status": "Actif",
+      "created_at": "10/16/2026",
+      "updated_at": "2026-10-22T14:31:34.530Z"
+    },
+    {
+      "id": "3",
+      "name": "JURIDIQUE",
+      "code": "JRD",
+      "desc": "Service Juridique",
+      "status": "Actif",
+      "created_at": "10/16/2026",
+      "updated_at": "10/16/2026"
+    },
+    {
+      "id": "2",
+      "name": "Logistique",
+      "code": "LGS",
+      "desc": "Service Logistique",
+      "status": "Actif",
+      "created_at": "10/16/2026",
+      "updated_at": "10/16/2026"
+    },
+    {
+      "id": "c2432f",
+      "name": ",j;",
+      "code": "jukj",
+      "desc": ";,;,",
+      "status": "Actif",
+      "created_at": "2026-10-22T16:12:28.206Z",
+      "updated_at": "2026-10-22T16:12:28.206Z"
+    }
+  ],
+  "categories": [
+    {
+      "id": "1",
+      "name": "Demande de credit",
+      "code": "DCRD",
+      "desc": "Document componsant une Demande de Credit",
+      "status": "Actif",
+      "created_at": "10/16/2026",
+      "updated_at": "2026-10-22T14:25:58.544Z"
+    },
+    {
+      "id": "2",
+      "name": "Correspondance",
+      "code": "CRSP",
+      "status": "Inactif",
+      "desc": "Document des courriers entrant et sortant",
+      "created_at": "10/16/2026",
+      "updated_at": "10/16/2026"
+    },
+    {
+      "id": "3",
+      "name": "Contrat",
+      "code": "CTR",
+      "desc": "La catégorie contint les contrats de prestation",
+      "status": "Actif",
+      "created_at": "10/16/2026",
+      "updated_at": "2026-10-16T10:54:49.494Z"
+    },
+    {
+      "id": "811b45",
+      "name": "contract",
+      "code": "crd",
+      "desc": "oijoiu",
+      "status": "Actif",
+      "created_at": "2026-10-22T12:53:42.507Z",
+      "updated_at": "2026-10-22T12:54:39.329Z"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

@@ -30,14 +30,15 @@ export class Scan {
   }
 
   onCodeScanned(result: string) {
-    console.log("data", result);
   // 'result' est la valeur brute du code-barres
-  this.doc = this.docs.find((el: any) => el.code === result);
-  this.details(this.doc);
+  this.doc = this.docs.find(el => el.code === result || el.reference === result || el.id === result);
+  this.doc ? this.details(this.doc) : alert("Document non trouvé !");
     // Affiche les infos du document
   };
 
   details(doc: Doc) {
+    console.log("data", doc);
+
     this.dialog.open(DetailsDoc, {
       width: '90vw',
       maxHeight: '1000vh',
