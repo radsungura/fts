@@ -1,55 +1,216 @@
 <div class="dashboard">
-  <!-- Stat cards -->
-  <div class="stats-grid">
-    <mat-card class="all">
-      <!-- <mat-icon>folder</mat-icon> -->
-      <span class="icon folder">📄</span>
-      
-      <h2>{{ stats.total }}</h2>
-      <p>Total Documents</p>
-    </mat-card>
-    <mat-card class="actif">
-      <span class="icon folder">✅</span>
-    
-      <!-- <mat-icon>check_circle</mat-icon> -->
-      <h2>{{ stats.actifs }}</h2>
-      <p>Actifs</p>
-    </mat-card>
-    <mat-card class="archive">
-      <!-- <mat-icon>archive</mat-icon> -->
-      <span class="icon folder">⬆️</span>
-      <h2>{{ stats.archives }}</h2>
-      <p>Empruntés</p>
-    </mat-card>
-    <mat-card class="user">
-      <span class="icon folder">🗃️</span>
-      <!-- <mat-icon>timer</mat-icon> -->
-      <h2>{{ stats.users }}</h2>
-      <p>Archivés</p>
-    </mat-card>
+  <header class="dashboard-header">
+    <div>
+      <h1>Tableau de bord</h1>
+      <p>Vue d'ensemble de la gestion physique des documents</p>
+    </div>
+    <span class="update-label">
+      <mat-icon>analytics</mat-icon>
+      Indicateurs en temps réel
+    </span>
+  </header>
+
+  <div *ngIf="loading" class="state-message">
+    <mat-icon>hourglass_top</mat-icon>
+    Chargement des statistiques...
   </div>
 
-  <!-- Graphs -->
-  <div class="charts-grid">
-    <mat-card class="chart">
-      <h3>Évolution </h3>
-      <canvas baseChart [data]="lineChartData" [options]="lineChartOptions" chartType="line"></canvas>
-    </mat-card>
-
-    <mat-card class="chart">
-      <h3>Répartition par type</h3>
-      <canvas style="width: 20px; height: 20px;" baseChart [data]="pieChartData" [type]="pieChartType"></canvas>
-    </mat-card>
+  <div *ngIf="!loading && loadError" class="error-message">
+    <mat-icon>error_outline</mat-icon>
+    <span>{{ loadError }}</span>
   </div>
 
-  <!-- Activity -->
-  <mat-card class="activity section">
-    <h3>Activité</h3>
-    <mat-list>
-      <mat-list-item *ngFor="let act of recentActivity">
-        <mat-icon matListIcon>{{ act.icon }}</mat-icon>
-        <span>{{ act.text }}</span>
-      </mat-list-item>
-    </mat-list>
-  </mat-card>
+  <ng-container *ngIf="!loading">
+    <!-- Indicateurs principaux -->
+    <section class="stats-grid">
+      <mat-card class="stat-card total">
+        <div class="stat-top">
+          <span class="stat-label">Total des documents</span>
+          <span class="stat-icon"><mat-icon>description</mat-icon></span>
+        </div>
+        <h2>{{ stats.total }}</h2>
+        <p>Documents enregistrés</p>
+      </mat-card>
+
+      <mat-card class="stat-card active">
+        <div class="stat-top">
+          <span class="stat-label">Documents actifs</span>
+          <span class="stat-icon"><mat-icon>check_circle</mat-icon></span>
+        </div>
+        <h2>{{ stats.actifs }}</h2>
+        <p>Actifs selon leur statut</p>
+      </mat-card>
+
+      <mat-card class="stat-card borrowed">
+        <div class="stat-top">
+          <span class="stat-label">Documents empruntés</span>
+          <span class="stat-icon"><mat-icon>assignment</mat-icon></span>
+        </div>
+        <h2>{{ stats.empruntes }}</h2>
+        <p>Statut d'emprunt sur la fiche document</p>
+      </mat-card>
+
+      <mat-card class="stat-card archived">
+        <div class="stat-top">
+          <span class="stat-label">Documents archivés</span>
+          <span class="stat-icon"><mat-icon>inventory_2</mat-icon></span>
+        </div>
+        <h2>{{ stats.archives }}</h2>
+        <p>Documents marqués comme archivés</p>
+      </mat-card>
+    </section>
+
+    <!-- Suivi des emprunts -->
+    <section class="stats-grid secondary-stats">
+      <mat-card class="mini-stat">
+        <span class="mini-icon warning"><mat-icon>schedule</mat-icon></span>
+        <div>
+          <p>Emprunts en retard</p>
+          <h3>{{ stats.retards }}</h3>
+        </div>
+      </mat-card>
+
+      <mat-card class="mini-stat">
+        <span class="mini-icon success"><mat-icon>assignment_turned_in</mat-icon></span>
+        <div>
+          <p>Emprunts retournés</p>
+          <h3>{{ stats.retours }}</h3>
+        </div>
+      </mat-card>
+    </section>
+
+    <!-- Évolution et catégories -->
+    <section class="charts-grid">
+      <mat-card class="panel chart-panel">
+        <div class="panel-heading">
+          <div>
+            <h3>Évolution de l'activité</h3>
+            <p>Documents ajoutés et emprunts par mois</p>
+          </div>
+          <mat-icon>show_chart</mat-icon>
+        </div>
+
+        <div class="chart-container">
+          <canvas
+            baseChart
+            [data]="lineChartData"
+            [options]="lineChartOptions"
+            [type]="lineChartType"
+          >
+          </canvas>
+        </div>
+      </mat-card>
+
+      <mat-card class="panel chart-panel">
+        <div class="panel-heading">
+          <div>
+            <h3>Répartition par catégorie</h3>
+            <p>Nombre de documents par catégorie</p>
+          </div>
+          <mat-icon>donut_large</mat-icon>
+        </div>
+
+        <div class="chart-container">
+          <canvas
+            baseChart
+            [data]="categoryChartData"
+            [options]="doughnutChartOptions"
+            [type]="doughnutChartType"
+          >
+          </canvas>
+        </div>
+
+        <p *ngIf="documents.length === 0" class="empty-message">Aucun document disponible.</p>
+      </mat-card>
+    </section>
+
+    <!-- Répartition organisationnelle et physique -->
+    <section class="charts-grid">
+      <mat-card class="panel chart-panel">
+        <div class="panel-heading">
+          <div>
+            <h3>Documents par département</h3>
+            <p>Top 8 des départements par volume</p>
+          </div>
+          <mat-icon>business</mat-icon>
+        </div>
+
+        <div class="chart-container horizontal-chart">
+          <canvas
+            baseChart
+            [data]="departmentChartData"
+            [options]="barChartOptions"
+            [type]="barChartType"
+          >
+          </canvas>
+        </div>
+
+        <p *ngIf="documents.length === 0" class="empty-message">Aucun document à analyser.</p>
+      </mat-card>
+
+      <mat-card class="panel chart-panel">
+        <div class="panel-heading">
+          <div>
+            <h3>Répartition par emplacement</h3>
+            <p>Top 8 des lieux de conservation</p>
+          </div>
+          <mat-icon>place</mat-icon>
+        </div>
+
+        <div class="chart-container horizontal-chart">
+          <canvas
+            baseChart
+            [data]="locationChartData"
+            [options]="barChartOptions"
+            [type]="barChartType"
+          >
+          </canvas>
+        </div>
+
+        <p *ngIf="documents.length === 0" class="empty-message">Aucun document à analyser.</p>
+      </mat-card>
+    </section>
+
+    <!-- Alertes et activité -->
+    <section class="bottom-grid">
+      <mat-card class="panel alerts-panel">
+        <div class="panel-heading">
+          <div>
+            <h3>Alertes et points d'attention</h3>
+            <p>Éléments nécessitant un suivi</p>
+          </div>
+          <mat-icon>notifications_active</mat-icon>
+        </div>
+
+        <div *ngFor="let alert of alerts" class="alert-item" [ngClass]="alert.type">
+          <mat-icon>{{ alert.icon }}</mat-icon>
+          <span>{{ alert.text }}</span>
+        </div>
+      </mat-card>
+
+      <mat-card class="panel activity-panel">
+        <div class="panel-heading">
+          <div>
+            <h3>Activité récente</h3>
+            <p>Dernières opérations datées disponibles</p>
+          </div>
+          <mat-icon>history</mat-icon>
+        </div>
+
+        <div *ngIf="recentActivity.length === 0" class="empty-message">
+          Aucune activité datée à afficher.
+        </div>
+
+        <mat-list *ngIf="recentActivity.length > 0">
+          <mat-list-item *ngFor="let act of recentActivity">
+            <mat-icon matListItemIcon>{{ act.icon }}</mat-icon>
+            <div matListItemTitle class="activity-text">{{ act.text }}</div>
+            <div matListItemLine class="activity-date">
+              {{ act.date | date: 'dd/MM/yyyy HH:mm' }}
+            </div>
+          </mat-list-item>
+        </mat-list>
+      </mat-card>
+    </section>
+  </ng-container>
 </div>

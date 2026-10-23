@@ -353,21 +353,18 @@ mat-nav-list a.active mat-icon {
   }
 }
 
-@media (max-width: 500px) {
+/* Écrans très étroits */
+@media (max-width: 360px) {
   .toolbar {
-    padding: 0 10px;
+    padding: 0 4px;
   }
 
   .page-title {
-    font-size: 11px;
-  }
-
-  .notification-btn {
-    display: none;
+    font-size: 10px;
   }
 
   .content {
-    padding: 12px;
+    padding: 8px;
   }
 }
 
@@ -435,7 +432,6 @@ mat-nav-list a.active mat-icon {
   background: rgba(0, 138, 155, 0.25);
   color: #5eead4;
 }
-
 
 .sidenav-container.dark-mode mat-card {
   background: #1f2937;

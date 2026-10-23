@@ -1,6 +1,8 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router, NavigationEnd } from '@angular/router';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { Subscription, filter } from 'rxjs';
 
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -29,11 +31,12 @@ import { MatDividerModule } from '@angular/material/divider';
   templateUrl: './layout.html',
   styleUrls: ['./layout.scss'],
 })
-export class Layout {
-
+export class Layout implements OnInit, OnDestroy {
   isDarkMode = false;
-
+  isMobile = false;
   drawerOpened = true;
+
+  private subscriptions = new Subscription();
 
   user = {
     name: 'Rad Dev',
@@ -58,8 +61,52 @@ export class Layout {
     },
   ];
 
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    private router: Router,
+  ) {}
+
+  ngOnInit(): void {
+    // Détection des écrans mobiles et des tablettes.
+    const screenSubscription = this.breakpointObserver
+      .observe('(max-width: 768px)')
+      .subscribe(({ matches }) => {
+        this.isMobile = matches;
+
+        // Menu fermé sur mobile, permanent sur ordinateur.
+        this.drawerOpened = !this.isMobile;
+      });
+
+    this.subscriptions.add(screenSubscription);
+
+    // Fermer automatiquement le menu après la navigation mobile.
+    const navigationSubscription = this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        if (this.isMobile) {
+          this.drawerOpened = false;
+        }
+      });
+
+    this.subscriptions.add(navigationSubscription);
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
+
   get unreadCount(): number {
     return this.notifications.filter((notification) => !notification.read).length;
+  }
+
+  toggleDrawer(): void {
+    this.drawerOpened = !this.drawerOpened;
+  }
+
+  closeDrawerOnMobile(): void {
+    if (this.isMobile) {
+      this.drawerOpened = false;
+    }
   }
 
   markAllAsRead(): void {

@@ -6,8 +6,8 @@
 }
 
 .audit-page {
-  --audit-primary: #315bc7;
-  --audit-primary-dark: #2448a5;
+  --audit-primary: #008a9b;
+  --audit-primary-dark: #1b9eaf;
   --audit-text: #243047;
   --audit-muted: #758198;
   --audit-border: #e5eaf2;
@@ -67,7 +67,7 @@
   flex-shrink: 0;
   border-radius: 16px;
   color: #fff;
-  background: linear-gradient(135deg, #416de0, #2749ad);
+  background: linear-gradient(135deg, #41aee0, #2751ad);
   box-shadow: 0 6px 16px rgb(49 91 199 / 18%);
 }
 
@@ -158,7 +158,7 @@
   color: #fff;
   background: var(--audit-primary);
   border-color: var(--audit-primary);
-  box-shadow: 0 3px 8px rgb(49 91 199 / 15%);
+  box-shadow: 0 3px 8px rgba(49, 199, 116, 0.15);
 }
 
 .btn-primary:hover {

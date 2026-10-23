@@ -383,3 +383,19 @@ mat-paginator {
     font-size: 10px;
   }
 }
+.btn-success {
+  background-color: #008a9b !important;
+  color: #ffffff !important;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.btn-success:hover {
+  background-color: #006f7c !important;
+}
+
+.btn-success mat-icon {
+  color: #ffffff;
+  margin-right: 4px;
+}

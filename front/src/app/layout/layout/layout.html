@@ -1,8 +1,18 @@
-<mat-sidenav-container class="sidenav-container" [class.dark-mode]="isDarkMode">
+<mat-sidenav-container
+  class="sidenav-container"
+  [class.dark-mode]="isDarkMode"
+  [class.mobile-layout]="isMobile"
+>
   <!-- ========================= -->
   <!-- SIDEBAR -->
   <!-- ========================= -->
-  <mat-sidenav #drawer class="sidenav" mode="side" [(opened)]="drawerOpened">
+  <mat-sidenav
+    #drawer
+    class="sidenav"
+    [mode]="isMobile ? 'over' : 'side'"
+    [opened]="drawerOpened"
+    (openedChange)="drawerOpened = $event"
+  >
     <!-- Logo -->
     <div class="sidebar-header">
       <div class="logo-icon">
@@ -22,50 +32,50 @@
           mat-list-item
           routerLink="/dashboard"
           routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
+          (click)="closeDrawerOnMobile()"
         >
-          <mat-icon>dashboard</mat-icon>
-          <span>Dashboard</span>
+          <mat-icon matListItemIcon>dashboard</mat-icon>
+          <span matListItemTitle>Tableau de bord</span>
         </a>
 
         <a mat-list-item routerLink="/documents" routerLinkActive="active">
-          <mat-icon>description</mat-icon>
-          <span>Documents</span>
+          <mat-icon matListItemIcon>description</mat-icon>
+          <span matListItemTitle>Documents</span>
         </a>
 
         <a mat-list-item routerLink="/search" routerLinkActive="active">
-          <mat-icon>search</mat-icon>
-          <span>Recherche</span>
+          <mat-icon matListItemIcon>search</mat-icon>
+          <span matListItemTitle>Recherche</span>
         </a>
 
         <a mat-list-item routerLink="/borrow" routerLinkActive="active">
-          <mat-icon>swap_horiz</mat-icon>
-          <span>Emprunts</span>
+          <mat-icon matListItemIcon>swap_horiz</mat-icon>
+          <span matListItemTitle>Emprunts</span>
         </a>
 
         <a mat-list-item routerLink="/archive" routerLinkActive="active">
-          <mat-icon>archive</mat-icon>
-          <span>Archives</span>
+          <mat-icon matListItemIcon>archive</mat-icon>
+          <span matListItemTitle>Archives</span>
         </a>
 
         <a mat-list-item routerLink="/repos" routerLinkActive="active">
-          <mat-icon>location_on</mat-icon>
-          <span>Emplacements</span>
+          <mat-icon matListItemIcon>location_on</mat-icon>
+          <span matListItemTitle>Emplacements</span>
         </a>
 
         <a mat-list-item routerLink="/audit" routerLinkActive="active">
-          <mat-icon>fact_check</mat-icon>
-          <span>Audit</span>
+          <mat-icon matListItemIcon>fact_check</mat-icon>
+          <span matListItemTitle>Audit</span>
         </a>
 
         <a mat-list-item routerLink="/users" routerLinkActive="active">
-          <mat-icon>group</mat-icon>
-          <span>Utilisateurs</span>
+          <mat-icon matListItemIcon>group</mat-icon>
+          <span matListItemTitle>Utilisateurs</span>
         </a>
 
         <a mat-list-item routerLink="/history" routerLinkActive="active">
-          <mat-icon>history</mat-icon>
-          <span>Historique</span>
+          <mat-icon matListItemIcon>history</mat-icon>
+          <span matListItemTitle>Historique</span>
         </a>
       </mat-nav-list>
     </div>
@@ -101,10 +111,11 @@
         mat-icon-button
         class="menu-btn"
         type="button"
-        (click)="drawer.toggle()"
+        (click)="toggleDrawer()"
         matTooltip="Afficher le menu"
+        [attr.aria-label]="isMobile ? 'Ouvrir ou fermer le menu' : 'Menu'"
       >
-        <mat-icon>menu</mat-icon>
+        <mat-icon>{{ drawerOpened ? 'menu_open' : 'menu' }}</mat-icon>
       </button>
 
       <!-- Titre -->
