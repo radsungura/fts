@@ -69,36 +69,16 @@
       "range": "",
       "room": "",
       "site": "",
-<<<<<<< HEAD
-      "dept_id": "3",
-      "code": "3-l-02",
-      "updated_by": "",
-      "created_by": "2026-10-22T14:59:14.219Z",
-      "created_at": "2026-10-22T14:59:14.219Z",
-      "updated_at": "2026-10-22T14:59:14.219Z",
-=======
       "dept_id": "jurid",
       "code": "jurid-l-02",
       "updated_by": "",
       "created_by": "2026-10-23T15:18:01.914Z",
       "created_at": "2026-10-23T15:18:01.914Z",
       "updated_at": "2026-10-23T15:18:01.914Z",
->>>>>>> scan
       "status": "Disponible",
       "id": "8e6c"
     },
     {
-<<<<<<< HEAD
-      "id": "8e6c",
-      "title": "Lettre d'affectation",
-      "reference": "l-02",
-      "category": "Correspondance",
-      "location": "Etagere1/rang2",
-      "status": "Disponible"
-    },
-    {
-=======
->>>>>>> scan
       "title": "Contrat1",
       "reference": "C-2026-001",
       "category": "CONTRAT",
