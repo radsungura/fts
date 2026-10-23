@@ -34,10 +34,10 @@ export class Scan {
   // 'result' est la valeur brute du code-barres
   this.doc = this.docs.find((el: any) => el.code === result);
   this.details(this.doc);
-    // Affiche les infos du document
   };
 
   details(doc: Doc) {
+    console.log("doc", doc);
     this.dialog.open(DetailsDoc, {
       width: '90vw',
       maxHeight: '1000vh',

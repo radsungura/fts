@@ -26,12 +26,8 @@ export class BarcodeDialog implements AfterViewInit {
     public dialogRef: MatDialogRef<BarcodeDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
-    const documentId = data?.document?.id;
+    const documentId = data?.document?.code;
 
-    /*
-     * On crée une référence lisible :
-     * Exemple : DOC-000125
-     */
     this.barcodeValue = this.formatBarcode(documentId);
   }
 
@@ -47,7 +43,9 @@ export class BarcodeDialog implements AfterViewInit {
     const numericId = Number(id);
 
     if (!isNaN(numericId)) {
-      return `DOC-${numericId.toString().padStart(6, '0')}`;
+      let code = `DOC-${numericId.toString().padStart(6, '0')}`;
+      
+      return code;
     }
 
     return `DOC-${id}`;
