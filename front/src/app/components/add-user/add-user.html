@@ -82,6 +82,13 @@
             Le nom d'utilisateur est obligatoire
           </mat-error>
         </mat-form-field>
+        </div>
+        <h3>
+        <mat-icon>manage_accounts</mat-icon>
+        Informations du compte
+      </h3>
+        <div class="form-grid">
+
         <!-- service -->
          <mat-form-field appearance="outline" class="full-width">
           <mat-label>Service</mat-label>
@@ -96,18 +103,7 @@
             Le rôle est obligatoire
           </mat-error>
         </mat-form-field>
-      </div>
-    </div>
-
-
-    <!-- Informations du compte -->
-    <div class="form-section">
-      <h3>
-        <mat-icon>manage_accounts</mat-icon>
-        Informations du compte
-      </h3>
-
-      <div class="form-grid">
+        
         <!-- Rôle -->
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Rôle</mat-label>
@@ -122,9 +118,18 @@
             Le rôle est obligatoire
           </mat-error>
         </mat-form-field>
+      </div>
+    </div>
+
+
+    <!-- Informations du compte -->
+    <div class="form-section">
+      
+
+      <div class="form-flex">
         
         <!-- Statut -->
-        <mat-form-field appearance="outline" class="full-width">
+        <mat-form-field appearance="outline" class="mid-width">
           <mat-label>Statut</mat-label>
           <mat-select formControlName="status">
             <mat-option value=""> Sélectionner le status </mat-option>
@@ -139,24 +144,21 @@
             Le statut est obligatoire
           </mat-error>
         </mat-form-field>
-      </div>
-
         <div class="password-container form-grid" *ngIf="data.mode === 'edit'">
-          <mat-form-field appearance="outline" class="full-width" >
+          <mat-form-field appearance="outline" class="pass-form" >
             <mat-label>Mot de passe</mat-label>
             <input matInput formControlName="pass" type="password" *ngIf="!form.get('passtemp')?.value" [readonly]="true"/>
             <input matInput formControlName="passtemp" type="text" *ngIf="form.get('passtemp')?.value" [readonly]="true"/>
             <mat-icon class="outline" matSuffix>shield</mat-icon>
           </mat-form-field>
-          <!-- Statut -->
-            <span
-              class="status-badge"
-              (click)="initpass()"
-            >
-              Reinitialiser le mot de passe 
-              <!-- <mat-icon>edit</mat-icon> -->
-            </span>
+          <button mat-stroked-button class="init" type="button" (click)="initpass()" *ngIf="!form.get('passtemp')?.value">
+            <mat-icon>autorenew</mat-icon>
+            Réinitialiser
+          </button>
         </div>
+      </div>
+
+        
     </div>
 
     <!-- Boutons -->

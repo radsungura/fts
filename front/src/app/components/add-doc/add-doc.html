@@ -44,11 +44,8 @@
         <!-- TITRE -->
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Titre du document</mat-label>
-
           <input matInput formControlName="title" placeholder="Ex. Rapport annuel 2026" />
-
           <mat-icon matSuffix> description </mat-icon>
-
           <mat-error *ngIf="form.controls.title.hasError('required')">
             Le titre est obligatoire
           </mat-error>
@@ -56,12 +53,10 @@
 
         <!-- REFERENCE -->
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Référence</mat-label>
-
-          <input matInput formControlName="reference" placeholder="Ex. DOC-2026-001" />
-
+          <mat-label *ngIf="!exist">Référence</mat-label>
+          <mat-label  style="color: red;" *ngIf="exist">La référence existe déjà</mat-label>
+          <input matInput formControlName="reference" placeholder="Ex. DOC-2026-001" (input)="checkref(form.controls.reference.value)" />
           <mat-icon matSuffix> tag </mat-icon>
-
           <mat-error *ngIf="form.controls.reference.hasError('required')">
             La référence est obligatoire
           </mat-error>
@@ -72,9 +67,9 @@
           <mat-label>Service Propriétaire</mat-label>
           <mat-select formControlName="dept_id">
             <!-- <mat-option value="">Service Propriétaire</mat-option> -->
-            <mat-option *ngFor="let el of servcs" [value]="el.id">{{el.name}}</mat-option>
+            <mat-option *ngFor="let serv of servcs" [value]="serv.id">{{serv.name}}</mat-option>
           </mat-select>
-          <mat-icon matSuffix> service </mat-icon>
+          <mat-icon matSuffix> work </mat-icon>
           <mat-error *ngIf="form.controls.dept_id.hasError('required')">
             Le service est obligatoire
           </mat-error>
@@ -82,10 +77,10 @@
 
         <!-- CATEGORIE -->
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Catégorie du document</mat-label>
+          <mat-label> Catégorie du document </mat-label>
           <mat-select formControlName="category">
             <!-- <mat-option value="">Categorie du document</mat-option> -->
-            <mat-option *ngFor="let el of cats" [value]="el.id">{{el.name}}</mat-option>
+            <mat-option *ngFor="let cat of cats" [value]="cat.id">{{cat.name}}</mat-option>
           </mat-select>
           <mat-icon matSuffix> category </mat-icon>
           <mat-error *ngIf="form.controls.category.hasError('required')">
@@ -93,9 +88,21 @@
           </mat-error>
         </mat-form-field>
 
+        <!-- Proprietaire -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Proprietaire</mat-label>
+          <input matInput formControlName="owner" placeholder="Ex. Dupont, Jean" />
+          <mat-icon matSuffix> person </mat-icon>
+          <mat-error *ngIf="form.controls.owner.hasError('required')">
+            Le proprietaire est obligatoire
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Status -->
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Statut</mat-label>
-          <mat-select formControlName="status">
+          <input matInput type="text" formControlName="status" [readonly]="true" *ngIf="data.action === 'edit'"/>
+          <mat-select formControlName="status" *ngIf="data.action === 'add'">
             <mat-option value="Disponible"> Disponible </mat-option>
             <mat-option value="Emprunté"> Emprunté </mat-option>
             <mat-option value="Archivé"> Archivé </mat-option>
@@ -106,6 +113,57 @@
           </mat-error>
         </mat-form-field>
 
+        <!-- Repertoire -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Etagère</mat-label>
+          <mat-select placeholder="Pick one" matInput formControlName="shelf" 
+          value="shelf" (selectionChange)="onShelfChange('shelf', form.controls.shelf.value)">
+              <mat-option *ngFor="let option of shelves" [value]="option.id">{{option.name}}</mat-option>
+          </mat-select> 
+          <mat-icon matSuffix>shelves</mat-icon>
+          <mat-error *ngIf="form.controls.shelf.hasError('required')">
+            La repetoire du document est obligatoire
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Niveau d'Etagère</mat-label>
+          <mat-select placeholder="Pick one" matInput formControlName="bay" 
+          value="shelf" (selectionChange)="onShelfChange('bay', form.controls.bay.value)">
+              <mat-option *ngFor="let option of bays" [value]="option.id">{{option.name}}</mat-option>
+          </mat-select> 
+          <mat-icon matSuffix> splitscreen </mat-icon>
+          <mat-error *ngIf="form.controls.bay.hasError('required')">
+            Le niveau d'etagère est obligatoire
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Boite/Classeur/Falde</mat-label>
+          <mat-select placeholder="Pick one" matInput formControlName="box_id" 
+          value="folders" (selectionChange)="onShelfChange('box', form.controls.box_id.value)">
+              <mat-option *ngFor="let option of boxs" [value]="option.id">{{option.name}}</mat-option>
+          </mat-select> 
+          <mat-icon matSuffix> inventory </mat-icon>
+          <mat-error *ngIf="form.controls.box_id.hasError('required')">
+            La boite est obligatoire
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Dossier</mat-label>
+          <mat-select placeholder="Pick one" matInput formControlName="folder" 
+          value="folders" (selectionChange)="onShelfChange('folder', form.controls.folder.value)">
+              <mat-option *ngFor="let option of folders" [value]="option.id">{{option.name}}</mat-option>
+          </mat-select>
+          <mat-icon matSuffix> folder </mat-icon>
+          <mat-error *ngIf="form.controls.folder.hasError('required')">
+            La dossier est obligatoire
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div style="display: flex; gap: 10px;">
         <!-- boxid -->
         <!-- <mat-form-field appearance="outline" class="full-width">
           <mat-label>Repertoire</mat-label>
@@ -119,19 +177,9 @@
           </mat-error>
         </mat-form-field> -->
 
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Localisation</mat-label>
-          <mat-select placeholder="Pick one" matInput formControlName="box_id" >
-            <mat-option *ngFor="let option of location" [value]="option.id">{{option.link}}</mat-option>
-          <mat-icon matSuffix> box </mat-icon>
-        </mat-select> 
-          
-          <mat-error *ngIf="form.controls.box_id.hasError('required')">
-            La repetoire du document est obligatoire
-          </mat-error>
-        </mat-form-field>
-  
-                   <!-- Description -->
+        
+        </div>
+        <!-- Description -->
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Description</mat-label>
           <textarea matInput formControlName="desc" placeholder="Ex. le document contient les contrats du juin 2024" >
@@ -141,7 +189,6 @@
             La description est obligatoire
           </mat-error>
         </mat-form-field>
-        </div>
     </div>
 
     <!-- INFORMATIONS DU COMPTE -->
@@ -170,7 +217,7 @@
         Annuler
       </button>
 
-      <button mat-raised-button class="submit-button" type="submit">
+      <button mat-raised-button class="submit-button" type="submit" [disabled]="exist">
         <mat-icon>
           {{ data.action === 'add' ? 'add' : 'save' }}
         </mat-icon>

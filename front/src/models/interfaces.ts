@@ -6,6 +6,7 @@ export interface Doc {
   category: string;
   location: string;
   desc: string;
+  owner: string;
   dept_id: string;
   box_id: string;
   status: string;
@@ -49,7 +50,7 @@ export interface User {
 }
 
 export interface Cat {
-  id?: number;
+  id?: string;
   name: string;
   code: string;
   desc: string;
@@ -59,6 +60,16 @@ export interface Cat {
 }
 
 export interface Serv {
+  id?: string;
+  name: string;
+  code: string;
+  desc: string;
+  status: 'Actif' | 'Inactif';
+  created_at?: Date;
+  updated_at?: Date;
+}
+
+export interface Role {
   id?: string;
   name: string;
   code: string;

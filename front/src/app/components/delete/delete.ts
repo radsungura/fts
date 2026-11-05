@@ -5,7 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { Repo } from '../../services/repo';
 import { Document } from '../../services/document';
 import { UserService } from '../../services/user';
-import { Borrows } from '../../services/borrow';
+import { MovService } from '../../services/borrow';
 import { CatService } from '../../services/categories';
 import { ServService } from '../../services/services';
 
@@ -27,7 +27,7 @@ export class Delete {
     private locs: Repo,
     private docs: Document,
     private users: UserService,
-    private borrows: Borrows,
+    private borrows: MovService,
     private cat: CatService,
     private serv: ServService,
 

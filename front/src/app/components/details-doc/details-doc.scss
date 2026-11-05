@@ -20,13 +20,13 @@
 .role-badge {
   display: inline-flex;
   width: fit-content;
-  padding: 5px 10px;
+  // padding: 5px 10px;
   background: #eef2ff;
   color: #3730a3;
-  border-radius: 6px;
+  // border-radius: 6px;
   font-size: 13px;
   font-weight: 600;
-  margin: 2px;
+  // margin: 2px;
 }
 
 .info-location {
@@ -92,6 +92,24 @@
   padding: 24px;
 }
 
+.history-body {
+  padding: 0 24px 24px;
+}
+
+.no-data{
+  padding: 24px;
+  align-items: center;
+  justify-content: center;
+  // display: flex;
+  color: #7b7d83;
+  text-align: center;
+  mat-icon{
+    width: 100%;
+    height: 50%;
+    font-size: 400%;
+  }
+}
+
 .section {
   margin-bottom: 28px;
 }
@@ -121,6 +139,87 @@
 
   color: #008a9b;
 }
+
+// table
+
+/* Conteneur pour arrondir les coins du tableau */
+  .table-container {
+      // border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 35px -8px rgba(0, 0, 0, 0.2);
+      transition: transform 0.2s ease;
+      max-width: 800px;
+      width: 100%;
+  }
+
+  .table-container:hover {
+      transform: scale(1.01);
+  }
+
+td{
+  padding: 10px;
+}
+
+/* Style du tableau */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #ffffff;
+            font-size: 1rem;
+            text-align: left;
+        }
+
+        /* En-tête */
+        thead {
+            background: #1e293b; /* bleu-gris foncé */
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        thead th {
+            padding: 18px 20px;
+            border-bottom: 3px solid #334155;
+        }
+
+        /* Corps du tableau */
+        tbody td {
+            padding: 16px 20px;
+            border-bottom: 1px solid #e2e8f0;
+            color: #1e293b;
+            font-weight: 400;
+        }
+
+        /* Lignes alternées (zébrées) */
+        tbody tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+
+        /* Survol des lignes */
+        tbody tr {
+            transition: background-color 0.15s ease;
+        }
+
+        tbody tr:hover {
+            background-color: #eef2f6;
+            cursor: default;
+        }
+
+        /* Dernière ligne sans bordure */
+        tbody tr:last-child td {
+          border-bottom: none;
+        }
+
+        /* Petits écrans : adapter le padding */
+        @media (max-width: 500px) {
+          thead th,
+          tbody td {
+              padding: 12px 14px;
+              font-size: 0.9rem;
+          }
+        }
 
 /* ============================= */
 /* INFORMATIONS */
@@ -265,7 +364,15 @@
 .status-badge.disponible {
   background: #d1fae5;
   color: #047857;
+  cursor: pointer;
 }
+
+.display-button {
+    background: #1cb1b9;
+    color: #ffffff;
+    cursor: pointer;
+}
+
 
 /* ============================= */
 /* FOOTER */

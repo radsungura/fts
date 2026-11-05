@@ -8,7 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { Mov, Doc, Serv } from '../../../models/interfaces';
-import { Borrows } from '../../services/borrow';
+import { MovService } from '../../services/borrow';
 import { Document } from '../../services/document';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { Functions } from '../../services/functions';
@@ -60,7 +60,7 @@ export class AddBorrow implements OnInit {
     public dialogRef: MatDialogRef<AddBorrow>,
     @Inject(MAT_DIALOG_DATA)
     public data: any,
-    private borrow: Borrows,
+    private borrow: MovService,
     private docService: Document,
     private func: Functions,
     private serv: ServService

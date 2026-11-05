@@ -18,7 +18,7 @@ import { Delete } from '../../components/delete/delete';
 import { DetailsBorrow } from '../../components/details-borrow/details-borrow';
 import { AddBorrow } from '../../components/add-borrow/add-borrow';
 
-import { Borrows } from '../../services/borrow';
+import { MovService } from '../../services/borrow';
 import { Document } from '../../../app/services/document';
 
 import { Mov, Doc } from '../../../models/interfaces';
@@ -68,7 +68,7 @@ export class Borrow {
 
   constructor(
     private dialog: MatDialog,
-    private data: Borrows,
+    private data: MovService,
     private documentService: Document,
   ) {}
 

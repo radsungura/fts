@@ -1,4 +1,4 @@
-<div class="document-details">
+<div class="document-details" >
   <!-- ========================= -->
   <!-- HEADER -->
   <!-- ========================= -->
@@ -18,6 +18,14 @@
       </p>
     </div>
 
+     <span class="status-badge display-button" (click)="history()">
+        @if(display === 'history'){
+          <mat-icon>arrow_back</mat-icon> Retour
+        }
+        @else{ 
+          Historique
+        }
+      </span>
     <button
       mat-icon-button
       class="close-button"
@@ -33,7 +41,7 @@
   <!-- BODY -->
   <!-- ========================= -->
 
-  <div class="details-body" *ngIf="document">
+  <div class="details-body" *ngIf="document && display === 'details'">
     <!-- INFORMATIONS PRINCIPALES -->
 
     <div class="section">
@@ -64,14 +72,14 @@
         <div class="info-item">
           <span class="label"> Catégorie </span>
           <span class="value category-badge">
-            {{ document.category }}
+            {{ document.cat }}
           </span>
         </div>
 
         <div class="info-item">
           <span class="label"> Service </span>
           <span class="value reference-badge">
-            {{ document.dept_id }}
+            {{ document.serv }}
           </span>
         </div>
 
@@ -120,15 +128,45 @@
     </div>
   </div>
 
+  <!-- history -->
+  <div class="history-body" *ngIf="display === 'history' && movs.length > 0">
+    <h3>Historique</h3>
+    <div class="table-container">
+      <table class="table">
+        <thead>
+          <tr>
+            <td>Date</td>
+            <td>Action</td>
+            <td>Actor</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let mov of movs">
+              @if(mov.returned_at && mov.returned_by){
+              <td>le {{ mov.returned_at | date: 'dd/MM/yyyy' }} </td> <td> Returné par </td><td>{{ mov.returned_by }}</td> 
+            }
+            @else{
+              <td>le {{ mov.borrowDate | date: 'dd/MM/yyyy' }} </td> <td>Emprunté par</td>  <td>{{ mov.borrower }}</td> 
+            }
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="no-data" *ngIf="display === 'history' && movs.length <= 0">
+    <span>Pas de mouvement pour le moment</span>
+    <mat-icon>sync</mat-icon>
+  </div>
+
   <!-- ========================= -->
   <!-- FOOTER -->
   <!-- ========================= -->
 
-  <div class="details-footer">
+  <!-- <div class="details-footer">
     <button mat-stroked-button type="button" (click)="close()">
       <mat-icon> close </mat-icon>
-
       Fermer
     </button>
-  </div>
+  </div> -->
 </div>
+

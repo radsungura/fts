@@ -30,7 +30,7 @@
   align-items: center;
   gap: 16px;
 
-  padding: 24px;
+  padding: 10px 24px 10px;
 
   border-bottom: 1px solid #e5e7eb;
 }
@@ -76,12 +76,15 @@
   margin-left: auto;
 }
 
+.pass-form {
+  width: 135%;
+} 
 /* =========================
    FORMULAIRE
    ========================= */
 
 .user-form {
-  padding: 24px;
+  padding: 15px 24px 10px;
 }
 
 /* =========================
@@ -89,7 +92,7 @@
    ========================= */
 
 .form-section {
-  margin-bottom: 28px;
+  // margin-bottom: 28px;
 }
 
 .form-section:last-of-type {
@@ -126,8 +129,23 @@
   gap: 8px 16px;
 }
 
+.init{
+  width: 120px;
+  right: -50px;
+  box-shadow: 3px 3px 2px #707070;
+}
+.form-flex {
+  display: flex;
+  // flex-wrap: wrap;
+  gap: 10px;
+}
+
 .full-width {
   width: 100%;
+}
+
+.mid-width {
+  width: 40%;
 }
 
 /* =========================
@@ -141,7 +159,7 @@
 
   gap: 12px;
 
-  padding-top: 20px;
+  padding-top: 10px;
 
   border-top: 1px solid #e5e7eb;
 }

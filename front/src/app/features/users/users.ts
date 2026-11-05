@@ -18,6 +18,7 @@ import { AddUser } from '../../components/add-user/add-user';
 import { Delete } from '../../components/delete/delete';
 import { User } from '../../../models/interfaces';
 import { UserService } from '../../services/user';
+
 @Component({
   selector: 'app-users',
   imports: [

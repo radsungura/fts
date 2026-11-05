@@ -22,6 +22,7 @@ import { BarcodeDialog } from '../../components/barcode-dialog/barcode-dialog';
 import { Document } from '../../services/document';
 import { Doc } from '../../../models/interfaces';
 import { Scan } from '../../components/scan/scan';
+import { CatService } from '../../services/categories';
 
 @Component({
   selector: 'app-documents',
@@ -44,8 +45,8 @@ import { Scan } from '../../components/scan/scan';
   styleUrl: './documents.scss',
 })
 export class Documents {
-  documents: Doc[] = [];
-  filteredDocuments: Doc[] = [];
+  documents: any[] = [];
+  filteredDocuments: any[] = [];
 
   view: 'list' | 'grid' = 'list';
 
@@ -56,32 +57,44 @@ export class Documents {
 
   pageSize = 5;
   pageIndex = 0;
-
+  cats: any[] = [];
   constructor(
     private dialog: MatDialog,
     private data: Document,
     private snackBar: MatSnackBar,
+    private cat: CatService,
   ) {}
 
   ngOnInit() {
-    this.loadDocs();
+    this.cat.getAll().subscribe(cat=>{
+      this.cats = cat;
+      this.loadDocs();
+    });
   }
 
   loadDocs() {
     this.data.getAll().subscribe({
       next: (docs) => {
         this.documents = [...docs].reverse();
+        this.documents.forEach(doc => {
+          doc.cat = this.getCategory(doc.category);
+        });
+
         this.filteredDocuments = [...this.documents];
         this.searchDocuments();
       },
       error: (error) => {
         console.error('Erreur lors du chargement des documents :', error);
-
         this.snackBar.open('Impossible de charger les documents', 'Fermer', { duration: 4000 });
       },
     });
   }
 
+
+  getCategory(cat: any){
+    const res = this.cats.find(el => el.id == cat);
+    return res?.name;
+  }
   searchDocuments() {
     const search = this.searchText.toLowerCase().trim();
 

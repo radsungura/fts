@@ -7,7 +7,7 @@ import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class Borrows {
+export class MovService {
     // private api = 'http://localhost:4000/borrow';
   private readonly api = `${environment.URL}/borrow`;
 

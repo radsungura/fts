@@ -11,6 +11,7 @@ import { Search } from './features/search/search';
 import { Audit } from './features/audit/audit';
 import { Services } from './features/services/services';
 import { Categories } from './features/categories/categories';
+import { Roles } from './features/roles/roles';
 
 export const routes: Routes = [
   {
@@ -25,6 +26,7 @@ export const routes: Routes = [
         { path: 'borrow', component: Borrow },
         { path: 'archive', component: Archive },
         { path: 'users', component: Users },
+        { path: 'roles', component: Roles },
         { path: 'audit', component: Audit },
         { path: 'services', component: Services },
         { path: 'categories', component: Categories }

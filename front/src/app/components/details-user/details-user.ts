@@ -26,7 +26,7 @@ export class DetailsUser {
     this.srv.getAll().subscribe(el=>{
       this.serv = el;
       this.user = data.item;
-      this.user.service = this.getServ(data.item.service);
+      this.user.serv = this.getServ(data.item.service);
     })
   }
   getServ(serv: any){
