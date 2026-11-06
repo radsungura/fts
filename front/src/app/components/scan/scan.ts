@@ -35,7 +35,9 @@ export class Scan {
   };
 
   details(doc: Doc) {
-    this.dialog.open(DetailsDoc, {
+   
+    this.dialog.closeAll();
+     this.dialog.open(DetailsDoc, {
       width: '90vw',
       maxHeight: '1000vh',
       data: {
